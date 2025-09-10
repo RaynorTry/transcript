@@ -1,561 +1,554 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📄 История закрытых обращений</title>
-    <style>
-        :root {
-            --bg: #111418;
-            --card: #1a1e24;
-            --soft: #262c36;
-            --text: #e5e7eb;
-            --muted: #9ca3af;
-            --accent: #57F287;
-            --user: #1e293b;
-            --staff: #0f3b2f;
-            --admin: #3b1f1f;
-            --system: #2a3346;
-        }
 
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            border-bottom: 1px solid var(--soft);
-            background: linear-gradient(180deg, #171a20 0%, #12151b 100%);
-            border-radius: 12px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .search-section {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: end;
-            border: 1px solid var(--soft);
-        }
-
-        .search-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg);
-            border: 1px solid var(--soft);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
-        }
-
-        button {
-            padding: 12px 24px;
-            background: var(--accent);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .tickets-list {
-            display: grid;
-            gap: 20px;
-        }
-
-        .ticket-card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--soft);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .ticket-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .ticket-id {
-            font-size: 0.9rem;
-            color: var(--muted);
-            font-weight: 600;
-        }
-
-        .ticket-subject {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 8px 0;
-        }
-
-        .ticket-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--muted);
-            margin-top: 10px;
-        }
-
-        .status-closed {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background: #3b1f1f;
-            color: #fca5a5;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--card);
-            width: 100%;
-            max-width: 900px;
-            border-radius: 12px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid var(--soft);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid var(--soft);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--muted);
-        }
-
-        .close-modal:hover {
-            color: var(--text);
-        }
-
-        .modal-body {
-            padding: 25px;
-        }
-
-        /* Стили сообщений — как в Discord */
-        .msg {
-            display: flex;
-            gap: 10px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            margin: 10px 0;
-            background: var(--card);
-            border: 1px solid var(--soft);
-        }
-
-        .msg.system {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            background: var(--system);
-            border-radius: 10px;
-            margin: 10px 0;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            flex: 0 0 36px;
-        }
-
-        .content {
-            flex: 1;
-        }
-
-        .headerline {
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
-        .name {
-            font-weight: 600;
-        }
-
-        .time {
-            color: var(--muted);
-            font-size: 12px;
-            margin-left: 6px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 1px 6px;
-            font-size: 11px;
-            border-radius: 6px;
-            margin-left: 6px;
-        }
-
-        .badge.user {
-            background: var(--user);
-            color: #93c5fd;
-        }
-
-        .badge.staff {
-            background: var(--staff);
-            color: #6ee7b7;
-        }
-
-        .badge.admin {
-            background: var(--admin);
-            color: #fca5a5;
-        }
-
-        .text p {
-            margin: 6px 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .attachments img {
-            max-width: 280px;
-            border-radius: 10px;
-            border: 1px solid var(--soft);
-            display: block;
-            margin-top: 6px;
-        }
-
-        .attachments .file a {
-            display: inline-block;
-            margin-top: 6px;
-            background: #1e2530;
-            border: 1px solid var(--soft);
-            padding: 6px 10px;
-            border-radius: 8px;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-            color: var(--muted);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--muted);
-            font-size: 1.2rem;
-        }
-
-        @media (max-width: 768px) {
-            .search-section {
-                flex-direction: column;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>📄 История закрытых обращений</h1>
-        </header>
-
-        <section class="search-section">
-            <div class="search-group">
-                <label for="search">Поиск по ID, теме или тексту</label>
-                <input type="text" id="search" placeholder="Введите запрос...">
-            </div>
-            <div class="search-group">
-                <label for="role">Роль</label>
-                <select id="role">
-                    <option value="">Любая</option>
-                    <option value="user">Пользователь</option>
-                    <option value="staff">Staff</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
-            <div class="search-group">
-                <label for="date">Дата</label>
-                <input type="date" id="date">
-            </div>
-            <button id="search-btn">🔍 Найти</button>
-        </section>
-
-        <section class="tickets-list" id="tickets-container">
-            <div class="loader">Загрузка списка тикетов...</div>
-        </section>
-    </div>
-
-    <div class="modal" id="ticket-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Загрузка...</h3>
-                <button class="close-modal" id="close-modal">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <div class="loader">Загружаем историю переписки...</div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const ticketsContainer = document.getElementById('tickets-container');
-        const searchInput = document.getElementById('search');
-        const roleSelect = document.getElementById('role');
-        const dateInput = document.getElementById('date');
-        const searchBtn = document.getElementById('search-btn');
-
-        const modal = document.getElementById('ticket-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalBody = document.getElementById('modal-body');
-        const closeModalBtn = document.getElementById('close-modal');
-
-        let allTickets = [];
-
-        // ✅ Загрузка списка тикетов — ИСПРАВЛЕНО: правильный путь!
-        async function loadTicketList() {
-            try {
-                const response = await fetch('transcript/tickets.json'); // ← ВОТ ОНО! Правильный путь
-                if (!response.ok) throw new Error('Не удалось загрузить tickets.json');
-                allTickets = await response.json();
-                renderTickets(allTickets);
-            } catch (error) {
-                console.error("Ошибка:", error);
-                ticketsContainer.innerHTML = `<div class="no-results">❌ Ошибка загрузки tickets.json — проверьте, что файл существует.</div>`;
-            }
-        }
-
-        // Загрузка и парсинг HTML-файла тикета
-        async function loadTicketFromFile(filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) throw new Error(`Файл не найден: ${filePath}`);
-
-                const htmlText = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
-
-                // Извлекаем заголовок и мета
-                const title = doc.querySelector('header h1')?.textContent.trim() || 'Без темы';
-                const meta = doc.querySelector('.meta')?.textContent.trim() || '';
-                const createdMatch = meta.match(/Сгенерировано: (\d{4}-\d{2}-\d{2})/);
-                const created = createdMatch ? createdMatch[1] : 'Неизвестно';
-
-                // Извлекаем все сообщения
-                const msgElements = doc.querySelectorAll('.msg');
-                const history = [];
-
-                msgElements.forEach(msgEl => {
-                    if (msgEl.classList.contains('system')) {
-                        history.push({
-                            type: 'system',
-                            time: '',
-                            text: msgEl.textContent.trim()
-                        });
-                    } else {
-                        const nameEl = msgEl.querySelector('.name');
-                        const timeEl = msgEl.querySelector('.time');
-                        const textEl = msgEl.querySelector('.text p');
-                        const badgeEl = msgEl.querySelector('.badge');
-
-                        let type = 'user';
-                        if (badgeEl) {
-                            if (badgeEl.classList.contains('admin')) type = 'admin';
-                            else if (badgeEl.classList.contains('staff')) type = 'staff';
-                        }
-
-                        history.push({
-                            type: type,
-                            time: timeEl?.textContent.trim() || 'Неизвестно',
-                            text: textEl?.textContent.trim() || '',
-                            author: nameEl?.textContent.trim() || 'Неизвестно'
-                        });
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Архив тикетов</title>
+            <style>
+                :root {
+                    --bg: #111418;
+                    --card: #1a1e24;
+                    --soft: #262c36;
+                    --text: #e5e7eb;
+                    --muted: #9ca3af;
+                    --accent: #57F287;
+                    --header-bg: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+                    --header-text: #ffffff;
+                    --filter-bg: #262c36;
+                    --status-open: #10b981;
+                    --status-closed: #ef4444;
+                }
+                [data-theme="light"] {
+                    --bg: #f9fafb;
+                    --card: #ffffff;
+                    --soft: #e5e7eb;
+                    --text: #111827;
+                    --muted: #6b7280;
+                    --header-bg: linear-gradient(135deg, #3b82f6, #2563eb);
+                    --header-text: #ffffff;
+                    --filter-bg: #f3f4f6;
+                    --status-open: #10b981;
+                    --status-closed: #ef4444;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: 'Inter', sans-serif;
+                    padding: 0;
+                }
+                header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 1.5rem;
+                    text-align: center;
+                }
+                header h1 {
+                    margin: 0;
+                    font-size: 2rem;
+                }
+                .controls {
+                    display: flex;
+                    gap: 1rem;
+                    padding: 1rem;
+                    background: var(--filter-bg);
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+                .search-box {
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .search-box input {
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid var(--soft);
+                    border-radius: 0.5rem;
+                    background: var(--card);
+                    color: var(--text);
+                }
+                select {
+                    padding: 0.5rem;
+                    border: 1px solid var(--soft);
+                    border-radius: 0.5rem;
+                    background: var(--card);
+                    color: var(--text);
+                }
+                .ticket-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 1rem;
+                    padding: 1rem;
+                }
+                .ticket-card {
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    border-radius: 0.75rem;
+                    padding: 1rem;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .ticket-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+                [data-theme="light"] .ticket-card:hover {
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                }
+                .ticket-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 0.5rem;
+                }
+                .ticket-title {
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                }
+                .ticket-status {
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 9999px;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                }
+                .status-open {
+                    background: var(--status-open);
+                    color: white;
+                }
+                .status-closed {
+                    background: var(--status-closed);
+                    color: white;
+                }
+                .ticket-meta {
+                    font-size: 0.875rem;
+                    color: var(--muted);
+                    margin: 0.5rem 0;
+                }
+                .ticket-meta div {
+                    margin: 0.25rem 0;
+                }
+                .ticket-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 1rem;
+                    font-size: 0.875rem;
+                }
+                .view-btn {
+                    background: var(--accent);
+                    color: #000;
+                    border: none;
+                    padding: 0.375rem 0.75rem;
+                    border-radius: 0.375rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    text-decoration: none;
+                    display: inline-block;
+                }
+                .theme-toggle {
+                    position: fixed;
+                    top: 1rem;
+                    right: 1rem;
+                    z-index: 100;
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    color: var(--text);
+                    padding: 0.5rem 0.75rem;
+                    border-radius: 0.5rem;
+                    cursor: pointer;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.375rem;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                @media (max-width: 768px) {
+                    .controls {
+                        flex-direction: column;
+                        align-items: stretch;
                     }
+                    .search-box {
+                        width: 100%;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" fill="currentColor"/>
+                </svg>
+                Сменить тему
+            </button>
+            <script>
+                function toggleTheme() {
+                    const body = document.body;
+                    const currentTheme = body.getAttribute('data-theme') || 'dark';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    body.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    document.body.setAttribute('data-theme', savedTheme);
                 });
 
-                return {
-                    subject: title,
-                    created: created,
-                    history: history
-                };
-            } catch (error) {
-                console.error("Ошибка загрузки тикета:", error);
-                return null;
-            }
-        }
+                function filterTickets() {
+                    const search = document.getElementById('search').value.toLowerCase();
+                    const category = document.getElementById('category').value;
+                    const status = document.getElementById('status').value;
+                    const cards = document.querySelectorAll('.ticket-card');
 
-        // Рендер списка тикетов
-        function renderTickets(ticketsToShow) {
-            ticketsContainer.innerHTML = '';
+                    cards.forEach(card => {
+                        const nickname = card.dataset.nickname.toLowerCase();
+                        const description = card.dataset.description.toLowerCase();
+                        const cat = card.dataset.category;
+                        const isClosed = card.dataset.closed === 'true';
 
-            if (ticketsToShow.length === 0) {
-                ticketsContainer.innerHTML = '<div class="no-results">Тикеты не найдены 😕</div>';
-                return;
-            }
+                        const matchesSearch = nickname.includes(search) || description.includes(search);
+                        const matchesCategory = category === 'all' || cat === category;
+                        const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
 
-            ticketsToShow.forEach(ticket => {
-                const card = document.createElement('div');
-                card.className = 'ticket-card';
-                card.innerHTML = `
-                    <div class="ticket-id">${ticket.id}</div>
-                    <div class="ticket-subject">${ticket.subject}</div>
-                    <div class="ticket-meta">
-                        <span>Создан: ${ticket.created}</span>
-                        <span class="status-closed">Закрыт</span>
-                    </div>
-                `;
-                card.addEventListener('click', () => openTicketModal(ticket));
-                ticketsContainer.appendChild(card);
-            });
-        }
-
-        // Открытие модального окна
-        async function openTicketModal(ticket) {
-            modalTitle.textContent = `Загрузка тикета ${ticket.id}...`;
-            modalBody.innerHTML = '<div class="loader">Загружаем историю переписки...</div>';
-            modal.style.display = 'flex';
-
-            const fullTicket = await loadTicketFromFile(ticket.file);
-            if (!fullTicket) {
-                modalBody.innerHTML = '<div class="error">❌ Не удалось загрузить содержимое тикета.</div>';
-                return;
-            }
-
-            modalTitle.textContent = fullTicket.subject;
-            modalBody.innerHTML = '';
-
-            if (fullTicket.history.length === 0) {
-                modalBody.innerHTML = '<div>История переписки отсутствует.</div>';
-                return;
-            }
-
-            fullTicket.history.forEach(entry => {
-                if (entry.type === 'system') {
-                    modalBody.innerHTML += `
-                        <div class="msg system">${entry.text}</div>
-                    `;
-                } else {
-                    const badgeClass = entry.type === 'admin' ? 'badge admin' : entry.type === 'staff' ? 'badge staff' : 'badge user';
-                    const badgeText = entry.type === 'admin' ? 'Admin' : entry.type === 'staff' ? 'Staff' : 'User';
-                    modalBody.innerHTML += `
-                        <div class="msg">
-                            <div class="content">
-                                <div class="headerline">
-                                    <span class="name">${entry.author}</span>
-                                    <span class="${badgeClass}">${badgeText}</span>
-                                    <span class="time">${entry.time}</span>
-                                </div>
-                                <div class="text"><p>${entry.text.replace(/\n/g, '<br>')}</p></div>
-                            </div>
-                        </div>
-                    `;
+                        card.style.display = matchesSearch && matchesCategory && matchesStatus ? 'block' : 'none';
+                    });
                 }
-            });
-        }
 
-        // Закрытие модалки
-        closeModalBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
+                function sortTickets() {
+                    const sortBy = document.getElementById('sort').value;
+                    const container = document.querySelector('.ticket-grid');
+                    const cards = Array.from(container.querySelectorAll('.ticket-card'));
 
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
+                    cards.sort((a, b) => {
+                        let aValue, bValue;
+                        if (sortBy === 'opened') {
+                            aValue = parseInt(a.dataset.opened);
+                            bValue = parseInt(b.dataset.opened);
+                        } else if (sortBy === 'closed') {
+                            aValue = parseInt(a.dataset.closedTime || 0);
+                            bValue = parseInt(b.dataset.closedTime || 0);
+                        } else if (sortBy === 'messages') {
+                            aValue = parseInt(a.dataset.messages);
+                            bValue = parseInt(b.dataset.messages);
+                        }
+                        return bValue - aValue;
+                    });
 
-        // Поиск и фильтрация
-        searchBtn.addEventListener('click', () => {
-            const query = searchInput.value.toLowerCase().trim();
-            const roleFilter = roleSelect.value;
-            const dateFilter = dateInput.value;
+                    container.innerHTML = '';
+                    cards.forEach(card => container.appendChild(card));
+                }
+            </script>
 
-            const filtered = allTickets.filter(ticket => {
-                const matchesSearch = !query ||
-                    ticket.id.toLowerCase().includes(query) ||
-                    ticket.subject.toLowerCase().includes(query);
+            <header>
+                <h1>📚 Архив тикетов</h1>
+                <p>Всего тикетов: 10</p>
+            </header>
 
-                const matchesDate = !dateFilter || ticket.created === dateFilter;
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Поиск по нику, описанию..." oninput="filterTickets()">
+                </div>
+                <select id="category" onchange="filterTickets()">
+                    <option value="all">Все категории</option>
+                    <option value="Финансовые-проблемы">Финансовые-проблемы</option><option value="Технические-проблемы">Технические-проблемы</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option>
+                </select>
+                <select id="status" onchange="filterTickets()">
+                    <option value="all">Все статусы</option>
+                    <option value="open">Открытые</option>
+                    <option value="closed">Закрытые</option>
+                </select>
+                <select id="sort" onchange="sortTickets()">
+                    <option value="opened">По дате открытия</option>
+                    <option value="closed">По дате закрытия</option>
+                    <option value="messages">По кол-ву сообщений</option>
+                </select>
+            </div>
 
-                return matchesSearch && matchesDate;
-            });
-
-            renderTickets(filtered);
-        });
-
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', loadTicketList);
-    </script>
-</body>
-</html>
+            <div class="ticket-grid">
+        
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="false"
+                     data-opened="1757517321"
+                     data-closed-time="0"
+                     data-messages="0">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-report-33</div>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 15:15</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1415354971146293300.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="321"
+                     data-description="321"
+                     data-category="Технические-проблемы"
+                     data-closed="true"
+                     data-opened="1757516456"
+                     data-closed-time="1757516480"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-technical-32</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> 321</div>
+                        <div><strong>Открыл:</strong> Xan241</div>
+                        <div><strong>Дата:</strong> 10.09.2025 15:00</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 15:01</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415351345581523155.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="321"
+                     data-description="321"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="true"
+                     data-opened="1757516368"
+                     data-closed-time="1757516384"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-report-31</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> 321</div>
+                        <div><strong>Открыл:</strong> Xan241</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:59</div>
+                        <div><strong>Закрыл:</strong> Xan241</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:59</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415350975505633390.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="true"
+                     data-opened="1757516296"
+                     data-closed-time="1757516317"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-warp-30</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:58</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:58</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415350673339449456.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="true"
+                     data-opened="1757516136"
+                     data-closed-time="1757516154"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-report-29</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:55</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:55</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415349998949896303.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="true"
+                     data-opened="1757515924"
+                     data-closed-time="1757515946"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-warp-28</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:52</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:52</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415349112198533294.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="true"
+                     data-opened="1757515680"
+                     data-closed-time="1757515702"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-report-27</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:48</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:48</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415348090876985405.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="true"
+                     data-opened="1757515105"
+                     data-closed-time="1757515138"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-warp-26</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:38</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:38</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415345677352960153.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="в"
+                     data-description="в"
+                     data-category="Финансовые-проблемы"
+                     data-closed="true"
+                     data-opened="1757513653"
+                     data-closed-time="1757513670"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-finance-25</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
+                        <div><strong>Ник:</strong> в</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:14</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:14</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1415339587861217482.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="true"
+                     data-opened="1757512808"
+                     data-closed-time="1757512848"
+                     data-messages="5">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-warp-24</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:00</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:00</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>5 сообщений</span>
+                        <a href="transcript-1415336041363275976.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+            </div>
+            <footer style="text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem; border-top: 1px solid var(--soft);">
+                © 2025 Ticket Bot • Всего тикетов: 10
+            </footer>
+        </body>
+        </html>
+        
