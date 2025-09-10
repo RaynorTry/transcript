@@ -1,0 +1,344 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-28</title>
+            <style>
+                :root {
+                    --bg: #111418;
+                    --card: #1a1e24;
+                    --soft: #262c36;
+                    --text: #e5e7eb;
+                    --muted: #9ca3af;
+                    --accent: #57F287;
+                    --user: #1e293b;
+                    --staff: #0f3b2f;
+                    --admin: #3b1f1f;
+                    --system: #2a3346;
+                    --header-bg: linear-gradient(135deg, #6366f1, #06b6d4);
+                    --header-text: #ffffff;
+                }
+                [data-theme="light"] {
+                    --bg: #f9fafb;
+                    --card: #ffffff;
+                    --soft: #e5e7eb;
+                    --text: #111827;
+                    --muted: #6b7280;
+                    --header-bg: linear-gradient(135deg, #6366f1, #06b6d4);
+                    --header-text: #ffffff;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                    transition: background 0.3s, color 0.3s;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 3px solid rgba(255,255,255,0.1);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 28px;
+                    font-weight: 700;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: rgba(0,0,0,0.1);
+                    padding: 12px;
+                    border-radius: 10px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                [data-theme="light"] .header-meta div {
+                    background: rgba(255,255,255,0.4);
+                }
+                .header-meta strong {
+                    color: #fff;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                    letter-spacing: 0.3px;
+                }
+                [data-theme="light"] .header-meta strong {
+                    color: #1e3a8a;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 12px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                [data-theme="light"] .embed-system {
+                    background: #f1f5f9;
+                    border-left-color: #10b981;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: #fff;
+                    margin-right: 6px;
+                }
+                [data-theme="light"] .embed-system .field strong {
+                    color: #1e293b;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 12px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    transition: transform 0.1s ease, box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    transform: translateX(4px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+                [data-theme="light"] .msg:hover {
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 6px;
+                    font-weight: 500;
+                }
+                .badge.user {
+                    background: var(--user);
+                    color: #93c5fd;
+                }
+                .badge.staff {
+                    background: var(--staff);
+                    color: #6ee7b7;
+                }
+                .badge.admin {
+                    background: var(--admin);
+                    color: #fca5a5;
+                }
+                [data-theme="light"] .badge {
+                    color: #fff;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--soft);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: #1e2530;
+                    border: 1px solid var(--soft);
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                [data-theme="light"] .file a {
+                    background: #f3f4f6;
+                    color: #10b981;
+                }
+                .file a:hover {
+                    background: #2d3748;
+                }
+                [data-theme="light"] .file a:hover {
+                    background: #e5e7eb;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--soft);
+                    margin-top: 30px;
+                }
+                .theme-toggle {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 100;
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    color: var(--text);
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                @media (max-width: 768px) {
+                    .embed-system {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                    .embed-system .avatar {
+                        margin-bottom: 10px;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" fill="currentColor"/>
+                </svg>
+                Сменить тему
+            </button>
+            <script>
+                function toggleTheme() {
+                    const body = document.body;
+                    const currentTheme = body.getAttribute('data-theme') || 'dark';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    body.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    document.body.setAttribute('data-theme', savedTheme);
+                });
+            </script>
+
+            <div class="header">
+                <h1>ticket-28</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Одобрение-варпа</div>
+                    <div><strong>ID тикета:</strong> 1415349112198533294</div>
+                    <div><strong>Открыт в:</strong> 14:52 / 10.09.25</div>
+                    <div><strong>Всего сообщений:</strong> 3</div>
+                    <div><strong>Закрыт в:</strong> 14:52 / 10.09.25</div>
+                    <div><strong>Всего вложений:</strong> 1</div>
+                    <div><strong>Открыт пользователем:</strong> Рэйка (<@457254057816489984>)</div>
+                    <div><strong>Закрыт пользователем:</strong> Рэйка (<@457254057816489984>)</div>
+                </div>
+            </div>
+
+            <div class="container">
+        
+            <div class="embed-system">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="time">СИСТЕМА • 14:52:05 10.09.25</div>
+                    <div class="field"><strong>Никнейм игрока:</strong> а</div>
+                    <div class="field"><strong>Причина обращения:</strong> а</div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Рэйка</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">14:52:10 10.09.25</span>
+                    </div>
+                    <div class='text'><p>а</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Рэйка</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">14:52:18 10.09.25</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1415349112198533294/1415349173200355519/image.png?ex=68c2e222&is=68c190a2&hm=47bf16749a304508e90a6a853caa4783f6f724149044c0dcb008d441c0d71a4e&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 10.09.2025 14:52:27 UTC
+            </footer>
+        </body>
+        </html>
+        
