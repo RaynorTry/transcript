@@ -193,7 +193,6 @@
                     document.body.setAttribute('data-theme', savedTheme);
                 });
 
-                // Поиск и фильтрация
                 function filterTickets() {
                     const search = document.getElementById('search').value.toLowerCase();
                     const category = document.getElementById('category').value;
@@ -214,7 +213,6 @@
                     });
                 }
 
-                // Сортировка
                 function sortTickets() {
                     const sortBy = document.getElementById('sort').value;
                     const container = document.querySelector('.ticket-grid');
@@ -232,7 +230,7 @@
                             aValue = parseInt(a.dataset.messages);
                             bValue = parseInt(b.dataset.messages);
                         }
-                        return bValue - aValue; // сначала новые/большие
+                        return bValue - aValue;
                     });
 
                     container.innerHTML = '';
@@ -242,7 +240,7 @@
 
             <header>
                 <h1>📚 Архив тикетов</h1>
-                <p>Всего тикетов: 2</p>
+                <p>Всего тикетов: 3</p>
             </header>
 
             <div class="controls">
@@ -268,17 +266,45 @@
             <div class="ticket-grid">
         
                 <div class="ticket-card"
-                     data-nickname="в"
-                     data-description="в"
-                     data-category="Финансовые-проблемы"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
                      data-closed="false"
-                     data-opened="1757513653"
+                     data-opened="1757515105"
                      data-closed-time="0"
                      data-messages="0">
                     <div class="ticket-header">
-                        <div class="ticket-title">#ticket-finance-25</div>
+                        <div class="ticket-title">#ticket-warp-26</div>
                         <span class="ticket-status status-open">
                             Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:38</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1415345677352960153.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="в"
+                     data-description="в"
+                     data-category="Финансовые-проблемы"
+                     data-closed="true"
+                     data-opened="1757513653"
+                     data-closed-time="1757513670"
+                     data-messages="3">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-finance-25</div>
+                        <span class="ticket-status status-closed">
+                            Закрыт
                         </span>
                     </div>
                     <div class="ticket-meta">
@@ -286,11 +312,11 @@
                         <div><strong>Ник:</strong> в</div>
                         <div><strong>Открыл:</strong> Рэйка</div>
                         <div><strong>Дата:</strong> 10.09.2025 14:14</div>
-                        
-                        
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 10.09.2025 14:14</div>
                     </div>
                     <div class="ticket-footer">
-                        <span>0 сообщений</span>
+                        <span>3 сообщений</span>
                         <a href="transcript-1415339587861217482.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
@@ -325,7 +351,7 @@
             
             </div>
             <footer style="text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem; border-top: 1px solid var(--soft);">
-                © 2025 Ticket Bot • Всего тикетов: 2
+                © 2025 Ticket Bot • Всего тикетов: 3
             </footer>
         </body>
         </html>
