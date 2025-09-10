@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📄 Транскрипт Тикетов</title>
+    <title>📄 История закрытых обращений</title>
     <style>
         :root {
             --bg: #111418;
@@ -383,10 +383,10 @@
 
         let allTickets = [];
 
-        // Загрузка списка тикетов
+        // ✅ Загрузка списка тикетов — ИСПРАВЛЕНО: правильный путь!
         async function loadTicketList() {
             try {
-                const response = await fetch('tickets.json');
+                const response = await fetch('transcript/tickets.json'); // ← ВОТ ОНО! Правильный путь
                 if (!response.ok) throw new Error('Не удалось загрузить tickets.json');
                 allTickets = await response.json();
                 renderTickets(allTickets);
@@ -546,25 +546,9 @@
                     ticket.id.toLowerCase().includes(query) ||
                     ticket.subject.toLowerCase().includes(query);
 
-                const matchesRole = !roleFilter || 
-                    (ticket.file && 
-                     fetch(ticket.file)
-                         .then(r => r.text())
-                         .then(html => {
-                             const parser = new DOMParser();
-                             const doc = parser.parseFromString(html, 'text/html');
-                             const badges = doc.querySelectorAll('.badge');
-                             return Array.from(badges).some(b => 
-                                 (roleFilter === 'admin' && b.classList.contains('admin')) ||
-                                 (roleFilter === 'staff' && b.classList.contains('staff')) ||
-                                 (roleFilter === 'user' && b.classList.contains('user'))
-                             );
-                         })
-                    );
-
                 const matchesDate = !dateFilter || ticket.created === dateFilter;
 
-                return matchesSearch && matchesDate; // role filter requires async — simplified for now
+                return matchesSearch && matchesDate;
             });
 
             renderTickets(filtered);
