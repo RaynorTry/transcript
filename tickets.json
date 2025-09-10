@@ -1,0 +1,23 @@
+[
+  {
+    "id": "TK-2025-001",
+    "file": "tickets/TK-2025-001.html",
+    "subject": "Не работает авторизация",
+    "status": "open",
+    "created": "2025-04-01"
+  },
+  {
+    "id": "TK-2025-002",
+    "file": "tickets/TK-2025-002.html",
+    "subject": "Ошибка при оплате",
+    "status": "closed",
+    "created": "2025-03-28"
+  },
+  {
+    "id": "TK-2025-003",
+    "file": "tickets/TK-2025-003.html",
+    "subject": "Нужна консультация по API",
+    "status": "pending",
+    "created": "2025-04-03"
+  }
+]
