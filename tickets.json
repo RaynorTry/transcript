@@ -1,23 +1,16 @@
 [
   {
-    "id": "TK-2025-001",
-    "file": "tickets/TK-2025-001.html",
-    "subject": "Не работает авторизация",
+    "id": "1415226282106421248",
+    "file": "transkript/transcript-1415226282106421248.html",
+    "subject": "Тема обращения (пока заглушка)",
     "status": "open",
     "created": "2025-04-01"
   },
   {
-    "id": "TK-2025-002",
-    "file": "tickets/TK-2025-002.html",
-    "subject": "Ошибка при оплате",
+    "id": "1415226282106421249",
+    "file": "transkript/transcript-1415226282106421249.html",
+    "subject": "Другая тема",
     "status": "closed",
     "created": "2025-03-28"
-  },
-  {
-    "id": "TK-2025-003",
-    "file": "tickets/TK-2025-003.html",
-    "subject": "Нужна консультация по API",
-    "status": "pending",
-    "created": "2025-04-03"
   }
 ]
