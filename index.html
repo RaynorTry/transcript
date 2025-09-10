@@ -6,28 +6,24 @@
     <title>📄 Транскрипт Тикетов</title>
     <style>
         :root {
-            --primary: #6e8efb;
-            --secondary: #a777e3;
-            --bg: #f9faff;
-            --card-bg: #ffffff;
-            --text: #333;
-            --text-light: #777;
-            --shadow: 0 5px 15px rgba(0,0,0,0.08);
-            --border-radius: 12px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --bg: #111418;
+            --card: #1a1e24;
+            --soft: #262c36;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --accent: #57F287;
+            --user: #1e293b;
+            --staff: #0f3b2f;
+            --admin: #3b1f1f;
+            --system: #2a3346;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             background: var(--bg);
             color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             padding: 20px;
-            line-height: 1.6;
         }
 
         .container {
@@ -38,25 +34,28 @@
         header {
             text-align: center;
             margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 1px solid var(--soft);
+            background: linear-gradient(180deg, #171a20 0%, #12151b 100%);
+            border-radius: 12px;
         }
 
         h1 {
             font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 700;
+            margin: 0;
+            font-weight: 600;
         }
 
         .search-section {
-            background: var(--card-bg);
+            background: var(--card);
             padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            border-radius: 12px;
             margin-bottom: 40px;
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             align-items: end;
+            border: 1px solid var(--soft);
         }
 
         .search-group {
@@ -68,41 +67,32 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--text);
         }
 
         input, select {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e1e6f0;
+            background: var(--bg);
+            border: 1px solid var(--soft);
             border-radius: 8px;
+            color: var(--text);
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         button {
             padding: 12px 24px;
-            background: var(--primary);
-            color: white;
+            background: var(--accent);
+            color: #000;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            transition: opacity 0.2s;
         }
 
         button:hover {
-            background: #5a7df7;
-        }
-
-        button:active {
-            transform: scale(0.98);
+            opacity: 0.9;
         }
 
         .tickets-list {
@@ -111,24 +101,22 @@
         }
 
         .ticket-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
+            background: var(--card);
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: var(--shadow);
+            border: 1px solid var(--soft);
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            overflow: hidden;
         }
 
         .ticket-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .ticket-id {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--muted);
             font-weight: 600;
         }
 
@@ -136,28 +124,25 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin: 8px 0;
-            color: var(--text);
         }
 
         .ticket-meta {
             display: flex;
             justify-content: space-between;
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--muted);
             margin-top: 10px;
         }
 
-        .status {
+        .status-closed {
             display: inline-block;
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
+            background: #3b1f1f;
+            color: #fca5a5;
         }
-
-        .status-open { background: #ffeaea; color: #d9534f; }
-        .status-closed { background: #e8f5e9; color: #4cae4c; }
-        .status-pending { background: #fff8e1; color: #f0ad4e; }
 
         .modal {
             display: none;
@@ -166,7 +151,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -174,13 +159,13 @@
         }
 
         .modal-content {
-            background: white;
+            background: var(--card);
             width: 100%;
-            max-width: 800px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 900px;
+            border-radius: 12px;
             max-height: 90vh;
             overflow-y: auto;
+            border: 1px solid var(--soft);
             animation: fadeIn 0.3s ease;
         }
 
@@ -191,7 +176,7 @@
 
         .modal-header {
             padding: 20px 25px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--soft);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -207,52 +192,126 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #aaa;
+            color: var(--muted);
         }
 
         .close-modal:hover {
-            color: #333;
+            color: var(--text);
         }
 
         .modal-body {
             padding: 25px;
         }
 
-        .history-entry {
-            padding: 15px;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 15px;
-            background: #fafafa;
-            border-radius: 0 8px 8px 0;
+        /* Стили сообщений — как в Discord */
+        .msg {
+            display: flex;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin: 10px 0;
+            background: var(--card);
+            border: 1px solid var(--soft);
         }
 
-        .history-entry.agent {
-            border-left-color: #4caf50;
-            background: #f1f8e9;
+        .msg.system {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            background: var(--system);
+            border-radius: 10px;
+            margin: 10px 0;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
         }
 
-        .history-entry.user {
-            border-left-color: #ff9800;
-            background: #fff3e0;
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex: 0 0 36px;
         }
 
-        .history-time {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 5px;
+        .content {
+            flex: 1;
+        }
+
+        .headerline {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .name {
+            font-weight: 600;
+        }
+
+        .time {
+            color: var(--muted);
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 11px;
+            border-radius: 6px;
+            margin-left: 6px;
+        }
+
+        .badge.user {
+            background: var(--user);
+            color: #93c5fd;
+        }
+
+        .badge.staff {
+            background: var(--staff);
+            color: #6ee7b7;
+        }
+
+        .badge.admin {
+            background: var(--admin);
+            color: #fca5a5;
+        }
+
+        .text p {
+            margin: 6px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .attachments img {
+            max-width: 280px;
+            border-radius: 10px;
+            border: 1px solid var(--soft);
+            display: block;
+            margin-top: 6px;
+        }
+
+        .attachments .file a {
+            display: inline-block;
+            margin-top: 6px;
+            background: #1e2530;
+            border: 1px solid var(--soft);
+            padding: 6px 10px;
+            border-radius: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
         }
 
         .loader {
             text-align: center;
             padding: 40px;
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: var(--muted);
         }
 
         .no-results {
             text-align: center;
             padding: 60px 20px;
-            color: var(--text-light);
+            color: var(--muted);
             font-size: 1.2rem;
         }
 
@@ -263,9 +322,6 @@
             h1 {
                 font-size: 2rem;
             }
-            .ticket-subject {
-                font-size: 1.1rem;
-            }
         }
     </style>
 </head>
@@ -273,7 +329,7 @@
     <div class="container">
         <header>
             <h1>📄 Транскрипт Тикетов</h1>
-            <p>Поиск и просмотр истории обращений из HTML-файлов</p>
+            <p>История закрытых обращений</p>
         </header>
 
         <section class="search-section">
@@ -282,16 +338,16 @@
                 <input type="text" id="search" placeholder="Введите запрос...">
             </div>
             <div class="search-group">
-                <label for="status">Статус</label>
-                <select id="status">
-                    <option value="">Любой</option>
-                    <option value="open">Открыт</option>
-                    <option value="closed">Закрыт</option>
-                    <option value="pending">Ожидает ответа</option>
+                <label for="role">Роль</label>
+                <select id="role">
+                    <option value="">Любая</option>
+                    <option value="user">Пользователь</option>
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
                 </select>
             </div>
             <div class="search-group">
-                <label for="date">Дата создания</label>
+                <label for="date">Дата</label>
                 <input type="date" id="date">
             </div>
             <button id="search-btn">🔍 Найти</button>
@@ -302,7 +358,6 @@
         </section>
     </div>
 
-    <!-- Модальное окно для просмотра истории тикета -->
     <div class="modal" id="ticket-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -310,16 +365,15 @@
                 <button class="close-modal" id="close-modal">&times;</button>
             </div>
             <div class="modal-body" id="modal-body">
-                <div class="loader">Загрузка истории переписки...</div>
+                <div class="loader">Загружаем историю переписки...</div>
             </div>
         </div>
     </div>
 
     <script>
-        // DOM Elements
         const ticketsContainer = document.getElementById('tickets-container');
         const searchInput = document.getElementById('search');
-        const statusSelect = document.getElementById('status');
+        const roleSelect = document.getElementById('role');
         const dateInput = document.getElementById('date');
         const searchBtn = document.getElementById('search-btn');
 
@@ -343,7 +397,7 @@
             }
         }
 
-        // Парсинг HTML-файла тикета
+        // Загрузка и парсинг HTML-файла тикета
         async function loadTicketFromFile(filePath) {
             try {
                 const response = await fetch(filePath);
@@ -353,29 +407,49 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
 
-                // Извлекаем метаданные
-                const data = {};
-                const ticketData = doc.querySelector('.ticket-data');
-                if (ticketData) {
-                    data.id = ticketData.querySelector('.id')?.textContent.trim();
-                    data.subject = ticketData.querySelector('.subject')?.textContent.trim();
-                    data.status = ticketData.querySelector('.status')?.textContent.trim();
-                    data.created = ticketData.querySelector('.created')?.textContent.trim();
-                    data.lastUpdate = ticketData.querySelector('.last-update')?.textContent.trim();
-                }
+                // Извлекаем заголовок и мета
+                const title = doc.querySelector('header h1')?.textContent.trim() || 'Без темы';
+                const meta = doc.querySelector('.meta')?.textContent.trim() || '';
+                const createdMatch = meta.match(/Сгенерировано: (\d{4}-\d{2}-\d{2})/);
+                const created = createdMatch ? createdMatch[1] : 'Неизвестно';
 
-                // Извлекаем историю
-                data.history = [];
-                const entries = doc.querySelectorAll('.history .entry');
-                entries.forEach(entry => {
-                    data.history.push({
-                        type: entry.getAttribute('data-type') || 'user',
-                        time: entry.getAttribute('data-time') || 'Неизвестно',
-                        text: entry.textContent.trim()
-                    });
+                // Извлекаем все сообщения
+                const msgElements = doc.querySelectorAll('.msg');
+                const history = [];
+
+                msgElements.forEach(msgEl => {
+                    if (msgEl.classList.contains('system')) {
+                        history.push({
+                            type: 'system',
+                            time: '',
+                            text: msgEl.textContent.trim()
+                        });
+                    } else {
+                        const nameEl = msgEl.querySelector('.name');
+                        const timeEl = msgEl.querySelector('.time');
+                        const textEl = msgEl.querySelector('.text p');
+                        const badgeEl = msgEl.querySelector('.badge');
+
+                        let type = 'user';
+                        if (badgeEl) {
+                            if (badgeEl.classList.contains('admin')) type = 'admin';
+                            else if (badgeEl.classList.contains('staff')) type = 'staff';
+                        }
+
+                        history.push({
+                            type: type,
+                            time: timeEl?.textContent.trim() || 'Неизвестно',
+                            text: textEl?.textContent.trim() || '',
+                            author: nameEl?.textContent.trim() || 'Неизвестно'
+                        });
+                    }
                 });
 
-                return data;
+                return {
+                    subject: title,
+                    created: created,
+                    history: history
+                };
             } catch (error) {
                 console.error("Ошибка загрузки тикета:", error);
                 return null;
@@ -399,7 +473,7 @@
                     <div class="ticket-subject">${ticket.subject}</div>
                     <div class="ticket-meta">
                         <span>Создан: ${ticket.created}</span>
-                        <span class="status status-${ticket.status}">${getStatusText(ticket.status)}</span>
+                        <span class="status-closed">Закрыт</span>
                     </div>
                 `;
                 card.addEventListener('click', () => openTicketModal(ticket));
@@ -407,16 +481,7 @@
             });
         }
 
-        function getStatusText(status) {
-            const map = {
-                open: "Открыт",
-                closed: "Закрыт",
-                pending: "Ожидает"
-            };
-            return map[status] || status;
-        }
-
-        // Открытие модального окна с историей
+        // Открытие модального окна
         async function openTicketModal(ticket) {
             modalTitle.textContent = `Загрузка тикета ${ticket.id}...`;
             modalBody.innerHTML = '<div class="loader">Загружаем историю переписки...</div>';
@@ -428,7 +493,7 @@
                 return;
             }
 
-            modalTitle.textContent = `Тикет ${fullTicket.id}: ${fullTicket.subject}`;
+            modalTitle.textContent = fullTicket.subject;
             modalBody.innerHTML = '';
 
             if (fullTicket.history.length === 0) {
@@ -437,17 +502,30 @@
             }
 
             fullTicket.history.forEach(entry => {
-                const entryEl = document.createElement('div');
-                entryEl.className = `history-entry ${entry.type}`;
-                entryEl.innerHTML = `
-                    <div class="history-time">${entry.time} — ${entry.type === 'user' ? 'Пользователь' : 'Агент поддержки'}</div>
-                    <div>${entry.text.replace(/\n/g, '<br>')}</div>
-                `;
-                modalBody.appendChild(entryEl);
+                if (entry.type === 'system') {
+                    modalBody.innerHTML += `
+                        <div class="msg system">${entry.text}</div>
+                    `;
+                } else {
+                    const badgeClass = entry.type === 'admin' ? 'badge admin' : entry.type === 'staff' ? 'badge staff' : 'badge user';
+                    const badgeText = entry.type === 'admin' ? 'Admin' : entry.type === 'staff' ? 'Staff' : 'User';
+                    modalBody.innerHTML += `
+                        <div class="msg">
+                            <div class="content">
+                                <div class="headerline">
+                                    <span class="name">${entry.author}</span>
+                                    <span class="${badgeClass}">${badgeText}</span>
+                                    <span class="time">${entry.time}</span>
+                                </div>
+                                <div class="text"><p>${entry.text.replace(/\n/g, '<br>')}</p></div>
+                            </div>
+                        </div>
+                    `;
+                }
             });
         }
 
-        // Закрытие модального окна
+        // Закрытие модалки
         closeModalBtn.addEventListener('click', () => {
             modal.style.display = 'none';
         });
@@ -461,7 +539,7 @@
         // Поиск и фильтрация
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.toLowerCase().trim();
-            const statusFilter = statusSelect.value;
+            const roleFilter = roleSelect.value;
             const dateFilter = dateInput.value;
 
             const filtered = allTickets.filter(ticket => {
@@ -469,10 +547,25 @@
                     ticket.id.toLowerCase().includes(query) ||
                     ticket.subject.toLowerCase().includes(query);
 
-                const matchesStatus = !statusFilter || ticket.status === statusFilter;
+                const matchesRole = !roleFilter || 
+                    (ticket.file && 
+                     fetch(ticket.file)
+                         .then(r => r.text())
+                         .then(html => {
+                             const parser = new DOMParser();
+                             const doc = parser.parseFromString(html, 'text/html');
+                             const badges = doc.querySelectorAll('.badge');
+                             return Array.from(badges).some(b => 
+                                 (roleFilter === 'admin' && b.classList.contains('admin')) ||
+                                 (roleFilter === 'staff' && b.classList.contains('staff')) ||
+                                 (roleFilter === 'user' && b.classList.contains('user'))
+                             );
+                         })
+                    );
+
                 const matchesDate = !dateFilter || ticket.created === dateFilter;
 
-                return matchesSearch && matchesStatus && matchesDate;
+                return matchesSearch && matchesDate; // role filter requires async — simplified for now
             });
 
             renderTickets(filtered);
