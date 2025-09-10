@@ -1,0 +1,304 @@
+
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Архив тикетов</title>
+            <style>
+                :root {
+                    --bg: #111418;
+                    --card: #1a1e24;
+                    --soft: #262c36;
+                    --text: #e5e7eb;
+                    --muted: #9ca3af;
+                    --accent: #57F287;
+                    --header-bg: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+                    --header-text: #ffffff;
+                    --filter-bg: #262c36;
+                    --status-open: #10b981;
+                    --status-closed: #ef4444;
+                }
+                [data-theme="light"] {
+                    --bg: #f9fafb;
+                    --card: #ffffff;
+                    --soft: #e5e7eb;
+                    --text: #111827;
+                    --muted: #6b7280;
+                    --header-bg: linear-gradient(135deg, #3b82f6, #2563eb);
+                    --header-text: #ffffff;
+                    --filter-bg: #f3f4f6;
+                    --status-open: #10b981;
+                    --status-closed: #ef4444;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: 'Inter', sans-serif;
+                    padding: 0;
+                }
+                header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 1.5rem;
+                    text-align: center;
+                }
+                header h1 {
+                    margin: 0;
+                    font-size: 2rem;
+                }
+                .controls {
+                    display: flex;
+                    gap: 1rem;
+                    padding: 1rem;
+                    background: var(--filter-bg);
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+                .search-box {
+                    flex: 1;
+                    min-width: 200px;
+                }
+                .search-box input {
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid var(--soft);
+                    border-radius: 0.5rem;
+                    background: var(--card);
+                    color: var(--text);
+                }
+                select {
+                    padding: 0.5rem;
+                    border: 1px solid var(--soft);
+                    border-radius: 0.5rem;
+                    background: var(--card);
+                    color: var(--text);
+                }
+                .ticket-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 1rem;
+                    padding: 1rem;
+                }
+                .ticket-card {
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    border-radius: 0.75rem;
+                    padding: 1rem;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .ticket-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+                [data-theme="light"] .ticket-card:hover {
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                }
+                .ticket-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 0.5rem;
+                }
+                .ticket-title {
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                }
+                .ticket-status {
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 9999px;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                }
+                .status-open {
+                    background: var(--status-open);
+                    color: white;
+                }
+                .status-closed {
+                    background: var(--status-closed);
+                    color: white;
+                }
+                .ticket-meta {
+                    font-size: 0.875rem;
+                    color: var(--muted);
+                    margin: 0.5rem 0;
+                }
+                .ticket-meta div {
+                    margin: 0.25rem 0;
+                }
+                .ticket-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-top: 1rem;
+                    font-size: 0.875rem;
+                }
+                .view-btn {
+                    background: var(--accent);
+                    color: #000;
+                    border: none;
+                    padding: 0.375rem 0.75rem;
+                    border-radius: 0.375rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    text-decoration: none;
+                    display: inline-block;
+                }
+                .theme-toggle {
+                    position: fixed;
+                    top: 1rem;
+                    right: 1rem;
+                    z-index: 100;
+                    background: var(--card);
+                    border: 1px solid var(--soft);
+                    color: var(--text);
+                    padding: 0.5rem 0.75rem;
+                    border-radius: 0.5rem;
+                    cursor: pointer;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.375rem;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                @media (max-width: 768px) {
+                    .controls {
+                        flex-direction: column;
+                        align-items: stretch;
+                    }
+                    .search-box {
+                        width: 100%;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" fill="currentColor"/>
+                </svg>
+                Сменить тему
+            </button>
+            <script>
+                function toggleTheme() {
+                    const body = document.body;
+                    const currentTheme = body.getAttribute('data-theme') || 'dark';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    body.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    const savedTheme = localStorage.getItem('theme') || 'dark';
+                    document.body.setAttribute('data-theme', savedTheme);
+                });
+
+                // Поиск и фильтрация
+                function filterTickets() {
+                    const search = document.getElementById('search').value.toLowerCase();
+                    const category = document.getElementById('category').value;
+                    const status = document.getElementById('status').value;
+                    const cards = document.querySelectorAll('.ticket-card');
+
+                    cards.forEach(card => {
+                        const nickname = card.dataset.nickname.toLowerCase();
+                        const description = card.dataset.description.toLowerCase();
+                        const cat = card.dataset.category;
+                        const isClosed = card.dataset.closed === 'true';
+
+                        const matchesSearch = nickname.includes(search) || description.includes(search);
+                        const matchesCategory = category === 'all' || cat === category;
+                        const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
+
+                        card.style.display = matchesSearch && matchesCategory && matchesStatus ? 'block' : 'none';
+                    });
+                }
+
+                // Сортировка
+                function sortTickets() {
+                    const sortBy = document.getElementById('sort').value;
+                    const container = document.querySelector('.ticket-grid');
+                    const cards = Array.from(container.querySelectorAll('.ticket-card'));
+
+                    cards.sort((a, b) => {
+                        let aValue, bValue;
+                        if (sortBy === 'opened') {
+                            aValue = parseInt(a.dataset.opened);
+                            bValue = parseInt(b.dataset.opened);
+                        } else if (sortBy === 'closed') {
+                            aValue = parseInt(a.dataset.closedTime || 0);
+                            bValue = parseInt(b.dataset.closedTime || 0);
+                        } else if (sortBy === 'messages') {
+                            aValue = parseInt(a.dataset.messages);
+                            bValue = parseInt(b.dataset.messages);
+                        }
+                        return bValue - aValue; // сначала новые/большие
+                    });
+
+                    container.innerHTML = '';
+                    cards.forEach(card => container.appendChild(card));
+                }
+            </script>
+
+            <header>
+                <h1>📚 Архив тикетов</h1>
+                <p>Всего тикетов: 1</p>
+            </header>
+
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Поиск по нику, описанию..." oninput="filterTickets()">
+                </div>
+                <select id="category" onchange="filterTickets()">
+                    <option value="all">Все категории</option>
+                    <option value="Одобрение-варпа">Одобрение-варпа</option>
+                </select>
+                <select id="status" onchange="filterTickets()">
+                    <option value="all">Все статусы</option>
+                    <option value="open">Открытые</option>
+                    <option value="closed">Закрытые</option>
+                </select>
+                <select id="sort" onchange="sortTickets()">
+                    <option value="opened">По дате открытия</option>
+                    <option value="closed">По дате закрытия</option>
+                    <option value="messages">По кол-ву сообщений</option>
+                </select>
+            </div>
+
+            <div class="ticket-grid">
+        
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="false"
+                     data-opened="1757512808"
+                     data-closed-time="0"
+                     data-messages="0">
+                    <div class="ticket-header">
+                        <div class="ticket-title">#ticket-warp-24</div>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 10.09.2025 14:00</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1415336041363275976.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+            </div>
+            <footer style="text-align: center; padding: 2rem; color: var(--muted); font-size: 0.875rem; border-top: 1px solid var(--soft);">
+                © 2025 Ticket Bot • Всего тикетов: 1
+            </footer>
+        </body>
+        </html>
+        
