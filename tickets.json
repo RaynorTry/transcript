@@ -1,16 +1,16 @@
 [
   {
     "id": "1415226282106421248",
-    "file": "transkript/transcript-1415226282106421248.html",
-    "subject": "Тема обращения (пока заглушка)",
-    "status": "open",
-    "created": "2025-04-01"
+    "file": "transcript/transcript-1415226282106421248.html",
+    "subject": "Транскрипт: #ticket-question-1",
+    "created": "2025-04-05",
+    "status": "closed"
   },
   {
     "id": "1415226282106421249",
-    "file": "transkript/transcript-1415226282106421249.html",
-    "subject": "Другая тема",
-    "status": "closed",
-    "created": "2025-03-28"
+    "file": "transcript/transcript-1415226282106421249.html",
+    "subject": "Транскрипт: #ticket-finance-2",
+    "created": "2025-04-04",
+    "status": "closed"
   }
 ]
