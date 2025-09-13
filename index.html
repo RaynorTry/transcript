@@ -161,7 +161,7 @@
                 .view-btn:hover {
                     background: #3a7be0;
                 }
-                /* ФОРМА ВХОДА */
+                /* ФОРМА ВХОДА ПО ПАРОЛЮ ИЗ ENV */
                 #auth-container {
                     display: flex;
                     justify-content: center;
@@ -249,7 +249,7 @@
             <div id="auth-container">
                 <div id="auth-form">
                     <h2>Доступ к архиву тикетов</h2>
-                    <p style="color: #a0a0a0;">Введите пароль для просмотра тикетов.</p>
+                    <p style="color: #a0a0a0;">Введите пароль для просмотра всех тикетов.</p>
                     <div class="form-group">
                         <label for="admin-password">Пароль:</label>
                         <input type="password" id="admin-password" placeholder="••••••••" autofocus>
@@ -262,7 +262,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 13</p>
+                    <p>Всего тикетов: 14</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -270,7 +270,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option>
+                        <option value="Технические-проблемы">Технические-проблемы</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
@@ -285,6 +285,34 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="f"
+                     data-description="f"
+                     data-category="Финансовые-проблемы"
+                     data-closed="false"
+                     data-opened="1757748748"
+                     data-closed-time="0"
+                     data-messages="0">
+                    <div class="ticket-header">
+                        <a href="transcript-1416325647680409623.html" class="ticket-title">#ticket-finance-15</a>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
+                        <div><strong>Ник:</strong> f</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 13.09.2025 07:32</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1416325647680409623.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="d"
                      data-description="d"
@@ -651,7 +679,7 @@
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 13 • Сгенерировано: 13.09.2025 05:19
+                    © 2025 Ticket Bot • Всего тикетов: 14 • Сгенерировано: 13.09.2025 07:32
                 </footer>
             </div>
 
