@@ -7,18 +7,18 @@
             <title>Архив тикетов</title>
             <style>
                 :root {
-                    --bg: #f8f9fa;
-                    --card: #ffffff;
-                    --soft: #e9ecef;
-                    --text: #212529;
-                    --muted: #6c757d;
-                    --accent: #0d6efd;
-                    --header-bg: #ffffff;
-                    --header-text: #212529;
-                    --filter-bg: #f1f3f5;
-                    --status-open: #198754;
-                    --status-closed: #dc3545;
-                    --border: #dee2e6;
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --filter-bg: #333333;
+                    --status-open: #5cb85c;
+                    --status-closed: #d9534f;
+                    --border: #404040;
                 }
                 body {
                     margin: 0;
@@ -34,7 +34,7 @@
                     padding: 1.5rem;
                     text-align: center;
                     border-bottom: 1px solid var(--border);
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
                 }
                 header h1 {
                     margin: 0;
@@ -89,7 +89,7 @@
                 }
                 .ticket-card:hover {
                     transform: translateY(-2px);
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
                 }
                 .ticket-header {
                     display: flex;
@@ -159,73 +159,48 @@
                     transition: background 0.2s;
                 }
                 .view-btn:hover {
-                    background: #0b5ed7;
+                    background: #3a7be0;
                 }
-
-                /* Стили для экрана авторизации */
-                #login-container {
-                    display: none;
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,0.5);
+                /* Авторизация через Discord — просто инструкция */
+                #auth-container {
+                    display: flex;
                     justify-content: center;
                     align-items: center;
-                    z-index: 1000;
-                }
-                #login-form {
-                    background: var(--card);
-                    padding: 2rem;
-                    border-radius: 10px;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-                    width: 100%;
-                    max-width: 400px;
-                }
-                #login-form h2 {
-                    margin-top: 0;
-                    color: var(--text);
+                    height: 100vh;
+                    background: #1e1e1e;
+                    color: #e0e0e0;
                     text-align: center;
+                    padding: 2rem;
                 }
-                .form-group {
+                #auth-container .box {
+                    background: #2d2d2d;
+                    padding: 2rem;
+                    border-radius: 12px;
+                    max-width: 400px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+                }
+                #auth-container h2 {
+                    margin-top: 0;
+                    color: #ffffff;
+                }
+                #auth-container p {
+                    color: #a0a0a0;
                     margin: 1rem 0;
                 }
-                .form-group label {
+                #auth-container a {
                     display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 500;
-                }
-                .form-group input {
-                    width: 100%;
-                    padding: 0.5rem;
-                    border: 1px solid var(--border);
-                    border-radius: 6px;
-                    font-size: 1rem;
-                    box-sizing: border-box;
-                }
-                .login-btn {
-                    width: 100%;
-                    padding: 0.75rem;
-                    background: var(--accent);
+                    margin-top: 1.5rem;
+                    padding: 0.75rem 1.5rem;
+                    background: #5865F2;
                     color: white;
-                    border: none;
+                    text-decoration: none;
                     border-radius: 6px;
-                    font-size: 1rem;
                     font-weight: 600;
-                    cursor: pointer;
-                    margin-top: 1rem;
+                    font-size: 1rem;
                 }
-                .login-btn:hover {
-                    background: #0b5ed7;
+                #auth-container a:hover {
+                    background: #4752c4;
                 }
-                .error-msg {
-                    color: var(--status-closed);
-                    text-align: center;
-                    margin: 0.5rem 0;
-                    font-size: 0.9rem;
-                }
-
                 footer {
                     color: var(--muted);
                     font-size: 0.875rem;
@@ -250,27 +225,27 @@
             </style>
         </head>
         <body>
-            <div id="login-container">
-                <div id="login-form">
-                    <h2>Авторизация</h2>
-                    <p style="text-align: center; color: var(--muted);">Доступ к архиву тикетов имеют только администраторы.</p>
-                    <div class="form-group">
-                        <label for="user-id">Ваш Discord ID:</label>
-                        <input type="text" id="user-id" placeholder="123456789012345678">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль:</label>
-                        <input type="password" id="password" placeholder="••••••••">
-                    </div>
-                    <div id="error-message" class="error-msg"></div>
-                    <button class="login-btn" onclick="login()">Войти</button>
+            <!-- ✅ ПРОСТАЯ АВТОРИЗАЦИЯ — НЕТ ФОРМ, ТОЛЬКО ИНСТРУКЦИЯ -->
+            <div id="auth-container">
+                <div class="box">
+                    <h2>Доступ к архиву тикетов</h2>
+                    <p>Вы можете просматривать тикеты только после того, как бот узнает ваш Discord ID.</p>
+                    <p>Чтобы получить доступ:</p>
+                    <ol style="text-align: left; margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Отправьте боту команду <code>/ticket</code> в любом канале.</li>
+                        <li>Создайте тикет (любую категорию).</li>
+                        <li>Бот автоматически запомнит ваш Discord ID.</li>
+                        <li>Обновите страницу — вы увидите свои тикеты.</li>
+                    </ol>
+                    <p>Администраторы (список ID в коде) видят все тикеты.</p>
+                    <a href="#" onclick="window.location.reload()">🔄 Обновить страницу</a>
                 </div>
             </div>
 
             <div id="content-container" style="display: none;">
                 <header>
-                    <!-- ✅ Заголовок "Архив тикетов" УДАЛЕН по требованию -->
-                    <p>Всего тикетов: 6</p>
+                    <h1>Архив тикетов</h1>
+                    <p>Всего тикетов: 12</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -278,7 +253,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Одобрение-варпа">Одобрение-варпа</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
@@ -294,13 +269,188 @@
                 <div class="ticket-grid">
         
                 <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="false"
+                     data-opened="1757737878"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-opened-by-id="Рэйка">
+                    <div class="ticket-header">
+                        <a href="transcript-1416280055222374513.html" class="ticket-title">#ticket-report-13</a>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 13.09.2025 04:31</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1416280055222374513.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="f"
+                     data-description="f"
+                     data-category="Одобрение-варпа"
+                     data-closed="true"
+                     data-opened="1757736042"
+                     data-closed-time="1757736065"
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
+                    <div class="ticket-header">
+                        <a href="transcript-1416272355801436312.html" class="ticket-title">#ticket-warp-12</a>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> f</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 13.09.2025 04:00</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 13.09.2025 04:01</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1416272355801436312.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-closed="false"
+                     data-opened="1757679754"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-opened-by-id="Рэйка">
+                    <div class="ticket-header">
+                        <a href="transcript-1416036264183861379.html" class="ticket-title">#ticket-warp-11</a>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 12.09.2025 12:22</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1416036264183861379.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="321"
+                     data-description="321"
+                     data-category="Финансовые-проблемы"
+                     data-closed="true"
+                     data-opened="1757678640"
+                     data-closed-time="1757678696"
+                     data-messages="2"
+                     data-opened-by-id="Xan241">
+                    <div class="ticket-header">
+                        <a href="transcript-1416031591557365761.html" class="ticket-title">#ticket-finance-10</a>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
+                        <div><strong>Ник:</strong> 321</div>
+                        <div><strong>Открыл:</strong> Xan241</div>
+                        <div><strong>Дата:</strong> 12.09.2025 12:04</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 12.09.2025 12:04</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>2 сообщений</span>
+                        <a href="transcript-1416031591557365761.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="321"
+                     data-description="321"
+                     data-category="Технические-проблемы"
+                     data-closed="true"
+                     data-opened="1757678522"
+                     data-closed-time="1757678533"
+                     data-messages="2"
+                     data-opened-by-id="Xan241">
+                    <div class="ticket-header">
+                        <a href="transcript-1416031099376631962.html" class="ticket-title">#ticket-technical-9</a>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> 321</div>
+                        <div><strong>Открыл:</strong> Xan241</div>
+                        <div><strong>Дата:</strong> 12.09.2025 12:02</div>
+                        <div><strong>Закрыл:</strong> Xan241</div>
+                        <div><strong>Закрыт:</strong> 12.09.2025 12:02</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>2 сообщений</span>
+                        <a href="transcript-1416031099376631962.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
+                     data-nickname="f"
+                     data-description="f"
+                     data-category="Технические-проблемы"
+                     data-closed="true"
+                     data-opened="1757676603"
+                     data-closed-time="1757676621"
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
+                    <div class="ticket-header">
+                        <a href="transcript-1416023047541883001.html" class="ticket-title">#ticket-technical-8</a>
+                        <span class="ticket-status status-closed">
+                            Закрыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> f</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 12.09.2025 11:30</div>
+                        <div><strong>Закрыл:</strong> Рэйка</div>
+                        <div><strong>Закрыт:</strong> 12.09.2025 11:30</div>
+                    </div>
+                    <div class="ticket-footer">
+                        <span>3 сообщений</span>
+                        <a href="transcript-1416023047541883001.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
                      data-nickname="Raynor"
                      data-description="Хочу одобрить варп "Секас""
                      data-category="Одобрение-варпа"
                      data-closed="true"
                      data-opened="1757675321"
                      data-closed-time="1757675363"
-                     data-messages="3">
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
                     <div class="ticket-header">
                         <a href="transcript-1416017670456741991.html" class="ticket-title">#ticket-warp-7</a>
                         <span class="ticket-status status-closed">
@@ -328,7 +478,8 @@
                      data-closed="true"
                      data-opened="1757525484"
                      data-closed-time="1757525563"
-                     data-messages="5">
+                     data-messages="5"
+                     data-opened-by-id="Гостоевский">
                     <div class="ticket-header">
                         <a href="transcript-1415389209128079360.html" class="ticket-title">#ticket-report-6</a>
                         <span class="ticket-status status-closed">
@@ -356,7 +507,8 @@
                      data-closed="true"
                      data-opened="1757524329"
                      data-closed-time="1757524351"
-                     data-messages="4">
+                     data-messages="4"
+                     data-opened-by-id="Рэйка">
                     <div class="ticket-header">
                         <a href="transcript-1415384363595595857.html" class="ticket-title">#ticket-report-5</a>
                         <span class="ticket-status status-closed">
@@ -384,7 +536,8 @@
                      data-closed="true"
                      data-opened="1757523350"
                      data-closed-time="1757523367"
-                     data-messages="3">
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
                     <div class="ticket-header">
                         <a href="transcript-1415380260572238058.html" class="ticket-title">#ticket-warp-4</a>
                         <span class="ticket-status status-closed">
@@ -412,7 +565,8 @@
                      data-closed="true"
                      data-opened="1757522188"
                      data-closed-time="1757522202"
-                     data-messages="3">
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
                     <div class="ticket-header">
                         <a href="transcript-1415375385104748630.html" class="ticket-title">#ticket-report-3</a>
                         <span class="ticket-status status-closed">
@@ -440,7 +594,8 @@
                      data-closed="true"
                      data-opened="1757522027"
                      data-closed-time="1757522052"
-                     data-messages="3">
+                     data-messages="3"
+                     data-opened-by-id="Рэйка">
                     <div class="ticket-header">
                         <a href="transcript-1415374708529954968.html" class="ticket-title">#ticket-warp-2</a>
                         <span class="ticket-status status-closed">
@@ -463,78 +618,44 @@
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 6 • Сгенерировано: 12.09.2025 11:09:28 UTC
+                    © 2025 Ticket Bot • Всего тикетов: 12 • Сгенерировано: 13.09.2025 04:31
                 </footer>
             </div>
 
             <script>
-                // Данные авторизованных администраторов (вшиты при генерации)
-                const AUTHORIZED_ADMINS = [
-                    
+                // 📌 СПИСОК ID АДМИНИСТРАТОРОВ — ЗАМЕНИТЕ НА СВОИ!
+                const ADMIN_DISCORD_IDS = [
+                    987654321098765432, 123456789012345678
                 ];
 
+                // Получаем ID текущего пользователя из localStorage
+                const CURRENT_USER_ID = localStorage.getItem('discord_user_id');
+                const IS_ADMIN = ADMIN_DISCORD_IDS.includes(parseInt(CURRENT_USER_ID));
+
                 document.addEventListener('DOMContentLoaded', function() {
-                    const token = localStorage.getItem('ticket_admin_token');
-                    if (token) {
-                        // Проверяем, действителен ли токен (user_id)
-                        const admin = AUTHORIZED_ADMINS.find(a => a.user_id == token);
-                        if (admin) {
-                            showContent();
-                            return;
-                        }
+                    // Если пользователь уже создавал тикет — его ID сохранён
+                    if (CURRENT_USER_ID) {
+                        showContent();
+                    } else {
+                        showAuth();
                     }
-                    showLogin();
                 });
 
-                function showLogin() {
-                    document.getElementById('login-container').style.display = 'flex';
+                function showAuth() {
+                    document.getElementById('auth-container').style.display = 'flex';
                     document.getElementById('content-container').style.display = 'none';
                 }
 
                 function showContent() {
-                    document.getElementById('login-container').style.display = 'none';
+                    document.getElementById('auth-container').style.display = 'none';
                     document.getElementById('content-container').style.display = 'block';
                 }
 
-                function login() {
-                    const userIdInput = document.getElementById('user-id').value.trim();
-                    const passwordInput = document.getElementById('password').value;
-                    const errorMsg = document.getElementById('error-message');
-
-                    if (!userIdInput || !passwordInput) {
-                        errorMsg.textContent = 'Пожалуйста, заполните все поля.';
-                        return;
-                    }
-
-                    // Хэшируем введенный пароль с помощью SHA-256
-                    sha256(passwordInput).then(hash => {
-                        const admin = AUTHORIZED_ADMINS.find(a => 
-                            a.user_id == parseInt(userIdInput) && a.password_hash === hash
-                        );
-
-                        if (admin) {
-                            localStorage.setItem('ticket_admin_token', userIdInput);
-                            showContent();
-                        } else {
-                            errorMsg.textContent = 'Неверный ID пользователя или пароль.';
-                        }
-                    });
-                }
-
-                // Функция хэширования SHA-256 (асинхронная, использует SubtleCrypto)
-                async function sha256(message) {
-                    const msgBuffer = new TextEncoder().encode(message);
-                    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                    return hashHex;
-                }
-
-                // Функции фильтрации и сортировки (остались без изменений)
                 function filterTickets() {
                     const search = document.getElementById('search').value.toLowerCase();
                     const category = document.getElementById('category').value;
                     const status = document.getElementById('status').value;
+
                     const cards = document.querySelectorAll('.ticket-card');
                     cards.forEach(card => {
                         const nickname = card.dataset.nickname.toLowerCase();
@@ -544,6 +665,14 @@
                         const matchesSearch = nickname.includes(search) || description.includes(search);
                         const matchesCategory = category === 'all' || cat === category;
                         const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
+
+                        // 🔒 ФИЛЬТР: если не админ — показываем только свои тикеты
+                        const openedById = parseInt(card.dataset.openedById);
+                        if (!IS_ADMIN && CURRENT_USER_ID && openedById !== parseInt(CURRENT_USER_ID)) {
+                            card.style.display = 'none';
+                            return;
+                        }
+
                         card.style.display = matchesSearch && matchesCategory && matchesStatus ? 'block' : 'none';
                     });
                 }
@@ -569,6 +698,13 @@
                     container.innerHTML = '';
                     cards.forEach(card => container.appendChild(card));
                 }
+
+                // ✅ Добавляем функцию для сохранения ID пользователя при первом взаимодействии
+                // Это вызывается при создании тикета — см. on_message
+                window.saveUserId = function(userId) {
+                    localStorage.setItem('discord_user_id', userId);
+                    window.location.reload(); // Перезагружаем страницу
+                };
             </script>
         </body>
         </html>
