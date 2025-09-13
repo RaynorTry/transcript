@@ -161,7 +161,7 @@
                 .view-btn:hover {
                     background: #3a7be0;
                 }
-                /* Авторизация через Discord — просто инструкция */
+                /* ФОРМА ВХОДА */
                 #auth-container {
                     display: flex;
                     justify-content: center;
@@ -172,34 +172,54 @@
                     text-align: center;
                     padding: 2rem;
                 }
-                #auth-container .box {
+                #auth-form {
                     background: #2d2d2d;
-                    padding: 2rem;
+                    padding: 2.5rem;
                     border-radius: 12px;
                     max-width: 400px;
                     box-shadow: 0 0 20px rgba(0,0,0,0.4);
                 }
-                #auth-container h2 {
+                #auth-form h2 {
                     margin-top: 0;
                     color: #ffffff;
                 }
-                #auth-container p {
-                    color: #a0a0a0;
-                    margin: 1rem 0;
+                .form-group {
+                    margin: 1.5rem 0;
                 }
-                #auth-container a {
+                .form-group label {
                     display: block;
-                    margin-top: 1.5rem;
-                    padding: 0.75rem 1.5rem;
+                    margin-bottom: 0.5rem;
+                    font-weight: 500;
+                }
+                .form-group input {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 1px solid var(--border);
+                    border-radius: 6px;
+                    background: var(--soft);
+                    color: var(--text);
+                    font-size: 1rem;
+                    box-sizing: border-box;
+                }
+                .login-btn {
+                    width: 100%;
+                    padding: 0.75rem;
                     background: #5865F2;
                     color: white;
-                    text-decoration: none;
+                    border: none;
                     border-radius: 6px;
-                    font-weight: 600;
                     font-size: 1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin-top: 1rem;
                 }
-                #auth-container a:hover {
+                .login-btn:hover {
                     background: #4752c4;
+                }
+                .error-msg {
+                    color: #d9534f;
+                    margin: 0.5rem 0;
+                    font-size: 0.9rem;
                 }
                 footer {
                     color: var(--muted);
@@ -225,27 +245,24 @@
             </style>
         </head>
         <body>
-            <!-- ✅ ПРОСТАЯ АВТОРИЗАЦИЯ — НЕТ ФОРМ, ТОЛЬКО ИНСТРУКЦИЯ -->
+            <!-- 🚫 ДОСТУП ТОЛЬКО ПО ПАРОЛЮ ИЗ ENV -->
             <div id="auth-container">
-                <div class="box">
+                <div id="auth-form">
                     <h2>Доступ к архиву тикетов</h2>
-                    <p>Вы можете просматривать тикеты только после того, как бот узнает ваш Discord ID.</p>
-                    <p>Чтобы получить доступ:</p>
-                    <ol style="text-align: left; margin: 1rem 0; padding-left: 1.5rem;">
-                        <li>Отправьте боту команду <code>/ticket</code> в любом канале.</li>
-                        <li>Создайте тикет (любую категорию).</li>
-                        <li>Бот автоматически запомнит ваш Discord ID.</li>
-                        <li>Обновите страницу — вы увидите свои тикеты.</li>
-                    </ol>
-                    <p>Администраторы (список ID в коде) видят все тикеты.</p>
-                    <a href="#" onclick="window.location.reload()">🔄 Обновить страницу</a>
+                    <p style="color: #a0a0a0;">Введите пароль для просмотра тикетов.</p>
+                    <div class="form-group">
+                        <label for="admin-password">Пароль:</label>
+                        <input type="password" id="admin-password" placeholder="••••••••" autofocus>
+                    </div>
+                    <div id="error-message" class="error-msg"></div>
+                    <button class="login-btn" onclick="checkPassword()">Войти</button>
                 </div>
             </div>
 
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 12</p>
+                    <p>Всего тикетов: 13</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -253,7 +270,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option>
+                        <option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
@@ -269,14 +286,41 @@
                 <div class="ticket-grid">
         
                 <div class="ticket-card"
+                     data-nickname="d"
+                     data-description="d"
+                     data-category="Технические-проблемы"
+                     data-closed="false"
+                     data-opened="1757740739"
+                     data-closed-time="0"
+                     data-messages="0">
+                    <div class="ticket-header">
+                        <a href="transcript-1416292054178463817.html" class="ticket-title">#ticket-technical-14</a>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> d</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 13.09.2025 05:18</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1416292054178463817.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
+                <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
                      data-category="Жалоба-на-игрока"
                      data-closed="true"
                      data-opened="1757737878"
                      data-closed-time="1757737920"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1416280055222374513.html" class="ticket-title">#ticket-report-13</a>
                         <span class="ticket-status status-closed">
@@ -304,8 +348,7 @@
                      data-closed="true"
                      data-opened="1757736042"
                      data-closed-time="1757736065"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1416272355801436312.html" class="ticket-title">#ticket-warp-12</a>
                         <span class="ticket-status status-closed">
@@ -333,8 +376,7 @@
                      data-closed="false"
                      data-opened="1757679754"
                      data-closed-time="0"
-                     data-messages="0"
-                     data-opened-by-id="Рэйка">
+                     data-messages="0">
                     <div class="ticket-header">
                         <a href="transcript-1416036264183861379.html" class="ticket-title">#ticket-warp-11</a>
                         <span class="ticket-status status-open">
@@ -362,8 +404,7 @@
                      data-closed="true"
                      data-opened="1757678640"
                      data-closed-time="1757678696"
-                     data-messages="2"
-                     data-opened-by-id="Xan241">
+                     data-messages="2">
                     <div class="ticket-header">
                         <a href="transcript-1416031591557365761.html" class="ticket-title">#ticket-finance-10</a>
                         <span class="ticket-status status-closed">
@@ -391,8 +432,7 @@
                      data-closed="true"
                      data-opened="1757678522"
                      data-closed-time="1757678533"
-                     data-messages="2"
-                     data-opened-by-id="Xan241">
+                     data-messages="2">
                     <div class="ticket-header">
                         <a href="transcript-1416031099376631962.html" class="ticket-title">#ticket-technical-9</a>
                         <span class="ticket-status status-closed">
@@ -420,8 +460,7 @@
                      data-closed="true"
                      data-opened="1757676603"
                      data-closed-time="1757676621"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1416023047541883001.html" class="ticket-title">#ticket-technical-8</a>
                         <span class="ticket-status status-closed">
@@ -449,8 +488,7 @@
                      data-closed="true"
                      data-opened="1757675321"
                      data-closed-time="1757675363"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1416017670456741991.html" class="ticket-title">#ticket-warp-7</a>
                         <span class="ticket-status status-closed">
@@ -478,8 +516,7 @@
                      data-closed="true"
                      data-opened="1757525484"
                      data-closed-time="1757525563"
-                     data-messages="5"
-                     data-opened-by-id="Гостоевский">
+                     data-messages="5">
                     <div class="ticket-header">
                         <a href="transcript-1415389209128079360.html" class="ticket-title">#ticket-report-6</a>
                         <span class="ticket-status status-closed">
@@ -507,8 +544,7 @@
                      data-closed="true"
                      data-opened="1757524329"
                      data-closed-time="1757524351"
-                     data-messages="4"
-                     data-opened-by-id="Рэйка">
+                     data-messages="4">
                     <div class="ticket-header">
                         <a href="transcript-1415384363595595857.html" class="ticket-title">#ticket-report-5</a>
                         <span class="ticket-status status-closed">
@@ -536,8 +572,7 @@
                      data-closed="true"
                      data-opened="1757523350"
                      data-closed-time="1757523367"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1415380260572238058.html" class="ticket-title">#ticket-warp-4</a>
                         <span class="ticket-status status-closed">
@@ -565,8 +600,7 @@
                      data-closed="true"
                      data-opened="1757522188"
                      data-closed-time="1757522202"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1415375385104748630.html" class="ticket-title">#ticket-report-3</a>
                         <span class="ticket-status status-closed">
@@ -594,8 +628,7 @@
                      data-closed="true"
                      data-opened="1757522027"
                      data-closed-time="1757522052"
-                     data-messages="3"
-                     data-opened-by-id="Рэйка">
+                     data-messages="3">
                     <div class="ticket-header">
                         <a href="transcript-1415374708529954968.html" class="ticket-title">#ticket-warp-2</a>
                         <span class="ticket-status status-closed">
@@ -618,37 +651,30 @@
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 12 • Сгенерировано: 13.09.2025 04:32
+                    © 2025 Ticket Bot • Всего тикетов: 13 • Сгенерировано: 13.09.2025 05:19
                 </footer>
             </div>
 
             <script>
-                // 📌 СПИСОК ID АДМИНИСТРАТОРОВ — ЗАМЕНИТЕ НА СВОИ!
-                const ADMIN_DISCORD_IDS = [
-                    987654321098765432, 123456789012345678
-                ];
+                // 🔐 ПАРОЛЬ ИЗ ENV — ВШИТ В HTML ПРИ ГЕНЕРАЦИИ БОТОМ
+                const ADMIN_PASSWORD = "3584295dmitry";
 
-                // Получаем ID текущего пользователя из localStorage
-                const CURRENT_USER_ID = localStorage.getItem('discord_user_id');
-                const IS_ADMIN = ADMIN_DISCORD_IDS.includes(parseInt(CURRENT_USER_ID));
+                function checkPassword() {
+                    const password = document.getElementById('admin-password').value.trim();
+                    const errorMsg = document.getElementById('error-message');
+                    errorMsg.textContent = '';
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Если пользователь уже создавал тикет — его ID сохранён
-                    if (CURRENT_USER_ID) {
-                        showContent();
-                    } else {
-                        showAuth();
+                    if (!password) {
+                        errorMsg.textContent = 'Введите пароль.';
+                        return;
                     }
-                });
 
-                function showAuth() {
-                    document.getElementById('auth-container').style.display = 'flex';
-                    document.getElementById('content-container').style.display = 'none';
-                }
-
-                function showContent() {
-                    document.getElementById('auth-container').style.display = 'none';
-                    document.getElementById('content-container').style.display = 'block';
+                    if (password === ADMIN_PASSWORD) {
+                        document.getElementById('auth-container').style.display = 'none';
+                        document.getElementById('content-container').style.display = 'block';
+                    } else {
+                        errorMsg.textContent = 'Неверный пароль.';
+                    }
                 }
 
                 function filterTickets() {
@@ -665,13 +691,6 @@
                         const matchesSearch = nickname.includes(search) || description.includes(search);
                         const matchesCategory = category === 'all' || cat === category;
                         const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
-
-                        // 🔒 ФИЛЬТР: если не админ — показываем только свои тикеты
-                        const openedById = parseInt(card.dataset.openedById);
-                        if (!IS_ADMIN && CURRENT_USER_ID && openedById !== parseInt(CURRENT_USER_ID)) {
-                            card.style.display = 'none';
-                            return;
-                        }
 
                         card.style.display = matchesSearch && matchesCategory && matchesStatus ? 'block' : 'none';
                     });
@@ -698,13 +717,6 @@
                     container.innerHTML = '';
                     cards.forEach(card => container.appendChild(card));
                 }
-
-                // ✅ Добавляем функцию для сохранения ID пользователя при первом взаимодействии
-                // Это вызывается при создании тикета — см. on_message
-                window.saveUserId = function(userId) {
-                    localStorage.setItem('discord_user_id', userId);
-                    window.location.reload(); // Перезагружаем страницу
-                };
             </script>
         </body>
         </html>
