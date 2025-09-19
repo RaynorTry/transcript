@@ -261,20 +261,25 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 4</p>
+                    <p>Всего тикетов: 1</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
-                        <input type="text" id="search" placeholder="Поиск по нику, описанию..." oninput="filterTickets()">
+                        <input type="text" id="search" placeholder="Поиск по нику, описанию, ID..." oninput="filterTickets()">
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Технические-проблемы">Технические-проблемы</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
+                        <option value="Финансовые-проблемы">Финансовые-проблемы</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
                         <option value="open">Открытые</option>
                         <option value="closed">Закрытые</option>
+                    </select>
+                    <select id="classification" onchange="filterTickets()">
+                        <option value="all">Все классификации</option>
+                        <option value="unclassified">Не классифицирован</option>
+                        <option value="resolved">✅ Решено</option><option value="rejected">❌ Отклонено</option><option value="duplicate">🔁 Дубликат</option><option value="needs_discussion">💬 Нужно обсудить</option>
                     </select>
                     <select id="sort" onchange="sortTickets()">
                         <option value="opened">По дате открытия</option>
@@ -285,120 +290,43 @@
                 <div class="ticket-grid">
         
                 <div class="ticket-card"
-                     data-nickname="Raynor"
-                     data-description="Жалоба на гостс34444"
-                     data-category="Жалоба-на-игрока"
-                     data-closed="true"
-                     data-opened="1758307940"
-                     data-closed-time="1758308014"
-                     data-messages="3">
+                     data-nickname="Vincent_Assault"
+                     data-description="Нужны монеты в личный кабинет, срочно!!!"
+                     data-category="Финансовые-проблемы"
+                     data-closed="false"
+                     data-opened="1758322640"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1418732721806508074"
+                     data-number="1"
+                     data-opened-by="Vincent_Assault"
+                     data-closed-by="—"
+                     data-classification="unclassified">
                     <div class="ticket-header">
-                        <a href="transcript-1418671066846597221.html" class="ticket-title">#ticket-report-4</a>
-                        <span class="ticket-status status-closed">
-                            Закрыт
+                        <a href="transcript-1418732721806508074.html" class="ticket-title">#ticket-finance-1</a>
+                        <span class="ticket-status status-open">
+                            Открыт
                         </span>
                     </div>
                     <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> Raynor</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 19.09.2025 18:52</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 19.09.2025 18:53</div>
+                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
+                        <div><strong>Ник:</strong> Vincent_Assault</div>
+                        <div><strong>Открыл:</strong> Vincent_Assault</div>
+                        <div><strong>Дата:</strong> 19.09.2025 22:57</div>
+                        
+                        
+                        
                     </div>
                     <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1418671066846597221.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="Raynor"
-                     data-description="Хочу варп сделать"
-                     data-category="Одобрение-варпа"
-                     data-closed="true"
-                     data-opened="1758307832"
-                     data-closed-time="1758307858"
-                     data-messages="3">
-                    <div class="ticket-header">
-                        <a href="transcript-1418670614239121649.html" class="ticket-title">#ticket-warp-3</a>
-                        <span class="ticket-status status-closed">
-                            Закрыт
-                        </span>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> Raynor</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 19.09.2025 18:50</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 19.09.2025 18:50</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1418670614239121649.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="гост"
-                     data-description="убьют ли меня за идеи"
-                     data-category="Технические-проблемы"
-                     data-closed="true"
-                     data-opened="1758307678"
-                     data-closed-time="1758307716"
-                     data-messages="2">
-                    <div class="ticket-header">
-                        <a href="transcript-1418669968991719445.html" class="ticket-title">#ticket-technical-2</a>
-                        <span class="ticket-status status-closed">
-                            Закрыт
-                        </span>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> гост</div>
-                        <div><strong>Открыл:</strong> Гостоевский</div>
-                        <div><strong>Дата:</strong> 19.09.2025 18:47</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 19.09.2025 18:48</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1418669968991719445.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Жалоба-на-игрока"
-                     data-closed="true"
-                     data-opened="1758294768"
-                     data-closed-time="1758294785"
-                     data-messages="3">
-                    <div class="ticket-header">
-                        <a href="transcript-1418615817066643517.html" class="ticket-title">#ticket-report-1</a>
-                        <span class="ticket-status status-closed">
-                            Закрыт
-                        </span>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 19.09.2025 15:12</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 19.09.2025 15:13</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1418615817066643517.html" class="view-btn">Открыть</a>
+                        <span>0 сообщений</span>
+                        <a href="transcript-1418732721806508074.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 4 • Сгенерировано: 19.09.2025 18:53
+                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 19.09.2025 22:57
                 </footer>
             </div>
             <script>
@@ -423,16 +351,30 @@
                     const search = document.getElementById('search').value.toLowerCase();
                     const category = document.getElementById('category').value;
                     const status = document.getElementById('status').value;
+                    const classification = document.getElementById('classification').value;
                     const cards = document.querySelectorAll('.ticket-card');
                     cards.forEach(card => {
                         const nickname = card.dataset.nickname.toLowerCase();
                         const description = card.dataset.description.toLowerCase();
                         const cat = card.dataset.category;
                         const isClosed = card.dataset.closed === 'true';
-                        const matchesSearch = nickname.includes(search) || description.includes(search);
+                        const id = card.dataset.id;
+                        const number = card.dataset.number;
+                        const openedBy = card.dataset.openedBy.toLowerCase();
+                        const closedBy = card.dataset.closedBy.toLowerCase();
+                        const classificationData = card.dataset.classification;
+                        
+                        const matchesSearch = nickname.includes(search) || 
+                                              description.includes(search) || 
+                                              id.includes(search) || 
+                                              number.includes(search) ||
+                                              openedBy.includes(search) ||
+                                              closedBy.includes(search);
                         const matchesCategory = category === 'all' || cat === category;
                         const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
-                        card.style.display = matchesSearch && matchesCategory && matchesStatus ? 'block' : 'none';
+                        const matchesClassification = classification === 'all' || classificationData === classification;
+                        
+                        card.style.display = matchesSearch && matchesCategory && matchesStatus && matchesClassification ? 'block' : 'none';
                     });
                 }
                 function sortTickets() {
