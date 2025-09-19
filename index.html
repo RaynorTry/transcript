@@ -261,7 +261,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 1</p>
+                    <p>Всего тикетов: 2</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -269,7 +269,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
@@ -284,6 +284,34 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="гост"
+                     data-description="убьют ли меня за идеи"
+                     data-category="Технические-проблемы"
+                     data-closed="false"
+                     data-opened="1758307678"
+                     data-closed-time="0"
+                     data-messages="0">
+                    <div class="ticket-header">
+                        <a href="transcript-1418669968991719445.html" class="ticket-title">#ticket-technical-2</a>
+                        <span class="ticket-status status-open">
+                            Открыт
+                        </span>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> гост</div>
+                        <div><strong>Открыл:</strong> Гостоевский</div>
+                        <div><strong>Дата:</strong> 19.09.2025 18:47</div>
+                        
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1418669968991719445.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="f"
                      data-description="f"
@@ -314,7 +342,7 @@
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 19.09.2025 15:13
+                    © 2025 Ticket Bot • Всего тикетов: 2 • Сгенерировано: 19.09.2025 18:47
                 </footer>
             </div>
             <script>
