@@ -161,7 +161,6 @@
                 .view-btn:hover {
                     background: #3a7be0;
                 }
-                /* ФОРМА ВХОДА ПО ПАРОЛЮ ИЗ ENV */
                 #auth-container {
                     display: flex;
                     justify-content: center;
@@ -245,7 +244,6 @@
             </style>
         </head>
         <body>
-            <!-- 🚫 ДОСТУП ТОЛЬКО ПО ПАРОЛЮ ИЗ ENV -->
             <div id="auth-container">
                 <div id="auth-form">
                     <h2>Доступ к архиву тикетов</h2>
@@ -269,7 +267,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Финансовые-проблемы">Финансовые-проблемы</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
                     </select>
                     <select id="status" onchange="filterTickets()">
                         <option value="all">Все статусы</option>
@@ -281,6 +279,10 @@
                         <option value="unclassified">Не классифицирован</option>
                         <option value="resolved">✅ Решено</option><option value="rejected">❌ Отклонено</option><option value="duplicate">🔁 Дубликат</option><option value="needs_discussion">💬 Нужно обсудить</option>
                     </select>
+                    <select id="priority" onchange="filterTickets()">
+                        <option value="all">Все приоритеты</option>
+                        <option value="low">🟢 Низкий</option><option value="medium">🟡 Средний</option><option value="high">🟠 Высокий</option><option value="critical">🔴 Критический</option>
+                    </select>
                     <select id="sort" onchange="sortTickets()">
                         <option value="opened">По дате открытия</option>
                         <option value="closed">По дате закрытия</option>
@@ -291,46 +293,49 @@
         
                 <div class="ticket-card"
                      data-nickname="Vincent_Assault"
-                     data-description="Нужны монеты в личный кабинет, срочно!!!"
-                     data-category="Финансовые-проблемы"
-                     data-closed="true"
-                     data-opened="1758322640"
-                     data-closed-time="1758322700"
-                     data-messages="3"
-                     data-attachments="2"
-                     data-id="1418732721806508074"
+                     data-description="Qwen3 сделал всё без ошибок, он сломался, не пришлось править код"
+                     data-category="Жалоба-на-игрока"
+                     data-closed="false"
+                     data-opened="1758326068"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1418747103978459240"
                      data-number="1"
                      data-opened-by="Vincent_Assault"
-                     data-closed-by="Рэйка"
-                     data-classification="unclassified">
+                     data-closed-by="—"
+                     data-classification="unclassified"
+                     data-priority="medium"
+                     data-assigned="—">
                     <div class="ticket-header">
-                        <a href="transcript-1418732721806508074.html" class="ticket-title">#ticket-finance-1</a>
-                        <span class="ticket-status status-closed">
-                            Закрыт
+                        <a href="transcript-1418747103978459240.html" class="ticket-title">#ticket-report-1</a>
+                        <span class="ticket-status status-open">
+                            Открыт
                         </span>
                     </div>
                     <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
                         <div><strong>Ник:</strong> Vincent_Assault</div>
                         <div><strong>Открыл:</strong> Vincent_Assault</div>
-                        <div><strong>Дата:</strong> 19.09.2025 22:57</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 19.09.2025 22:58</div>
+                        <div><strong>Дата:</strong> 19.09.2025 23:54</div>
+                        
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
                         
                     </div>
                     <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1418732721806508074.html" class="view-btn">Открыть</a>
+                        <span>0 сообщений</span>
+                        <a href="transcript-1418747103978459240.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 19.09.2025 22:58
+                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 19.09.2025 23:54
                 </footer>
             </div>
             <script>
-                // 🔐 ПАРОЛЬ ИЗ ENV — ВШИТ В HTML ПРИ ГЕНЕРАЦИИ БОТОМ
                 const ADMIN_PASSWORD = "3584295dmitry";
                 function checkPassword() {
                     const password = document.getElementById('admin-password').value.trim();
@@ -352,6 +357,7 @@
                     const category = document.getElementById('category').value;
                     const status = document.getElementById('status').value;
                     const classification = document.getElementById('classification').value;
+                    const priority = document.getElementById('priority').value;
                     const cards = document.querySelectorAll('.ticket-card');
                     cards.forEach(card => {
                         const nickname = card.dataset.nickname.toLowerCase();
@@ -363,18 +369,20 @@
                         const openedBy = card.dataset.openedBy.toLowerCase();
                         const closedBy = card.dataset.closedBy.toLowerCase();
                         const classificationData = card.dataset.classification;
-                        
+                        const priorityData = card.dataset.priority;
+                        const assignedTo = card.dataset.assigned.toLowerCase();
                         const matchesSearch = nickname.includes(search) || 
                                               description.includes(search) || 
                                               id.includes(search) || 
                                               number.includes(search) ||
                                               openedBy.includes(search) ||
-                                              closedBy.includes(search);
+                                              closedBy.includes(search) ||
+                                              assignedTo.includes(search);
                         const matchesCategory = category === 'all' || cat === category;
                         const matchesStatus = status === 'all' || (status === 'open' && !isClosed) || (status === 'closed' && isClosed);
                         const matchesClassification = classification === 'all' || classificationData === classification;
-                        
-                        card.style.display = matchesSearch && matchesCategory && matchesStatus && matchesClassification ? 'block' : 'none';
+                        const matchesPriority = priority === 'all' || priorityData === priority;
+                        card.style.display = matchesSearch && matchesCategory && matchesStatus && matchesClassification && matchesPriority ? 'block' : 'none';
                     });
                 }
                 function sortTickets() {
