@@ -252,7 +252,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 2</p>
+                    <p>Всего тикетов: 1</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -260,7 +260,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option>
+                        <option value="Одобрение-варпа">Одобрение-варпа</option>
                     </select>
                     <select id="priority" onchange="filterTickets()">
                         <option value="all">Все приоритеты</option>
@@ -277,78 +277,43 @@
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758453536"
-                     data-closed-time="1758453570"
-                     data-messages="6"
-                     data-attachments="1"
-                     data-id="1419281743210479717"
-                     data-number="2"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—">
-                    <div class="ticket-header">
-                        <a href="transcript-1419281743210479717.html" class="ticket-title">#ticket-report-2</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 21.09.2025 11:18</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 21.09.2025 11:19</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>6 сообщений</span>
-                        <a href="transcript-1419281743210479717.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
                      data-category="Одобрение-варпа"
-                     data-opened="1758431155"
-                     data-closed-time="1758431391"
+                     data-opened="1758454821"
+                     data-closed-time="1758455139"
                      data-messages="1"
                      data-attachments="0"
-                     data-id="1419187867602649190"
+                     data-id="1419287132861890622"
                      data-number="1"
                      data-opened-by="Рэйка"
                      data-closed-by="Рэйка"
-                     data-priority="high"
+                     data-priority="critical"
                      data-assigned="Рэйка">
                     <div class="ticket-header">
-                        <a href="transcript-1419187867602649190.html" class="ticket-title">#ticket-warp-1</a>
+                        <a href="transcript-1419287132861890622.html" class="ticket-title">#ticket-warp-1</a>
                     </div>
                     <div class="ticket-meta">
                         <div><strong>Категория:</strong> Одобрение-варпа</div>
                         <div><strong>Ник:</strong> а</div>
                         <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 21.09.2025 05:05</div>
+                        <div><strong>Дата:</strong> 21.09.2025 11:40</div>
                         <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 21.09.2025 05:09</div>
-                        <div><strong>Приоритет:</strong> 🟠 Высокий</div>
+                        <div><strong>Закрыт:</strong> 21.09.2025 11:45</div>
+                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
                         <div><strong>Назначен:</strong> Рэйка</div>
                     </div>
                     <div class="ticket-footer">
                         <span>1 сообщений</span>
-                        <a href="transcript-1419187867602649190.html" class="view-btn">Открыть</a>
+                        <a href="transcript-1419287132861890622.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
             
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 2 • Сгенерировано: 21.09.2025 11:19
+                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 21.09.2025 11:45
                 </footer>
             </div>
             <script>
                 const ADMIN_PASSWORD = "3584295dmitry";
-                
-                // --- НОВОЕ: Загрузка сохраненного пароля ---
                 window.onload = function() {
                     const savedPassword = localStorage.getItem('ticket_archive_password');
                     const rememberCheckbox = document.getElementById('remember-password');
@@ -357,14 +322,11 @@
                         rememberCheckbox.checked = true;
                     }
                 };
-                
-                // --- НОВОЕ: Обработка Enter в поле ввода пароля ---
                 document.getElementById('admin-password').addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         checkPassword();
                     }
                 });
-                
                 function checkPassword() {
                     const password = document.getElementById('admin-password').value.trim();
                     const rememberCheckbox = document.getElementById('remember-password');
@@ -375,7 +337,6 @@
                         return;
                     }
                     if (password === ADMIN_PASSWORD) {
-                        // --- НОВОЕ: Сохранение пароля ---
                         if (rememberCheckbox.checked) {
                             localStorage.setItem('ticket_archive_password', password);
                         } else {
