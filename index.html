@@ -244,6 +244,61 @@
                     margin-bottom: 1.5rem;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 }
+                .feedback-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                }
+                .rating-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 4px;
+                    font-weight: bold;
+                    font-size: 0.875rem;
+                }
+                .rating-badge-1 {
+                    background-color: #d9534f;
+                    color: white;
+                }
+                .rating-badge-2 {
+                    background-color: #f0ad4e;
+                    color: white;
+                }
+                .rating-badge-3 {
+                    background-color: #f0ad4e;
+                    color: white;
+                }
+                .timestamp {
+                    color: var(--muted);
+                    font-size: 0.875rem;
+                }
+                .feedback-body {
+                    margin-bottom: 1rem;
+                }
+                .feedback-body p {
+                    margin: 0.5rem 0;
+                    color: var(--text);
+                }
+                .feedback-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 0.875rem;
+                    color: var(--muted);
+                }
+                .ticket-link {
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+                .ticket-link:hover {
+                    text-decoration: underline;
+                }
             </style>
         </head>
         <body>
@@ -267,7 +322,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 2</p>
+                    <p>Всего тикетов: 3</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -291,6 +346,39 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-opened="1758557738"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1419718797345951845"
+                     data-number="3"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—">
+                    <div class="ticket-header">
+                        <a href="transcript-1419718797345951845.html" class="ticket-title">#ticket-report-3</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 22.09.2025 16:15</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1419718797345951845.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -366,7 +454,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 2 • Сгенерировано: 22.09.2025 15:43
+                    © 2025 Ticket Bot • Всего тикетов: 3 • Сгенерировано: 22.09.2025 16:15
                 </footer>
             </div>
             <script>
@@ -477,24 +565,94 @@
                             return;
                         }
                         feedbackList.innerHTML = '';
+                        // Добавляем стиль для карточек отзывов
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            .feedback-card {
+                                background: var(--card);
+                                border: 1px solid var(--border);
+                                border-radius: 8px;
+                                padding: 1.25rem;
+                                margin-bottom: 1.5rem;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            }
+                            .feedback-header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 1rem;
+                                flex-wrap: wrap;
+                                gap: 0.5rem;
+                            }
+                            .rating-badge {
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 0.25rem;
+                                padding: 0.25rem 0.5rem;
+                                border-radius: 4px;
+                                font-weight: bold;
+                                font-size: 0.875rem;
+                            }
+                            .rating-badge-1 {
+                                background-color: #d9534f;
+                                color: white;
+                            }
+                            .rating-badge-2 {
+                                background-color: #f0ad4e;
+                                color: white;
+                            }
+                            .rating-badge-3 {
+                                background-color: #f0ad4e;
+                                color: white;
+                            }
+                            .timestamp {
+                                color: var(--muted);
+                                font-size: 0.875rem;
+                            }
+                            .feedback-body {
+                                margin-bottom: 1rem;
+                            }
+                            .feedback-body p {
+                                margin: 0.5rem 0;
+                                color: var(--text);
+                            }
+                            .feedback-footer {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                font-size: 0.875rem;
+                                color: var(--muted);
+                            }
+                            .ticket-link {
+                                color: var(--accent);
+                                text-decoration: none;
+                                font-weight: 500;
+                            }
+                            .ticket-link:hover {
+                                text-decoration: underline;
+                            }
+                        `;
+                        document.head.appendChild(style);
                         feedbackData.forEach(feedback => {
-                            const colorMap = {1: '#d9534f', 2: '#f0ad4e', 3: '#f0ad4e'};
                             const card = document.createElement('div');
                             card.className = 'feedback-card';
                             card.innerHTML = `
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
-                                    <span style="background: ${colorMap[feedback.rating]}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: bold;">
+                                <div class="feedback-header">
+                                    <div class="rating-badge rating-badge-${feedback.rating}">
                                         ${feedback.rating} ⭐
-                                    </span>
-                                    <span style="color: var(--muted); font-size: 0.875rem;">${feedback.date}</span>
+                                    </div>
+                                    <span class="timestamp">${feedback.date}</span>
                                 </div>
-                                <div style="margin-bottom: 0.75rem;">
-                                    <strong>Категория:</strong> ${feedback.category}<br>
-                                    <strong>Ник:</strong> ${feedback.nickname}<br>
-                                    <strong>Тикет:</strong> <a href="${feedback.ticket_url}" style="color: var(--accent);">${feedback.ticket_slug}</a>
+                                <div class="feedback-body">
+                                    <p><strong>Категория:</strong> ${feedback.category}</p>
+                                    <p><strong>Ник:</strong> ${feedback.nickname}</p>
+                                    <p><strong>Тикет:</strong> <a href="${feedback.ticket_url}" class="ticket-link">${feedback.ticket_slug}</a></p>
+                                    <div style="background: var(--soft); padding: 1rem; border-radius: 6px; font-style: italic;">
+                                        "${feedback.comment}"
+                                    </div>
                                 </div>
-                                <div style="background: var(--soft); padding: 1rem; border-radius: 6px; font-style: italic;">
-                                    "${feedback.comment}"
+                                <div class="feedback-footer">
+                                    <span>${feedback.rating} звёзд</span>
                                 </div>
                             `;
                             feedbackList.appendChild(card);
