@@ -229,6 +229,21 @@
                         padding: 1rem;
                     }
                 }
+                /* --- NEW: Стили для вкладки отзывов --- */
+                #feedback-container {
+                    display: none;
+                    padding: 2rem 1rem;
+                    max-width: 1400px;
+                    margin: 0 auto;
+                }
+                .feedback-card {
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    padding: 1.25rem;
+                    margin-bottom: 1.5rem;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
             </style>
         </head>
         <body>
@@ -252,7 +267,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 2</p>
+                    <p>Всего тикетов: 1</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -260,7 +275,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Вопрос по игре">Вопрос по игре</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
                     </select>
                     <select id="priority" onchange="filterTickets()">
                         <option value="all">Все приоритеты</option>
@@ -271,78 +286,54 @@
                         <option value="closed">По дате закрытия</option>
                         <option value="messages">По кол-ву сообщений</option>
                     </select>
+                    <!-- --- NEW: Кнопка для перехода на отзывы --- -->
+                    <button id="show-feedback-btn" onclick="showFeedbackTab()">Отзывы (1-3⭐)</button>
                 </div>
                 <div class="ticket-grid">
         
                 <div class="ticket-card"
-                     data-nickname="Vincent_Assault"
-                     data-description="Как крафтить красный камень из ванилы"
-                     data-category="Вопрос по игре"
-                     data-opened="1758476323"
-                     data-closed-time="1758476378"
-                     data-messages="3"
-                     data-attachments="1"
-                     data-id="1419377318287118506"
-                     data-number="2"
-                     data-opened-by="Vincent_Assault"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка">
-                    <div class="ticket-header">
-                        <a href="transcript-1419377318287118506.html" class="ticket-title">#ticket-question-2</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Вопрос по игре</div>
-                        <div><strong>Ник:</strong> Vincent_Assault</div>
-                        <div><strong>Открыл:</strong> Vincent_Assault</div>
-                        <div><strong>Дата:</strong> 21.09.2025 17:38</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 21.09.2025 17:39</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1419377318287118506.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
                      data-category="Жалоба-на-игрока"
-                     data-opened="1758458979"
-                     data-closed-time="1758459109"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1419304570143637564"
+                     data-opened="1758555581"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1419709749750136832"
                      data-number="1"
                      data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка">
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—">
                     <div class="ticket-header">
-                        <a href="transcript-1419304570143637564.html" class="ticket-title">#ticket-report-1</a>
+                        <a href="transcript-1419709749750136832.html" class="ticket-title">#ticket-report-1</a>
                     </div>
                     <div class="ticket-meta">
                         <div><strong>Категория:</strong> Жалоба-на-игрока</div>
                         <div><strong>Ник:</strong> а</div>
                         <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 21.09.2025 12:49</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 21.09.2025 12:51</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 22.09.2025 15:39</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
                     </div>
                     <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1419304570143637564.html" class="view-btn">Открыть</a>
+                        <span>0 сообщений</span>
+                        <a href="transcript-1419709749750136832.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
             
                 </div>
+                <!-- --- NEW: Контейнер для отзывов --- -->
+                <div id="feedback-container">
+                    <h2 style="text-align: center; color: var(--text);">Негативные отзывы (Оценки 1-3)</h2>
+                    <div id="feedback-list">
+                        <p style="text-align: center; color: var(--muted);">Загрузка отзывов...</p>
+                    </div>
+                </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 2 • Сгенерировано: 21.09.2025 17:39
+                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 22.09.2025 15:39
                 </footer>
             </div>
             <script>
@@ -428,6 +419,57 @@
                     });
                     container.innerHTML = '';
                     cards.forEach(card => container.appendChild(card));
+                }
+                // --- NEW: Функции для работы с вкладкой отзывов ---
+                function showFeedbackTab() {
+                    document.querySelector('.ticket-grid').style.display = 'none';
+                    document.getElementById('feedback-container').style.display = 'block';
+                    document.getElementById('show-feedback-btn').disabled = true;
+                    loadFeedback();
+                }
+                function showTicketsTab() {
+                    document.querySelector('.ticket-grid').style.display = 'grid';
+                    document.getElementById('feedback-container').style.display = 'none';
+                    document.getElementById('show-feedback-btn').disabled = false;
+                }
+                async function loadFeedback() {
+                    const feedbackList = document.getElementById('feedback-list');
+                    feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted);">Загрузка отзывов...</p>';
+                    try {
+                        const response = await fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/feedback.json');
+                        if (!response.ok) throw new Error('Не удалось загрузить feedback.json из Gist');
+                        const feedbackData = await response.json();
+                        if (feedbackData.length === 0) {
+                            feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted);">Нет негативных отзывов.</p>';
+                            return;
+                        }
+                        feedbackList.innerHTML = '';
+                        feedbackData.forEach(feedback => {
+                            const colorMap = {1: '#d9534f', 2: '#f0ad4e', 3: '#f0ad4e'};
+                            const card = document.createElement('div');
+                            card.className = 'feedback-card';
+                            card.innerHTML = `
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                                    <span style="background: ${colorMap[feedback.rating]}; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: bold;">
+                                        ${feedback.rating} ⭐
+                                    </span>
+                                    <span style="color: var(--muted); font-size: 0.875rem;">${feedback.date}</span>
+                                </div>
+                                <div style="margin-bottom: 0.75rem;">
+                                    <strong>Категория:</strong> ${feedback.category}<br>
+                                    <strong>Ник:</strong> ${feedback.nickname}<br>
+                                    <strong>Тикет:</strong> <a href="${feedback.ticket_url}" style="color: var(--accent);">${feedback.ticket_slug}</a>
+                                </div>
+                                <div style="background: var(--soft); padding: 1rem; border-radius: 6px; font-style: italic;">
+                                    "${feedback.comment}"
+                                </div>
+                            `;
+                            feedbackList.appendChild(card);
+                        });
+                    } catch (error) {
+                        feedbackList.innerHTML = `<p style="text-align: center; color: #d9534f;">Ошибка загрузки: ${error.message}</p>`;
+                        console.error("Ошибка загрузки отзывов:", error);
+                    }
                 }
             </script>
         </body>
