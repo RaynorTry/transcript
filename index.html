@@ -302,7 +302,7 @@
             <div id="content-container">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 8</p>
+                    <p>Всего тикетов: 9</p>
                     <button id="logout-btn" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">Выйти</button>
                 </header>
                 <div class="controls">
@@ -327,6 +327,39 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-opened="1758645607"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1420087346577145918"
+                     data-number="9"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—">
+                    <div class="ticket-header">
+                        <a href="transcript-1420087346577145918.html" class="ticket-title">#ticket-warp-9</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 23.09.2025 16:40</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1420087346577145918.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -600,7 +633,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 8 • Сгенерировано: 23.09.2025 16:33
+                    © 2025 Ticket Bot • Всего тикетов: 9 • Сгенерировано: 23.09.2025 16:40
                 </footer>
             </div>
 
@@ -608,7 +641,7 @@
                 // Инициализация Supabase
                 const supabaseUrl = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
                 // ⚠️ Ключ берётся из переменной окружения Vercel — безопасно!
-                const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
+                const supabaseAnonKey = env.SUPABASE_ANON_KEY || '';
                 if (!supabaseAnonKey) {
                     document.getElementById('login-container').innerHTML = `
                         <h2 style="color: #d9534f;">❌ Ошибка конфигурации</h2>
