@@ -243,11 +243,16 @@
                     padding: 1.25rem;
                     margin-bottom: 1.5rem;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .feedback-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
                 }
                 .feedback-header {
                     display: flex;
                     justify-content: space-between;
-                    align-items: center;
+                    align-items: flex-start;
                     margin-bottom: 1rem;
                     flex-wrap: wrap;
                     gap: 0.5rem;
@@ -322,7 +327,7 @@
             <div id="content-container" style="display: none;">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 3</p>
+                    <p>Всего тикетов: 4</p>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -330,7 +335,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Технические-проблемы">Технические-проблемы</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Технические-проблемы">Технические-проблемы</option>
                     </select>
                     <select id="priority" onchange="filterTickets()">
                         <option value="all">Все приоритеты</option>
@@ -346,6 +351,39 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-opened="1758592161"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1419863176769699860"
+                     data-number="4"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—">
+                    <div class="ticket-header">
+                        <a href="transcript-1419863176769699860.html" class="ticket-title">#ticket-warp-4</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 23.09.2025 01:49</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1419863176769699860.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -454,7 +492,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 3 • Сгенерировано: 22.09.2025 16:17
+                    © 2025 Ticket Bot • Всего тикетов: 4 • Сгенерировано: 23.09.2025 01:49
                 </footer>
             </div>
             <script>
@@ -565,75 +603,8 @@
                             return;
                         }
                         feedbackList.innerHTML = '';
-                        // Добавляем стиль для карточек отзывов
-                        const style = document.createElement('style');
-                        style.textContent = `
-                            .feedback-card {
-                                background: var(--card);
-                                border: 1px solid var(--border);
-                                border-radius: 8px;
-                                padding: 1.25rem;
-                                margin-bottom: 1.5rem;
-                                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                            }
-                            .feedback-header {
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                margin-bottom: 1rem;
-                                flex-wrap: wrap;
-                                gap: 0.5rem;
-                            }
-                            .rating-badge {
-                                display: inline-flex;
-                                align-items: center;
-                                gap: 0.25rem;
-                                padding: 0.25rem 0.5rem;
-                                border-radius: 4px;
-                                font-weight: bold;
-                                font-size: 0.875rem;
-                            }
-                            .rating-badge-1 {
-                                background-color: #d9534f;
-                                color: white;
-                            }
-                            .rating-badge-2 {
-                                background-color: #f0ad4e;
-                                color: white;
-                            }
-                            .rating-badge-3 {
-                                background-color: #f0ad4e;
-                                color: white;
-                            }
-                            .timestamp {
-                                color: var(--muted);
-                                font-size: 0.875rem;
-                            }
-                            .feedback-body {
-                                margin-bottom: 1rem;
-                            }
-                            .feedback-body p {
-                                margin: 0.5rem 0;
-                                color: var(--text);
-                            }
-                            .feedback-footer {
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                font-size: 0.875rem;
-                                color: var(--muted);
-                            }
-                            .ticket-link {
-                                color: var(--accent);
-                                text-decoration: none;
-                                font-weight: 500;
-                            }
-                            .ticket-link:hover {
-                                text-decoration: underline;
-                            }
-                        `;
-                        document.head.appendChild(style);
                         feedbackData.forEach(feedback => {
+                            const colorMap = {1: '#d9534f', 2: '#f0ad4e', 3: '#f0ad4e'};
                             const card = document.createElement('div');
                             card.className = 'feedback-card';
                             card.innerHTML = `
