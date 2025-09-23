@@ -5,6 +5,8 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Архив тикетов</title>
+            <!-- Подключаем Supabase SDK -->
+            <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
             <style>
                 :root {
                     --bg: #1e1e1e;
@@ -25,6 +27,46 @@
                     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                     line-height: 1.6;
                     padding: 0;
+                }
+                #login-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    background: var(--bg);
+                    color: var(--text);
+                    text-align: center;
+                    padding: 2rem;
+                }
+                #login-container h2 {
+                    margin-bottom: 1rem;
+                    color: var(--header-text);
+                }
+                #login-btn {
+                    background: #5865F2;
+                    color: white;
+                    border: none;
+                    padding: 0.75rem 2rem;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin-top: 1rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+                #login-btn:hover {
+                    background: #4752c4;
+                }
+                #user-info {
+                    margin-top: 1rem;
+                    font-size: 0.9rem;
+                    color: var(--muted);
+                }
+                #content-container {
+                    display: none; /* Скрываем, пока не залогинимся */
                 }
                 header {
                     background: var(--header-bg);
@@ -144,70 +186,6 @@
                 .view-btn:hover {
                     background: #3a7be0;
                 }
-                #auth-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    background: #1e1e1e;
-                    color: #e0e0e0;
-                    text-align: center;
-                    padding: 2rem;
-                }
-                #auth-form {
-                    background: #2d2d2d;
-                    padding: 2.5rem;
-                    border-radius: 12px;
-                    max-width: 400px;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-                }
-                #auth-form h2 {
-                    margin-top: 0;
-                    color: #ffffff;
-                }
-                .form-group {
-                    margin: 1.5rem 0;
-                    text-align: left;
-                }
-                .form-group label {
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 500;
-                }
-                .form-group input {
-                    width: 100%;
-                    padding: 0.75rem;
-                    border: 1px solid var(--border);
-                    border-radius: 6px;
-                    background: var(--soft);
-                    color: var(--text);
-                    font-size: 1rem;
-                    box-sizing: border-box;
-                }
-                .form-group input[type="checkbox"] {
-                    width: auto;
-                    margin-right: 0.5rem;
-                }
-                .login-btn {
-                    width: 100%;
-                    padding: 0.75rem;
-                    background: #5865F2;
-                    color: white;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 1rem;
-                    font-weight: 600;
-                    cursor: pointer;
-                    margin-top: 1rem;
-                }
-                .login-btn:hover {
-                    background: #4752c4;
-                }
-                .error-msg {
-                    color: #d9534f;
-                    margin: 0.5rem 0;
-                    font-size: 0.9rem;
-                }
                 footer {
                     color: var(--muted);
                     font-size: 0.875rem;
@@ -307,27 +285,25 @@
             </style>
         </head>
         <body>
-            <div id="auth-container">
-                <div id="auth-form">
-                    <h2>Доступ к архиву тикетов</h2>
-                    <p style="color: #a0a0a0;">Введите пароль для просмотра всех тикетов.</p>
-                    <div class="form-group">
-                        <label for="admin-password">Пароль:</label>
-                        <input type="password" id="admin-password" placeholder="••••••••" autofocus>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="remember-password"> Запомнить пароль (хранится локально)
-                        </label>
-                    </div>
-                    <div id="error-message" class="error-msg"></div>
-                    <button class="login-btn" onclick="checkPassword()">Войти</button>
-                </div>
+            <!-- Контейнер для входа -->
+            <div id="login-container">
+                <h2>🔐 Доступ к архиву тикетов</h2>
+                <p>Войдите через Discord, чтобы увидеть все тикеты.</p>
+                <button id="login-btn">
+                    <svg width="20" height="20" viewBox="0 0 127.14 96.36" style="fill:currentColor">
+                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+                    </svg>
+                    Войти через Discord
+                </button>
+                <div id="user-info"></div>
             </div>
-            <div id="content-container" style="display: none;">
+
+            <!-- Основной контент (скрыт по умолчанию) -->
+            <div id="content-container">
                 <header>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 6</p>
+                    <p>Всего тикетов: 7</p>
+                    <button id="logout-btn" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">Выйти</button>
                 </header>
                 <div class="controls">
                     <div class="search-box">
@@ -351,6 +327,39 @@
                 </div>
                 <div class="ticket-grid">
         
+                <div class="ticket-card"
+                     data-nickname="f"
+                     data-description="f"
+                     data-category="Одобрение-варпа"
+                     data-opened="1758644850"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1420084171694542948"
+                     data-number="7"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—">
+                    <div class="ticket-header">
+                        <a href="transcript-1420084171694542948.html" class="ticket-title">#ticket-warp-7</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> f</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 23.09.2025 16:27</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1420084171694542948.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -558,45 +567,77 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 6 • Сгенерировано: 23.09.2025 16:22
+                    © 2025 Ticket Bot • Всего тикетов: 7 • Сгенерировано: 23.09.2025 16:27
                 </footer>
             </div>
+
             <script>
-                const ADMIN_PASSWORD = "3584295dmitry";
-                window.onload = function() {
-                    const savedPassword = localStorage.getItem('ticket_archive_password');
-                    const rememberCheckbox = document.getElementById('remember-password');
-                    if (savedPassword) {
-                        document.getElementById('admin-password').value = savedPassword;
-                        rememberCheckbox.checked = true;
-                    }
-                };
-                document.getElementById('admin-password').addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-                function checkPassword() {
-                    const password = document.getElementById('admin-password').value.trim();
-                    const rememberCheckbox = document.getElementById('remember-password');
-                    const errorMsg = document.getElementById('error-message');
-                    errorMsg.textContent = '';
-                    if (!password) {
-                        errorMsg.textContent = 'Введите пароль.';
-                        return;
-                    }
-                    if (password === ADMIN_PASSWORD) {
-                        if (rememberCheckbox.checked) {
-                            localStorage.setItem('ticket_archive_password', password);
-                        } else {
-                            localStorage.removeItem('ticket_archive_password');
+                // Инициализация Supabase
+                const supabaseUrl = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
+                // ⚠️ Ключ берётся из переменной окружения Vercel — безопасно!
+                const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
+                if (!supabaseAnonKey) {
+                    document.getElementById('login-container').innerHTML = `
+                        <h2 style="color: #d9534f;">❌ Ошибка конфигурации</h2>
+                        <p>Ключ Supabase не задан. Обратитесь к администратору.</p>
+                    `;
+                } else {
+                    const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+                    const loginContainer = document.getElementById('login-container');
+                    const contentContainer = document.getElementById('content-container');
+                    const loginBtn = document.getElementById('login-btn');
+                    const logoutBtn = document.getElementById('logout-btn');
+                    const userInfo = document.getElementById('user-info');
+
+                    // Функция входа
+                    async function signInWithDiscord() {
+                        const { error } = await supabase.auth.signInWithOAuth({
+                            provider: 'discord',
+                            options: {
+                                redirectTo: window.location.origin,
+                            }
+                        });
+                        if (error) {
+                            alert('Ошибка входа: ' + error.message);
                         }
-                        document.getElementById('auth-container').style.display = 'none';
-                        document.getElementById('content-container').style.display = 'block';
-                    } else {
-                        errorMsg.textContent = 'Неверный пароль.';
                     }
+
+                    // Функция выхода
+                    async function signOut() {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) console.error(error);
+                    }
+
+                    // Обновление UI
+                    function updateUI(session) {
+                        if (session) {
+                            loginContainer.style.display = 'none';
+                            contentContainer.style.display = 'block';
+                            userInfo.innerHTML = `Вы вошли как: <strong>${session.user.user_metadata.full_name || 'Аноним'}</strong>`;
+                        } else {
+                            loginContainer.style.display = 'flex';
+                            contentContainer.style.display = 'none';
+                            userInfo.innerHTML = '';
+                        }
+                    }
+
+                    // Проверка сессии при загрузке
+                    supabase.auth.getSession().then(({  { session } }) => {
+                        updateUI(session);
+                    });
+
+                    // Слушаем изменения аутентификации
+                    supabase.auth.onAuthStateChange((event, session) => {
+                        updateUI(session);
+                    });
+
+                    // Обработчики кнопок
+                    loginBtn.addEventListener('click', signInWithDiscord);
+                    logoutBtn.addEventListener('click', signOut);
                 }
+
+                // --- Остальные функции (фильтрация, сортировка, отзывы) остаются без изменений ---
                 function filterTickets() {
                     const search = document.getElementById('search').value.toLowerCase();
                     const category = document.getElementById('category').value;
@@ -624,6 +665,7 @@
                         card.style.display = matchesSearch && matchesCategory && matchesPriority ? 'block' : 'none';
                     });
                 }
+
                 function sortTickets() {
                     const sortBy = document.getElementById('sort').value;
                     const container = document.querySelector('.ticket-grid');
@@ -645,18 +687,20 @@
                     container.innerHTML = '';
                     cards.forEach(card => container.appendChild(card));
                 }
-                // --- NEW: Функции для работы с вкладкой отзывов ---
+
                 function showFeedbackTab() {
                     document.querySelector('.ticket-grid').style.display = 'none';
                     document.getElementById('feedback-container').style.display = 'block';
                     document.getElementById('show-feedback-btn').disabled = true;
                     loadFeedback();
                 }
+
                 function showTicketsTab() {
                     document.querySelector('.ticket-grid').style.display = 'grid';
                     document.getElementById('feedback-container').style.display = 'none';
                     document.getElementById('show-feedback-btn').disabled = false;
                 }
+
                 async function loadFeedback() {
                     const feedbackList = document.getElementById('feedback-list');
                     feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted);">Загрузка отзывов...</p>';
