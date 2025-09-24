@@ -75,9 +75,27 @@
                     border-bottom: 1px solid var(--border);
                     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
                     position: relative;
-                    background-image: url('https://placehold.co/1200x150/252525/ffffff?text=Ticket+Archive+Header');
-                    background-size: cover;
-                    background-position: center;
+                }
+                #nav-tabs {
+                    position: absolute;
+                    left: 16px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    display: flex;
+                    gap: 12px;
+                }
+                #nav-tabs button {
+                    background: transparent;
+                    color: var(--text);
+                    border: 1px solid var(--border);
+                    padding: 0.4rem 0.8rem;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                }
+                #nav-tabs button:hover {
+                    background: var(--soft);
                 }
                 #user-profile {
                     position: absolute;
@@ -86,17 +104,17 @@
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 8px;
+                    gap: 6px;
                 }
                 #user-avatar {
-                    width: 48px;
-                    height: 48px;
+                    width: 40px;
+                    height: 40px;
                     border-radius: 50%;
                     border: 2px solid var(--accent);
                 }
                 #user-display-name {
                     font-weight: 600;
-                    font-size: 1rem;
+                    font-size: 0.95rem;
                 }
                 #user-role {
                     font-size: 0.85rem;
@@ -106,12 +124,12 @@
                     background: #d9534f;
                     color: white;
                     border: none;
-                    padding: 0.4rem 0.8rem;
+                    padding: 0.35rem 0.7rem;
                     border-radius: 4px;
                     cursor: pointer;
-                    font-size: 0.85rem;
-                    margin-top: 4px;
+                    font-size: 0.8rem;
                     width: 100%;
+                    margin-top: 4px;
                 }
                 #logout-btn:hover {
                     background: #c9302c;
@@ -120,7 +138,6 @@
                     margin: 0;
                     font-size: 1.8rem;
                     font-weight: 600;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
                 }
                 .controls {
                     display: flex;
@@ -247,6 +264,12 @@
                         grid-template-columns: 1fr;
                         padding: 1rem;
                     }
+                    #nav-tabs {
+                        position: static;
+                        transform: none;
+                        justify-content: center;
+                        margin-bottom: 1rem;
+                    }
                 }
                 #feedback-container {
                     display: none;
@@ -347,6 +370,10 @@
 
             <div id="content-container">
                 <header>
+                    <div id="nav-tabs">
+                        <button id="show-tickets-btn">Тикеты</button>
+                        <button id="show-feedback-btn" style="display: none;">Отзывы (1–3⭐)</button>
+                    </div>
                     <div id="user-profile">
                         <img id="user-avatar" src="" alt="Avatar">
                         <span id="user-display-name"></span>
@@ -354,13 +381,10 @@
                         <button id="logout-btn">Выйти</button>
                     </div>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 21</p>
+                    <p>Всего тикетов: 22</p>
                 </header>
 
                 <div class="controls">
-                    <button id="show-feedback-btn" style="display: none; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Отзывы (1-3⭐)
-                    </button>
                     <div class="search-box">
                         <input type="text" id="search" placeholder="Поиск по нику, описанию, ID..." oninput="filterTickets()">
                     </div>
@@ -381,6 +405,40 @@
 
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Технические-проблемы"
+                     data-opened="1758689758"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1420272530928828508"
+                     data-number="22"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1420272530928828508.html" class="ticket-title">#ticket-technical-22</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 24.09.2025 04:55</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1420272530928828508.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="в"
                      data-description="в"
@@ -1106,7 +1164,7 @@
                 </div>
 
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 21 • Сгенерировано: 24.09.2025 04:16
+                    © 2025 Ticket Bot • Всего тикетов: 22 • Сгенерировано: 24.09.2025 04:55
                 </footer>
             </div>
 
@@ -1127,6 +1185,7 @@
                     const loginBtn = document.getElementById('login-btn');
                     const logoutBtn = document.getElementById('logout-btn');
                     const showFeedbackBtn = document.getElementById('show-feedback-btn');
+                    const showTicketsBtn = document.getElementById('show-tickets-btn');
                     const backToTicketsBtn = document.getElementById('back-to-tickets-btn');
                     const ticketsGrid = document.getElementById('tickets-grid');
                     const feedbackContainer = document.getElementById('feedback-container');
@@ -1246,6 +1305,7 @@
                     if (loginBtn) loginBtn.addEventListener('click', signInWithDiscord);
                     if (logoutBtn) logoutBtn.addEventListener('click', signOut);
                     if (showFeedbackBtn) showFeedbackBtn.addEventListener('click', showFeedbackTab);
+                    if (showTicketsBtn) showTicketsBtn.addEventListener('click', showTicketsTab);
                     if (backToTicketsBtn) backToTicketsBtn.addEventListener('click', showTicketsTab);
 
                     function filterTickets() {
