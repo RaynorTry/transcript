@@ -5,7 +5,6 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Архив тикетов</title>
-            <!-- Подключаем Supabase SDK -->
             <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
             <style>
                 :root {
@@ -66,7 +65,7 @@
                     color: var(--muted);
                 }
                 #content-container {
-                    display: none; /* Скрываем, пока не залогинимся */
+                    display: none;
                 }
                 header {
                     background: var(--header-bg);
@@ -82,14 +81,25 @@
                     top: 16px;
                     right: 16px;
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
-                    gap: 8px;
+                    gap: 6px;
                 }
                 #user-avatar {
                     width: 32px;
                     height: 32px;
                     border-radius: 50%;
                     border: 2px solid var(--accent);
+                }
+                #logout-btn {
+                    margin-top: 0.5rem;
+                    padding: 0.3rem 0.8rem;
+                    background: #d9534f;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.9rem;
                 }
                 header h1 {
                     margin: 0;
@@ -222,7 +232,6 @@
                         padding: 1rem;
                     }
                 }
-                /* --- Стили для отзывов --- */
                 #feedback-container {
                     display: none;
                     padding: 2rem 1rem;
@@ -257,18 +266,9 @@
                     font-weight: bold;
                     font-size: 0.875rem;
                 }
-                .rating-badge-1 {
-                    background-color: #d9534f;
-                    color: white;
-                }
-                .rating-badge-2 {
-                    background-color: #f0ad4e;
-                    color: white;
-                }
-                .rating-badge-3 {
-                    background-color: #f0ad4e;
-                    color: white;
-                }
+                .rating-badge-1 { background-color: #d9534f; color: white; }
+                .rating-badge-2 { background-color: #f0ad4e; color: white; }
+                .rating-badge-3 { background-color: #f0ad4e; color: white; }
                 .timestamp {
                     color: var(--muted);
                     font-size: 0.875rem;
@@ -308,7 +308,6 @@
             </style>
         </head>
         <body>
-            <!-- Контейнер для входа -->
             <div id="login-container">
                 <h2>🔐 Доступ к архиву тикетов</h2>
                 <p>Войдите через Discord, чтобы увидеть все тикеты.</p>
@@ -320,19 +319,20 @@
                 </button>
                 <div id="user-info"></div>
             </div>
-            <!-- Основной контент -->
+
             <div id="content-container">
                 <header>
                     <div id="user-profile">
                         <img id="user-avatar" src="" alt="Avatar">
                         <span id="user-display-name"></span>
+                        <button id="logout-btn">Выйти</button>
                     </div>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 23</p>
-                    <button id="logout-btn" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">Выйти</button>
+                    <p>Всего тикетов: 24</p>
                 </header>
+
                 <div class="controls">
-                    <button id="show-feedback-btn" style="display: none; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
                         Отзывы (1-3⭐)
                     </button>
                     <div class="search-box">
@@ -352,8 +352,43 @@
                         <option value="messages">По кол-ву сообщений</option>
                     </select>
                 </div>
+
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Технические-проблемы"
+                     data-opened="1758694599"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1420292833012875264"
+                     data-number="24"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1420292833012875264.html" class="ticket-title">#ticket-technical-24</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Технические-проблемы</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 24.09.2025 06:16</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1420292833012875264.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -1137,6 +1172,7 @@
                 </div>
             
                 </div>
+
                 <div id="feedback-container">
                     <button id="back-to-tickets-btn">← Назад к тикетам</button>
                     <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Негативные отзывы (Оценки 1–3)</h2>
@@ -1144,25 +1180,24 @@
                         <p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>
                     </div>
                 </div>
+
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 23 • Сгенерировано: 24.09.2025 05:53
+                    © 2025 Ticket Bot • Всего тикетов: 24 • Сгенерировано: 24.09.2025 06:16
                 </footer>
             </div>
+
             <script>
-                // Ждём полной загрузки DOM
                 window.addEventListener('DOMContentLoaded', async function() {
-                    console.log("📄 DOM загружен, инициализируем Supabase...");
                     const supabaseUrl = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
                     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
                     if (typeof window.supabase === 'undefined') {
                         document.getElementById('login-container').innerHTML = `
                             <h2 style="color: #d9534f;">❌ Ошибка</h2>
-                            <p>Supabase SDK не загружен. Проверьте подключение к интернету.</p>
+                            <p>Supabase SDK не загружен.</p>
                         `;
                         return;
                     }
                     const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-                    console.log("✅ Supabase клиент создан");
                     const loginContainer = document.getElementById('login-container');
                     const contentContainer = document.getElementById('content-container');
                     const loginBtn = document.getElementById('login-btn');
@@ -1171,76 +1206,68 @@
                     const backToTicketsBtn = document.getElementById('back-to-tickets-btn');
                     const ticketsGrid = document.getElementById('tickets-grid');
                     const feedbackContainer = document.getElementById('feedback-container');
-                    // --- NEW: ADMIN_IDS ---
                     const ADMIN_IDS = [457254057816489984,855078703225372702];
 
-                    // Проверка сессии при загрузке
                     const { data } = await supabase.auth.getSession();
                     const session = data.session;
                     updateUI(session);
 
-                    // Слушаем изменения аутентификации
                     supabase.auth.onAuthStateChange((event, session) => {
-                        console.log("🔄 Состояние аутентификации изменилось:", event);
                         updateUI(session);
                     });
 
                     async function signInWithDiscord() {
-                        console.log("🔑 Начинаем вход через Discord...");
                         const { error } = await supabase.auth.signInWithOAuth({
                             provider: 'discord',
-                            options: {
-                                redirectTo: window.location.origin,
-                            }
+                            options: { redirectTo: window.location.origin }
                         });
-                        if (error) {
-                            console.error("❌ Ошибка входа:", error.message);
-                            alert('Ошибка входа: ' + error.message);
-                        } else {
-                            console.log("✅ Запрос на вход отправлен");
-                        }
+                        if (error) alert('Ошибка входа: ' + error.message);
                     }
 
                     async function signOut() {
-                        console.log("🚪 Выход...");
-                        const { error } = await supabase.auth.signOut();
-                        if (error) {
-                            console.error("❌ Ошибка выхода:", error);
-                        } else {
-                            console.log("✅ Успешный выход");
-                        }
+                        await supabase.auth.signOut();
+                        window.location.reload();
                     }
 
                     function updateUI(session) {
                         if (session) {
+                            const user = session.user;
+                            const userId = String(user.id);
+                            const isAdmin = ADMIN_IDS.some(id => 
+                                String(id) === userId || 
+                                String(BigInt(id)) === userId
+                            );
+
+                            if (!isAdmin) {
+                                loginContainer.style.display = 'flex';
+                                contentContainer.style.display = 'none';
+                                loginContainer.innerHTML = `
+                                    <h2 style="color: #d9534f;">🚫 Доступ запрещён</h2>
+                                    <p>У вас нет прав администратора для просмотра архива тикетов.</p>
+                                    <button id="logout-and-back" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                        Выйти и вернуться
+                                    </button>
+                                `;
+                                document.getElementById('logout-and-back').addEventListener('click', signOut);
+                                return;
+                            }
+
+                            // Админ — показываем контент
                             loginContainer.style.display = 'none';
                             contentContainer.style.display = 'block';
 
-                            // Профиль
-                            const user = session.user;
                             const avatarUrl = user.user_metadata.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-                            const displayName = user.user_metadata.full_name || user.user_metadata.preferred_username || 'User';
+                            const displayName = user.user_metadata.full_name || user.user_metadata.preferred_username || 'Admin';
                             document.getElementById('user-avatar').src = avatarUrl;
                             document.getElementById('user-display-name').textContent = displayName;
 
-                            // Проверка админа
-                            const userId = String(user.id);
-                            const isAdmin = ADMIN_IDS.includes(BigInt(userId)) || ADMIN_IDS.includes(Number(userId)) || ADMIN_IDS.includes(userId);
+                            // Показываем кнопку отзывов
+                            if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
 
-                            // Показываем кнопку отзывов только админам
-                            if (showFeedbackBtn) {
-                                showFeedbackBtn.style.display = isAdmin ? 'inline-block' : 'none';
-                            }
-
-                            // Фильтруем тикеты
+                            // Показываем все тикеты
                             const ticketCards = document.querySelectorAll('.ticket-card');
                             ticketCards.forEach(card => {
-                                const ticketUserId = card.dataset.userId;
-                                if (isAdmin || String(ticketUserId) === userId) {
-                                    card.style.display = 'block';
-                                } else {
-                                    card.style.display = 'none';
-                                }
+                                card.style.display = 'block';
                             });
                         } else {
                             loginContainer.style.display = 'flex';
@@ -1297,17 +1324,14 @@
                             });
                         } catch (error) {
                             feedbackList.innerHTML = `<p style="text-align: center; color: #d9534f; grid-column: 1 / -1;">Ошибка: ${error.message}</p>`;
-                            console.error("Ошибка загрузки отзывов:", error);
                         }
                     }
 
-                    // Обработчики
                     if (loginBtn) loginBtn.addEventListener('click', signInWithDiscord);
                     if (logoutBtn) logoutBtn.addEventListener('click', signOut);
                     if (showFeedbackBtn) showFeedbackBtn.addEventListener('click', showFeedbackTab);
                     if (backToTicketsBtn) backToTicketsBtn.addEventListener('click', showTicketsTab);
 
-                    // Фильтрация и сортировка
                     function filterTickets() {
                         const search = document.getElementById('search').value.toLowerCase();
                         const category = document.getElementById('category').value;
@@ -1335,6 +1359,7 @@
                             card.style.display = matchesSearch && matchesCategory && matchesPriority ? 'block' : 'none';
                         });
                     }
+
                     function sortTickets() {
                         const sortBy = document.getElementById('sort').value;
                         const container = document.querySelector('.ticket-grid');
@@ -1356,6 +1381,7 @@
                         container.innerHTML = '';
                         cards.forEach(card => container.appendChild(card));
                     }
+
                     const searchInput = document.getElementById('search');
                     const categorySelect = document.getElementById('category');
                     const prioritySelect = document.getElementById('priority');
