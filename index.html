@@ -319,7 +319,6 @@
                 </button>
                 <div id="user-info"></div>
             </div>
-
             <div id="content-container">
                 <header>
                     <div id="user-profile">
@@ -328,9 +327,8 @@
                         <button id="logout-btn">Выйти</button>
                     </div>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 25</p>
+                    <p>Всего тикетов: 26</p>
                 </header>
-
                 <div class="controls">
                     <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
                         Отзывы (1-3⭐)
@@ -352,9 +350,42 @@
                         <option value="messages">По кол-ву сообщений</option>
                     </select>
                 </div>
-
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Жалоба-на-игрока"
+                     data-opened="1758801961"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1420743141442584608"
+                     data-number="26"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1420743141442584608.html" class="ticket-title">#ticket-report-26</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 25.09.2025 12:06</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1420743141442584608.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -1206,7 +1237,6 @@
                 </div>
             
                 </div>
-
                 <div id="feedback-container">
                     <button id="back-to-tickets-btn">← Назад к тикетам</button>
                     <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Негативные отзывы (Оценки 1–3)</h2>
@@ -1214,12 +1244,10 @@
                         <p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>
                     </div>
                 </div>
-
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 25 • Сгенерировано: 24.09.2025 06:21
+                    © 2025 Ticket Bot • Всего тикетов: 26 • Сгенерировано: 25.09.2025 12:06
                 </footer>
             </div>
-
             <script>
                 window.addEventListener('DOMContentLoaded', async function() {
                     const supabaseUrl = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
@@ -1240,16 +1268,13 @@
                     const backToTicketsBtn = document.getElementById('back-to-tickets-btn');
                     const ticketsGrid = document.getElementById('tickets-grid');
                     const feedbackContainer = document.getElementById('feedback-container');
-                    const ADMIN_IDS = [457254057816489984,855078703225372702];
-
+                    const ADMIN_IDS = ["457254057816489984","855078703225372702"];
                     const { data } = await supabase.auth.getSession();
                     const session = data.session;
                     updateUI(session);
-
                     supabase.auth.onAuthStateChange((event, session) => {
                         updateUI(session);
                     });
-
                     async function signInWithDiscord() {
                         const { error } = await supabase.auth.signInWithOAuth({
                             provider: 'discord',
@@ -1257,21 +1282,15 @@
                         });
                         if (error) alert('Ошибка входа: ' + error.message);
                     }
-
                     async function signOut() {
                         await supabase.auth.signOut();
                         window.location.reload();
                     }
-
                     function updateUI(session) {
                         if (session) {
                             const user = session.user;
                             const userId = String(user.id);
-                            const isAdmin = ADMIN_IDS.some(id => 
-                                String(id) === userId || 
-                                String(BigInt(id)) === userId
-                            );
-
+                            const isAdmin = ADMIN_IDS.includes(userId);
                             if (!isAdmin) {
                                 loginContainer.style.display = 'flex';
                                 contentContainer.style.display = 'none';
@@ -1285,19 +1304,15 @@
                                 document.getElementById('logout-and-back').addEventListener('click', signOut);
                                 return;
                             }
-
                             // Админ — показываем контент
                             loginContainer.style.display = 'none';
                             contentContainer.style.display = 'block';
-
                             const avatarUrl = user.user_metadata.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
                             const displayName = user.user_metadata.full_name || user.user_metadata.preferred_username || 'Admin';
                             document.getElementById('user-avatar').src = avatarUrl;
                             document.getElementById('user-display-name').textContent = displayName;
-
                             // Показываем кнопку отзывов
                             if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
-
                             // Показываем все тикеты
                             const ticketCards = document.querySelectorAll('.ticket-card');
                             ticketCards.forEach(card => {
@@ -1308,18 +1323,15 @@
                             contentContainer.style.display = 'none';
                         }
                     }
-
                     function showFeedbackTab() {
                         ticketsGrid.style.display = 'none';
                         feedbackContainer.style.display = 'block';
                         loadFeedback();
                     }
-
                     function showTicketsTab() {
                         feedbackContainer.style.display = 'none';
                         ticketsGrid.style.display = 'grid';
                     }
-
                     async function loadFeedback() {
                         const feedbackList = document.getElementById('feedback-list');
                         feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>';
@@ -1360,12 +1372,10 @@
                             feedbackList.innerHTML = `<p style="text-align: center; color: #d9534f; grid-column: 1 / -1;">Ошибка: ${error.message}</p>`;
                         }
                     }
-
                     if (loginBtn) loginBtn.addEventListener('click', signInWithDiscord);
                     if (logoutBtn) logoutBtn.addEventListener('click', signOut);
                     if (showFeedbackBtn) showFeedbackBtn.addEventListener('click', showFeedbackTab);
                     if (backToTicketsBtn) backToTicketsBtn.addEventListener('click', showTicketsTab);
-
                     function filterTickets() {
                         const search = document.getElementById('search').value.toLowerCase();
                         const category = document.getElementById('category').value;
@@ -1393,7 +1403,6 @@
                             card.style.display = matchesSearch && matchesCategory && matchesPriority ? 'block' : 'none';
                         });
                     }
-
                     function sortTickets() {
                         const sortBy = document.getElementById('sort').value;
                         const container = document.querySelector('.ticket-grid');
@@ -1415,7 +1424,6 @@
                         container.innerHTML = '';
                         cards.forEach(card => container.appendChild(card));
                     }
-
                     const searchInput = document.getElementById('search');
                     const categorySelect = document.getElementById('category');
                     const prioritySelect = document.getElementById('priority');
