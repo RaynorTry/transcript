@@ -19,24 +19,26 @@
                     --filter-bg: #333333;
                     --border: #404040;
                 }
+                * {
+                    box-sizing: border-box;
+                }
                 body {
                     margin: 0;
                     background: var(--bg);
                     color: var(--text);
                     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                     line-height: 1.6;
-                    padding: 0;
                 }
                 #login-container {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    height: 100vh;
+                    min-height: 100vh;
                     background: var(--bg);
                     color: var(--text);
                     text-align: center;
-                    padding: 2rem;
+                    padding: 1.5rem;
                 }
                 #login-container h2 {
                     margin-bottom: 1rem;
@@ -68,52 +70,60 @@
                     display: none;
                 }
                 header {
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
                     background: var(--header-bg);
                     color: var(--header-text);
-                    padding: 1.5rem;
+                    padding: 1.25rem 1rem;
                     text-align: center;
                     border-bottom: 1px solid var(--border);
                     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-                    position: relative;
                 }
                 #user-profile {
                     position: absolute;
-                    top: 16px;
-                    right: 16px;
+                    top: 12px;
+                    right: 12px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 6px;
+                    gap: 4px;
+                    font-size: 0.85rem;
                 }
                 #user-avatar {
-                    width: 32px;
-                    height: 32px;
+                    width: 28px;
+                    height: 28px;
                     border-radius: 50%;
                     border: 2px solid var(--accent);
                 }
                 #logout-btn {
-                    margin-top: 0.5rem;
-                    padding: 0.3rem 0.8rem;
+                    margin-top: 0.25rem;
+                    padding: 0.25rem 0.6rem;
                     background: #d9534f;
                     color: white;
                     border: none;
                     border-radius: 4px;
                     cursor: pointer;
-                    font-size: 0.9rem;
+                    font-size: 0.8rem;
                 }
                 header h1 {
                     margin: 0;
-                    font-size: 1.8rem;
+                    font-size: 1.4rem;
                     font-weight: 600;
+                }
+                header p {
+                    margin: 0.25rem 0 0;
+                    font-size: 0.9rem;
+                    color: var(--muted);
                 }
                 .controls {
                     display: flex;
-                    gap: 1rem;
+                    flex-wrap: wrap;
+                    gap: 0.75rem;
                     padding: 1rem;
                     background: var(--filter-bg);
-                    flex-wrap: wrap;
-                    align-items: center;
                     border-bottom: 1px solid var(--border);
+                    align-items: center;
                 }
                 .search-box {
                     flex: 1;
@@ -127,7 +137,6 @@
                     background: var(--card);
                     color: var(--text);
                     font-family: inherit;
-                    box-sizing: border-box;
                 }
                 select {
                     padding: 0.5rem;
@@ -136,12 +145,13 @@
                     background: var(--card);
                     color: var(--text);
                     font-family: inherit;
+                    min-width: 140px;
                 }
                 .ticket-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                    gap: 1.5rem;
-                    padding: 2rem 1rem;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 1.25rem;
+                    padding: 1.5rem 1rem 2rem;
                     max-width: 1400px;
                     margin: 0 auto;
                 }
@@ -149,7 +159,7 @@
                     background: var(--card);
                     border: 1px solid var(--border);
                     border-radius: 8px;
-                    padding: 1.25rem;
+                    padding: 1rem;
                     transition: transform 0.2s, box-shadow 0.2s;
                 }
                 .ticket-card:hover {
@@ -160,29 +170,29 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: flex-start;
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.75rem;
                     flex-wrap: wrap;
                     gap: 0.5rem;
                 }
                 .ticket-title {
                     font-weight: 600;
-                    font-size: 1.1rem;
+                    font-size: 1.05rem;
                     color: var(--accent);
                     text-decoration: none;
                 }
                 .ticket-meta {
-                    font-size: 0.875rem;
+                    font-size: 0.85rem;
                     color: var(--muted);
-                    margin: 0.75rem 0;
+                    margin: 0.5rem 0;
                     line-height: 1.5;
                 }
                 .ticket-meta div {
-                    margin: 0.25rem 0;
+                    margin: 0.2rem 0;
                     display: flex;
                     gap: 0.5rem;
                 }
                 .ticket-meta strong {
-                    min-width: 90px;
+                    min-width: 85px;
                     color: var(--text);
                     font-weight: 600;
                 }
@@ -190,22 +200,22 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    margin-top: 1.25rem;
-                    padding-top: 1rem;
+                    margin-top: 1rem;
+                    padding-top: 0.75rem;
                     border-top: 1px solid var(--border);
-                    font-size: 0.875rem;
+                    font-size: 0.85rem;
                 }
                 .view-btn {
                     background: var(--accent);
                     color: #fff;
                     border: none;
-                    padding: 0.375rem 1rem;
+                    padding: 0.35rem 0.9rem;
                     border-radius: 6px;
                     font-weight: 600;
                     cursor: pointer;
                     text-decoration: none;
                     display: inline-block;
-                    font-size: 0.875rem;
+                    font-size: 0.85rem;
                     transition: background 0.2s;
                 }
                 .view-btn:hover {
@@ -213,13 +223,28 @@
                 }
                 footer {
                     color: var(--muted);
-                    font-size: 0.875rem;
+                    font-size: 0.85rem;
                     text-align: center;
-                    padding: 2rem;
+                    padding: 1.5rem;
                     border-top: 1px solid var(--border);
-                    margin-top: 2rem;
+                    margin-top: 1rem;
                 }
+                /* Mobile-first адаптация */
                 @media (max-width: 768px) {
+                    header {
+                        padding: 1rem;
+                    }
+                    header h1 {
+                        font-size: 1.25rem;
+                    }
+                    #user-profile {
+                        top: 10px;
+                        right: 10px;
+                    }
+                    #user-avatar {
+                        width: 24px;
+                        height: 24px;
+                    }
                     .controls {
                         flex-direction: column;
                         align-items: stretch;
@@ -227,14 +252,45 @@
                     .search-box {
                         width: 100%;
                     }
+                    select {
+                        width: 100%;
+                        min-width: auto;
+                    }
                     .ticket-grid {
                         grid-template-columns: 1fr;
-                        padding: 1rem;
+                        padding: 1rem 0.75rem 1.5rem;
+                    }
+                    .ticket-card {
+                        padding: 0.9rem;
+                    }
+                    .ticket-meta strong {
+                        min-width: 70px;
+                        font-size: 0.8rem;
+                    }
+                    .ticket-meta {
+                        font-size: 0.8rem;
                     }
                 }
+                @media (max-width: 480px) {
+                    .ticket-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0.4rem;
+                    }
+                    .ticket-footer {
+                        flex-direction: column;
+                        gap: 0.5rem;
+                        align-items: flex-start;
+                    }
+                    .view-btn {
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+                /* Отзывы */
                 #feedback-container {
                     display: none;
-                    padding: 2rem 1rem;
+                    padding: 1.5rem 1rem 2rem;
                     max-width: 1400px;
                     margin: 0 auto;
                 }
@@ -242,7 +298,7 @@
                     background: var(--card);
                     border: 1px solid var(--border);
                     border-radius: 8px;
-                    padding: 1.25rem;
+                    padding: 1rem;
                     transition: transform 0.2s, box-shadow 0.2s;
                 }
                 .feedback-card:hover {
@@ -253,7 +309,7 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: flex-start;
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.75rem;
                     flex-wrap: wrap;
                     gap: 0.5rem;
                 }
@@ -261,30 +317,31 @@
                     display: inline-flex;
                     align-items: center;
                     gap: 0.25rem;
-                    padding: 0.25rem 0.5rem;
+                    padding: 0.2rem 0.45rem;
                     border-radius: 4px;
                     font-weight: bold;
-                    font-size: 0.875rem;
+                    font-size: 0.8rem;
                 }
                 .rating-badge-1 { background-color: #d9534f; color: white; }
                 .rating-badge-2 { background-color: #f0ad4e; color: white; }
                 .rating-badge-3 { background-color: #f0ad4e; color: white; }
                 .timestamp {
                     color: var(--muted);
-                    font-size: 0.875rem;
+                    font-size: 0.8rem;
                 }
                 .feedback-body {
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.75rem;
                 }
                 .feedback-body p {
-                    margin: 0.5rem 0;
+                    margin: 0.4rem 0;
                     color: var(--text);
+                    font-size: 0.9rem;
                 }
                 .feedback-footer {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    font-size: 0.875rem;
+                    font-size: 0.8rem;
                     color: var(--muted);
                 }
                 .ticket-link {
@@ -304,6 +361,12 @@
                     border-radius: 4px;
                     cursor: pointer;
                     font-weight: 600;
+                    width: auto;
+                }
+                @media (max-width: 480px) {
+                    #back-to-tickets-btn {
+                        width: 100%;
+                    }
                 }
             </style>
         </head>
@@ -324,14 +387,14 @@
                     <div id="user-profile">
                         <img id="user-avatar" src="" alt="Avatar">
                         <span id="user-display-name"></span>
-                        <span id="admin-badge" style="background: #d9534f; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; display: none;">Админ</span>
+                        <span id="admin-badge" style="background: #d9534f; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; display: none;">Админ</span>
                         <button id="logout-btn">Выйти</button>
                     </div>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 32</p>
+                    <p>Всего тикетов: 1</p>
                 </header>
                 <div class="controls">
-                    <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; min-width: 140px;">
                         Отзывы (1-3⭐)
                     </button>
                     <div class="search-box">
@@ -339,7 +402,7 @@
                     </div>
                     <select id="category" onchange="filterTickets()">
                         <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Жалоба-на-состав">Жалоба-на-состав</option><option value="Жалоба-на-состава">Жалоба-на-состава</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Технические-проблемы">Технические-проблемы</option>
+                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option>
                     </select>
                     <select id="priority" onchange="filterTickets()">
                         <option value="all">Все приоритеты</option>
@@ -354,198 +417,28 @@
                 <div class="ticket-grid" id="tickets-grid">
         
                 <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-состав"
-                     data-opened="1758871479"
-                     data-closed-time="1758871490"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1421034720937902141"
-                     data-number="31"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421034720937902141.html" class="ticket-title">#ticket-staff-report-31</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-состав</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 07:24</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 07:24</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1421034720937902141.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="п"
-                     data-description="п"
+                     data-nickname="в"
+                     data-description="в"
                      data-category="Жалоба-на-игрока"
-                     data-opened="1758869622"
-                     data-closed-time="1758869631"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1421026931817582633"
-                     data-number="30"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421026931817582633.html" class="ticket-title">#ticket-report-30</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> п</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 06:53</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 06:53</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1421026931817582633.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758867974"
-                     data-closed-time="1758867984"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1421020022813364328"
-                     data-number="29"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421020022813364328.html" class="ticket-title">#ticket-warp-29</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 06:26</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 06:26</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1421020022813364328.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="g"
-                     data-description="g"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758867094"
-                     data-closed-time="1758867107"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421016329959378946"
-                     data-number="28"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421016329959378946.html" class="ticket-title">#ticket-report-28</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> g</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 06:11</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 06:11</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421016329959378946.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758865913"
-                     data-closed-time="1758865977"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1421011376993730591"
-                     data-number="27"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421011376993730591.html" class="ticket-title">#ticket-report-27</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 05:51</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 05:52</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1421011376993730591.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758865559"
+                     data-opened="1758873095"
                      data-closed-time="0"
                      data-messages="0"
                      data-attachments="0"
-                     data-id="1421009892067643456"
-                     data-number="27"
+                     data-id="1421041502314041364"
+                     data-number="1"
                      data-opened-by="Рэйка"
                      data-closed-by="—"
                      data-priority="medium"
                      data-assigned="—"
                      data-user-id="457254057816489984">
                     <div class="ticket-header">
-                        <a href="transcript-1421009892067643456.html" class="ticket-title">#ticket-warp-27</a>
+                        <a href="transcript-1421041502314041364.html" class="ticket-title">#ticket-report-1</a>
                     </div>
                     <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> в</div>
                         <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 05:45</div>
+                        <div><strong>Дата:</strong> 26.09.2025 07:51</div>
                         
                         
                         <div><strong>Приоритет:</strong> 🟡 Средний</div>
@@ -553,904 +446,20 @@
                     </div>
                     <div class="ticket-footer">
                         <span>0 сообщений</span>
-                        <a href="transcript-1421009892067643456.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758801961"
-                     data-closed-time="1758801971"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420743141442584608"
-                     data-number="26"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420743141442584608.html" class="ticket-title">#ticket-report-26</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 25.09.2025 12:06</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 25.09.2025 12:06</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420743141442584608.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758694901"
-                     data-closed-time="1758694914"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420294101852622878"
-                     data-number="25"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420294101852622878.html" class="ticket-title">#ticket-warp-25</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 06:21</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 06:21</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420294101852622878.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Технические-проблемы"
-                     data-opened="1758694599"
-                     data-closed-time="1758694608"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1420292833012875264"
-                     data-number="24"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420292833012875264.html" class="ticket-title">#ticket-technical-24</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 06:16</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 06:16</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1420292833012875264.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758693080"
-                     data-closed-time="1758693192"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420286463572054077"
-                     data-number="23"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420286463572054077.html" class="ticket-title">#ticket-report-23</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 05:51</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 05:53</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420286463572054077.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Технические-проблемы"
-                     data-opened="1758689758"
-                     data-closed-time="1758689771"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420272530928828508"
-                     data-number="22"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420272530928828508.html" class="ticket-title">#ticket-technical-22</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 04:55</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 04:56</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420272530928828508.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="в"
-                     data-description="в"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758687378"
-                     data-closed-time="1758687391"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420262548619530281"
-                     data-number="21"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420262548619530281.html" class="ticket-title">#ticket-report-21</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> в</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 04:16</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 04:16</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420262548619530281.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758684919"
-                     data-closed-time="1758685135"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420252234129608917"
-                     data-number="20"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420252234129608917.html" class="ticket-title">#ticket-warp-20</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 03:35</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 03:38</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420252234129608917.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758680392"
-                     data-closed-time="1758680400"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1420233244066054237"
-                     data-number="19"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420233244066054237.html" class="ticket-title">#ticket-report-19</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 02:19</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 02:20</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1420233244066054237.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758678803"
-                     data-closed-time="1758678820"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420226579128254496"
-                     data-number="18"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420226579128254496.html" class="ticket-title">#ticket-warp-18</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 01:53</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 01:53</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420226579128254496.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758678282"
-                     data-closed-time="1758678295"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420224396051615867"
-                     data-number="17"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420224396051615867.html" class="ticket-title">#ticket-report-17</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 01:44</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 01:44</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420224396051615867.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-состава"
-                     data-opened="1758675733"
-                     data-closed-time="1758675944"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420213703105843251"
-                     data-number="16"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420213703105843251.html" class="ticket-title">#ticket-ticket-16</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-состава</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 01:02</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 01:05</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420213703105843251.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758674924"
-                     data-closed-time="1758674965"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420210309259333712"
-                     data-number="15"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420210309259333712.html" class="ticket-title">#ticket-report-15</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 24.09.2025 00:48</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 24.09.2025 00:49</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420210309259333712.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758648418"
-                     data-closed-time="1758648430"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1420099137688305707"
-                     data-number="14"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420099137688305707.html" class="ticket-title">#ticket-warp-14</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 17:26</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 17:27</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1420099137688305707.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758647379"
-                     data-closed-time="1758647390"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1420094777436799037"
-                     data-number="13"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420094777436799037.html" class="ticket-title">#ticket-report-13</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 17:09</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 17:09</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1420094777436799037.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758646660"
-                     data-closed-time="1758646672"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420091762667425925"
-                     data-number="12"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420091762667425925.html" class="ticket-title">#ticket-warp-12</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:57</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:57</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420091762667425925.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Технические-проблемы"
-                     data-opened="1758646235"
-                     data-closed-time="1758646261"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420089981182935154"
-                     data-number="11"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420089981182935154.html" class="ticket-title">#ticket-technical-11</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:50</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:51</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420089981182935154.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758645803"
-                     data-closed-time="1758645840"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420088167402569800"
-                     data-number="10"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Vincent_Assault"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420088167402569800.html" class="ticket-title">#ticket-report-10</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:43</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:44</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Vincent_Assault</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420088167402569800.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758645607"
-                     data-closed-time="1758645638"
-                     data-messages="3"
-                     data-attachments="0"
-                     data-id="1420087346577145918"
-                     data-number="9"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="high"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420087346577145918.html" class="ticket-title">#ticket-warp-9</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:40</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:40</div>
-                        <div><strong>Приоритет:</strong> 🟠 Высокий</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1420087346577145918.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758645182"
-                     data-closed-time="1758645218"
-                     data-messages="4"
-                     data-attachments="0"
-                     data-id="1420085565323214909"
-                     data-number="8"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420085565323214909.html" class="ticket-title">#ticket-report-8</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:33</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:33</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>4 сообщений</span>
-                        <a href="transcript-1420085565323214909.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="f"
-                     data-description="f"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758644850"
-                     data-closed-time="1758644873"
-                     data-messages="3"
-                     data-attachments="0"
-                     data-id="1420084171694542948"
-                     data-number="7"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420084171694542948.html" class="ticket-title">#ticket-warp-7</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> f</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:27</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:27</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1420084171694542948.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758644453"
-                     data-closed-time="1758644531"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1420082505704280065"
-                     data-number="6"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1420082505704280065.html" class="ticket-title">#ticket-report-6</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 16:20</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 16:22</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1420082505704280065.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="Гост"
-                     data-description="Спасите, я не хочу ебашить в шк"
-                     data-category="Технические-проблемы"
-                     data-opened="1758619446"
-                     data-closed-time="1758619488"
-                     data-messages="4"
-                     data-attachments="5"
-                     data-id="1419977618761187419"
-                     data-number="5"
-                     data-opened-by="Гостоевский"
-                     data-closed-by="Гостоевский"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="1174367291325030440">
-                    <div class="ticket-header">
-                        <a href="transcript-1419977618761187419.html" class="ticket-title">#ticket-technical-5</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> Гост</div>
-                        <div><strong>Открыл:</strong> Гостоевский</div>
-                        <div><strong>Дата:</strong> 23.09.2025 09:24</div>
-                        <div><strong>Закрыл:</strong> Гостоевский</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 09:24</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>4 сообщений</span>
-                        <a href="transcript-1419977618761187419.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758592161"
-                     data-closed-time="1758592224"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1419863176769699860"
-                     data-number="4"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1419863176769699860.html" class="ticket-title">#ticket-warp-4</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 23.09.2025 01:49</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 23.09.2025 01:50</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1419863176769699860.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758557738"
-                     data-closed-time="1758557836"
-                     data-messages="4"
-                     data-attachments="2"
-                     data-id="1419718797345951845"
-                     data-number="3"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="high"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1419718797345951845.html" class="ticket-title">#ticket-report-3</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 22.09.2025 16:15</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 22.09.2025 16:17</div>
-                        <div><strong>Приоритет:</strong> 🟠 Высокий</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>4 сообщений</span>
-                        <a href="transcript-1419718797345951845.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Технические-проблемы"
-                     data-opened="1758555781"
-                     data-closed-time="1758555830"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1419710587524612246"
-                     data-number="2"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1419710587524612246.html" class="ticket-title">#ticket-technical-2</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Технические-проблемы</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 22.09.2025 15:43</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 22.09.2025 15:43</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1419710587524612246.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758555581"
-                     data-closed-time="1758555674"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1419709749750136832"
-                     data-number="1"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1419709749750136832.html" class="ticket-title">#ticket-report-1</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 22.09.2025 15:39</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 22.09.2025 15:41</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1419709749750136832.html" class="view-btn">Открыть</a>
+                        <a href="transcript-1421041502314041364.html" class="view-btn">Открыть</a>
                     </div>
                 </div>
             
                 </div>
                 <div id="feedback-container">
                     <button id="back-to-tickets-btn">← Назад к тикетам</button>
-                    <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Негативные отзывы (Оценки 1–3)</h2>
+                    <h2 style="text-align: center; color: var(--text); margin-bottom: 1.25rem;">Негативные отзывы (Оценки 1–3)</h2>
                     <div id="feedback-list" class="ticket-grid">
                         <p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 32 • Сгенерировано: 26.09.2025 07:24
+                    © 2025 Ticket Bot • Всего тикетов: 1 • Сгенерировано: 26.09.2025 07:51
                 </footer>
             </div>
             <script>
@@ -1474,15 +483,12 @@
                     const ticketsGrid = document.getElementById('tickets-grid');
                     const feedbackContainer = document.getElementById('feedback-container');
                     const ADMIN_IDS = ["457254057816489984","855078703225372702"];
-
                     const { data } = await supabase.auth.getSession();
                     const session = data.session;
                     updateUI(session);
-
                     supabase.auth.onAuthStateChange((event, session) => {
                         updateUI(session);
                     });
-
                     async function signInWithDiscord() {
                         const { error } = await supabase.auth.signInWithOAuth({
                             provider: 'discord',
@@ -1490,27 +496,20 @@
                         });
                         if (error) alert('Ошибка входа: ' + error.message);
                     }
-
                     async function signOut() {
                         await supabase.auth.signOut();
                         window.location.reload();
                     }
-
                     function updateUI(session) {
                         if (session) {
                             const user = session.user;
-                            // 🔑 ИСПРАВЛЕНО: используем provider_id из app_metadata
                             let discordId = null;
                             if (user.app_metadata?.provider_id) {
                                 discordId = String(user.app_metadata.provider_id);
                             } else if (user.user_metadata?.provider_id) {
                                 discordId = String(user.user_metadata.provider_id);
                             }
-                            console.log("Discord ID из Supabase:", discordId);
-                            console.log("Админ-лист:", ADMIN_IDS);
                             const isAdmin = discordId && ADMIN_IDS.includes(discordId);
-                            console.log("isAdmin:", isAdmin);
-
                             if (!isAdmin) {
                                 loginContainer.style.display = 'flex';
                                 contentContainer.style.display = 'none';
@@ -1524,8 +523,6 @@
                                 document.getElementById('logout-and-back').addEventListener('click', signOut);
                                 return;
                             }
-
-                            // Админ — показываем контент
                             loginContainer.style.display = 'none';
                             contentContainer.style.display = 'block';
                             const avatarUrl = user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
@@ -1533,30 +530,21 @@
                             document.getElementById('user-avatar').src = avatarUrl;
                             document.getElementById('user-display-name').textContent = displayName;
                             document.getElementById('admin-badge').style.display = 'block';
-
                             if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
-
-                            const ticketCards = document.querySelectorAll('.ticket-card');
-                            ticketCards.forEach(card => {
-                                card.style.display = 'block';
-                            });
                         } else {
                             loginContainer.style.display = 'flex';
                             contentContainer.style.display = 'none';
                         }
                     }
-
                     function showFeedbackTab() {
                         ticketsGrid.style.display = 'none';
                         feedbackContainer.style.display = 'block';
                         loadFeedback();
                     }
-
                     function showTicketsTab() {
                         feedbackContainer.style.display = 'none';
                         ticketsGrid.style.display = 'grid';
                     }
-
                     async function loadFeedback() {
                         const feedbackList = document.getElementById('feedback-list');
                         feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>';
@@ -1583,7 +571,7 @@
                                         <p><strong>Категория:</strong> ${feedback.category}</p>
                                         <p><strong>Ник:</strong> ${feedback.nickname}</p>
                                         <p><strong>Тикет:</strong> <a href="${feedback.ticket_url}" class="ticket-link">${feedback.ticket_slug}</a></p>
-                                        <div style="background: var(--soft); padding: 1rem; border-radius: 6px; font-style: italic;">
+                                        <div style="background: var(--soft); padding: 0.75rem; border-radius: 6px; font-style: italic; font-size: 0.9rem;">
                                             "${feedback.comment}"
                                         </div>
                                     </div>
@@ -1597,12 +585,10 @@
                             feedbackList.innerHTML = `<p style="text-align: center; color: #d9534f; grid-column: 1 / -1;">Ошибка: ${error.message}</p>`;
                         }
                     }
-
                     if (loginBtn) loginBtn.addEventListener('click', signInWithDiscord);
                     if (logoutBtn) logoutBtn.addEventListener('click', signOut);
                     if (showFeedbackBtn) showFeedbackBtn.addEventListener('click', showFeedbackTab);
                     if (backToTicketsBtn) backToTicketsBtn.addEventListener('click', showTicketsTab);
-
                     function filterTickets() {
                         const search = document.getElementById('search').value.toLowerCase();
                         const category = document.getElementById('category').value;
@@ -1630,7 +616,6 @@
                             card.style.display = matchesSearch && matchesCategory && matchesPriority ? 'block' : 'none';
                         });
                     }
-
                     function sortTickets() {
                         const sortBy = document.getElementById('sort').value;
                         const container = document.querySelector('.ticket-grid');
@@ -1652,7 +637,6 @@
                         container.innerHTML = '';
                         cards.forEach(card => container.appendChild(card));
                     }
-
                     const searchInput = document.getElementById('search');
                     const categorySelect = document.getElementById('category');
                     const prioritySelect = document.getElementById('priority');
