@@ -327,7 +327,7 @@
                         <button id="logout-btn">Выйти</button>
                     </div>
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 30</p>
+                    <p>Всего тикетов: 31</p>
                 </header>
                 <div class="controls">
                     <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
@@ -352,6 +352,40 @@
                 </div>
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="п"
+                     data-description="п"
+                     data-category="Жалоба-на-игрока"
+                     data-opened="1758869622"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1421026931817582633"
+                     data-number="30"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1421026931817582633.html" class="ticket-title">#ticket-report-30</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> п</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 26.09.2025 06:53</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1421026931817582633.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -1381,7 +1415,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 30 • Сгенерировано: 26.09.2025 06:26
+                    © 2025 Ticket Bot • Всего тикетов: 31 • Сгенерировано: 26.09.2025 06:53
                 </footer>
             </div>
             <script>
@@ -1427,53 +1461,54 @@
                         window.location.reload();
                     }
 
-                function updateUI(session) {
-                    if (session) {
-                        const user = session.user;
-                        // 🔑 Правильный способ получить Discord ID через Supabase OAuth
-                        let userId = String(user.id); // fallback
-                        if (user.user_metadata && user.user_metadata.provider === 'discord' && user.user_metadata.provider_id) {
-                            userId = String(user.user_metadata.provider_id);
-                        }
+                    function updateUI(session) {
+                        if (session) {
+                            const user = session.user;
+                            // 🔑 ИСПРАВЛЕНО: используем provider_id из app_metadata
+                            let discordId = null;
+                            if (user.app_metadata?.provider_id) {
+                                discordId = String(user.app_metadata.provider_id);
+                            } else if (user.user_metadata?.provider_id) {
+                                discordId = String(user.user_metadata.provider_id);
+                            }
+                            console.log("Discord ID из Supabase:", discordId);
+                            console.log("Админ-лист:", ADMIN_IDS);
+                            const isAdmin = discordId && ADMIN_IDS.includes(discordId);
+                            console.log("isAdmin:", isAdmin);
 
-                        console.log("Ваш Discord ID:", userId);
-                        console.log("Админ-лист:", ADMIN_IDS);
-                        const isAdmin = ADMIN_IDS.includes(userId);
-                        console.log("isAdmin:", isAdmin);
+                            if (!isAdmin) {
+                                loginContainer.style.display = 'flex';
+                                contentContainer.style.display = 'none';
+                                loginContainer.innerHTML = `
+                                    <h2 style="color: #d9534f;">🚫 Доступ запрещён</h2>
+                                    <p>У вас нет прав администратора для просмотра архива тикетов.</p>
+                                    <button id="logout-and-back" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                        Выйти и вернуться
+                                    </button>
+                                `;
+                                document.getElementById('logout-and-back').addEventListener('click', signOut);
+                                return;
+                            }
 
-                        if (!isAdmin) {
+                            // Админ — показываем контент
+                            loginContainer.style.display = 'none';
+                            contentContainer.style.display = 'block';
+                            const avatarUrl = user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+                            const displayName = user.user_metadata?.full_name || user.user_metadata?.preferred_username || 'Admin';
+                            document.getElementById('user-avatar').src = avatarUrl;
+                            document.getElementById('user-display-name').textContent = displayName;
+
+                            if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
+
+                            const ticketCards = document.querySelectorAll('.ticket-card');
+                            ticketCards.forEach(card => {
+                                card.style.display = 'block';
+                            });
+                        } else {
                             loginContainer.style.display = 'flex';
                             contentContainer.style.display = 'none';
-                            loginContainer.innerHTML = `
-                                <h2 style="color: #d9534f;">🚫 Доступ запрещён</h2>
-                                <p>У вас нет прав администратора для просмотра архива тикетов.</p>
-                                <button id="logout-and-back" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                                    Выйти и вернуться
-                                </button>
-                            `;
-                            document.getElementById('logout-and-back').addEventListener('click', signOut);
-                            return;
                         }
-
-                        // Админ — показываем контент
-                        loginContainer.style.display = 'none';
-                        contentContainer.style.display = 'block';
-                        const avatarUrl = user.user_metadata.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-                        const displayName = user.user_metadata.full_name || user.user_metadata.preferred_username || 'Admin';
-                        document.getElementById('user-avatar').src = avatarUrl;
-                        document.getElementById('user-display-name').textContent = displayName;
-
-                        if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
-
-                        const ticketCards = document.querySelectorAll('.ticket-card');
-                        ticketCards.forEach(card => {
-                            card.style.display = 'block';
-                        });
-                    } else {
-                        loginContainer.style.display = 'flex';
-                        contentContainer.style.display = 'none';
                     }
-                }
 
                     function showFeedbackTab() {
                         ticketsGrid.style.display = 'none';
