@@ -119,12 +119,41 @@
                 }
                 .controls {
                     display: flex;
-                    flex-wrap: wrap;
-                    gap: 0.75rem;
+                    justify-content: space-between;
+                    align-items: center;
                     padding: 1rem;
                     background: var(--filter-bg);
                     border-bottom: 1px solid var(--border);
+                    gap: 1rem;
+                }
+
+                .controls-left {
+                    display: flex;
                     align-items: center;
+                }
+
+                .feedback-btn {
+                    background: #d9534f;
+                    color: white;
+                    border: none;
+                    padding: 0.5rem 1rem;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    transition: background 0.2s;
+                }
+
+                .feedback-btn:hover {
+                    background: #c94a4a;
+                }
+
+                .controls-right {
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
                 }
                 .search-box {
                     flex: 1;
@@ -251,6 +280,14 @@
                     .controls {
                         flex-direction: column;
                         align-items: stretch;
+                    }
+                    .controls-right {
+                        width: 100%;
+                        gap: 0.75rem;
+                    }
+                    .search-box input,
+                        select {
+                        width: 100%;
                     }
                     .search-box {
                         width: 100%;
@@ -389,7 +426,7 @@
             <header>
                 <div class="header-title-container">
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 4</p>
+                    <p>Всего тикетов: 5</p>
                 </div>
                 <div id="user-profile">
                     <img id="user-avatar" src="" alt="Avatar">
@@ -399,28 +436,64 @@
                 </div>
             </header>
                 <div class="controls">
-                    <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; min-width: 140px;">
-                        Отзывы (1-3⭐)
-                    </button>
-                    <div class="search-box">
-                        <input type="text" id="search" placeholder="Поиск по нику, описанию, ID..." oninput="filterTickets()">
+                    <div class="controls-left">
+                        <button id="show-feedback-btn" class="feedback-btn">Отзывы (1-3⭐)</button>
                     </div>
-                    <select id="category" onchange="filterTickets()">
-                        <option value="all">Все категории</option>
-                        <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option>
-                    </select>
-                    <select id="priority" onchange="filterTickets()">
-                        <option value="all">Все приоритеты</option>
-                        <option value="low">🟢 Низкий</option><option value="medium">🟡 Средний</option><option value="high">🟠 Высокий</option><option value="critical">🔴 Критический</option>
-                    </select>
-                    <select id="sort" onchange="sortTickets()">
-                        <option value="opened">По дате открытия</option>
-                        <option value="closed">По дате закрытия</option>
-                        <option value="messages">По кол-ву сообщений</option>
-                    </select>
+                    <div class="controls-right">
+                        <div class="search-box">
+                            <input type="text" id="search" placeholder="Поиск по нику, описанию, ID..." oninput="filterTickets()">
+                        </div>
+                        <select id="category" onchange="filterTickets()">
+                            <option value="all">Все категории</option>
+                            <option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Одобрение-варпа">Одобрение-варпа</option>
+                        </select>
+                        <select id="priority" onchange="filterTickets()">
+                            <option value="all">Все приоритеты</option>
+                            <option value="low">🟢 Низкий</option><option value="medium">🟡 Средний</option><option value="high">🟠 Высокий</option><option value="critical">🔴 Критический</option>
+                        </select>
+                        <select id="sort" onchange="sortTickets()">
+                            <option value="opened">По дате открытия</option>
+                            <option value="closed">По дате закрытия</option>
+                            <option value="messages">По кол-ву сообщений</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="в"
+                     data-description="в"
+                     data-category="Жалоба-на-игрока"
+                     data-opened="1758894662"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1421131957517029499"
+                     data-number="5"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1421131957517029499.html" class="ticket-title">#ticket-report-5</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
+                        <div><strong>Ник:</strong> в</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 26.09.2025 13:51</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1421131957517029499.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -566,7 +639,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 4 • Сгенерировано: 26.09.2025 13:32
+                    © 2025 Ticket Bot • Всего тикетов: 5 • Сгенерировано: 26.09.2025 13:51
                 </footer>
             </div>
             <script>
