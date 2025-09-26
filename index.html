@@ -70,25 +70,19 @@
                     display: none;
                 }
                 header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                    position: relative;
                     background: var(--header-bg);
                     color: var(--header-text);
-                    padding: 1.5rem 2rem;
+                    padding: 1.5rem 2rem; /* ← Добавляем отступ справа */
+                    text-align: center;
                     border-bottom: 1px solid var(--border);
                     box-shadow: 0 1px 3px rgba(0,0,0,0.3);
                 }
 
-                .header-title-container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 4px;
-                    text-align: center;
-                }
-
                 #user-profile {
+                    position: absolute;
+                    top: 16px;
+                    right: 16px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -238,19 +232,17 @@
                 }
                 /* Mobile-first адаптация */
                 @media (max-width: 768px) {
-                    header {
-                        flex-direction: column;
-                        align-items: stretch;
-                        gap: 1rem;
-                        padding: 1rem;
-                    }
-                    .header-title-container {
-                        align-items: center;
-                    }
-                    #user-profile {
-                        align-items: flex-start;
-                        margin-left: 0;
-                    }
+                header {
+                    padding: 1rem;
+                    text-align: left;
+                }
+                #user-profile {
+                    position: static;
+                    margin-left: auto;
+                    align-items: flex-start;
+                    top: auto;
+                    right: auto;
+                }
                     }
                     #user-avatar {
                         width: 24px;
@@ -397,7 +389,7 @@
             <header>
                 <div class="header-title-container">
                     <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 3</p>
+                    <p>Всего тикетов: 4</p>
                 </div>
                 <div id="user-profile">
                     <img id="user-avatar" src="" alt="Avatar">
@@ -429,6 +421,40 @@
                 </div>
                 <div class="ticket-grid" id="tickets-grid">
         
+                <div class="ticket-card"
+                     data-nickname="а"
+                     data-description="а"
+                     data-category="Одобрение-варпа"
+                     data-opened="1758893558"
+                     data-closed-time="0"
+                     data-messages="0"
+                     data-attachments="0"
+                     data-id="1421127328930463758"
+                     data-number="4"
+                     data-opened-by="Рэйка"
+                     data-closed-by="—"
+                     data-priority="medium"
+                     data-assigned="—"
+                     data-user-id="457254057816489984">
+                    <div class="ticket-header">
+                        <a href="transcript-1421127328930463758.html" class="ticket-title">#ticket-warp-4</a>
+                    </div>
+                    <div class="ticket-meta">
+                        <div><strong>Категория:</strong> Одобрение-варпа</div>
+                        <div><strong>Ник:</strong> а</div>
+                        <div><strong>Открыл:</strong> Рэйка</div>
+                        <div><strong>Дата:</strong> 26.09.2025 13:32</div>
+                        
+                        
+                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
+                        
+                    </div>
+                    <div class="ticket-footer">
+                        <span>0 сообщений</span>
+                        <a href="transcript-1421127328930463758.html" class="view-btn">Открыть</a>
+                    </div>
+                </div>
+            
                 <div class="ticket-card"
                      data-nickname="а"
                      data-description="а"
@@ -540,7 +566,7 @@
                     </div>
                 </div>
                 <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 3 • Сгенерировано: 26.09.2025 13:13
+                    © 2025 Ticket Bot • Всего тикетов: 4 • Сгенерировано: 26.09.2025 13:32
                 </footer>
             </div>
             <script>
