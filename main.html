@@ -33,9 +33,9 @@
     }
     #content {
       display: none;
-      max-width: 1400px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 0 1.5rem 2rem;
+      padding: 2rem;
     }
     header {
       background: var(--header-bg);
@@ -44,22 +44,52 @@
       position: sticky;
       top: 0;
       z-index: 100;
-    }
-    .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
     }
+    .header-title {
+      flex: 1;
+      min-width: 200px;
+    }
+    .header-title h1 {
+      margin-bottom: 0.5rem;
+    }
+    #total-count {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+    #logout {
+      background: var(--error);
+      color: white;
+      border: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
     .nav-tabs {
+      margin-top: 1rem;
       display: flex;
       gap: 1rem;
-      margin-top: 1rem;
     }
     .nav-tab {
       padding: 0.5rem 1rem;
-      background: var(--soft);
+      background: var(--card);
       border-radius: 6px;
       text-decoration: none;
       color: var(--text);
@@ -131,28 +161,6 @@
       font-weight: 600;
       margin-top: 1rem;
     }
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 4px;
-      border: 2px solid var(--accent);
-      object-fit: cover;
-    }
-    #logout {
-      background: var(--error);
-      color: white;
-      border: none;
-      padding: 0.4rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      margin-left: 0.5rem;
-    }
     footer {
       text-align: center;
       padding: 2rem 0 1rem;
@@ -168,22 +176,21 @@
 
   <div id="content">
     <header>
-      <div class="header-content">
-        <div>
-          <h1>Архив тикетов</h1>
-          <div id="total-count">Загрузка...</div>
-        </div>
-        <div class="user-info">
-          <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
-          <span id="user-name"></span>
-          <button id="logout">Выйти</button>
-        </div>
+      <div class="header-title">
+        <h1>Архив тикетов</h1>
+        <div id="total-count">Загрузка...</div>
       </div>
-      <div class="nav-tabs">
-        <a href="/main.html" class="nav-tab active">Все тикеты</a>
-        <a href="/feedback.html" class="nav-tab">Негативные отзывы</a>
+      <div class="user-info">
+        <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+        <span id="user-name"></span>
+        <button id="logout">Выйти</button>
       </div>
     </header>
+
+    <div class="nav-tabs">
+      <a href="/main.html" class="nav-tab active">Все тикеты</a>
+      <a href="/feedback.html" class="nav-tab">Негативные отзывы</a>
+    </div>
 
     <div class="controls">
       <div class="search-box">
@@ -255,42 +262,42 @@
       });
     }
 
-  function renderTickets(tickets) {
-    const categories = [...new Set(tickets.map(t => t.category))];
-    const categorySelect = document.getElementById('category');
-    categorySelect.innerHTML = '<option value="all">Все категории</option>';
-    categories.forEach(cat => {
-      const opt = document.createElement('option');
-      opt.value = cat;
-      opt.textContent = cat;
-      categorySelect.appendChild(opt);
-    });
+    function renderTickets(tickets) {
+      const categories = [...new Set(tickets.map(t => t.category))];
+      const categorySelect = document.getElementById('category');
+      categorySelect.innerHTML = '<option value="all">Все категории</option>';
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
+      });
 
-    ticketsGrid.innerHTML = tickets.map(ticket => `
-      <div class="ticket-card"
-         data-nickname="${ticket.nickname || ''}"
-         data-description="${ticket.description || ''}"
-         data-category="${ticket.category || ''}"
-         data-opened="${ticket.opened_at || 0}"
-         data-closed="${ticket.closed_at || 0}"
-         data-messages="${ticket.messages || 0}">
-      <a href="transcript-${ticket.id}.html" target="_blank" class="ticket-title">#${ticket.slug}</a>
-      
-      <div class="ticket-meta">
-        <div><strong>ID тикета:</strong> ${ticket.id}</div>
-        <div><strong>Категория:</strong> ${ticket.category || '—'}</div>
-        <div><strong>Открыл:</strong> ${ticket.opened_by || '—'}</div>
-        <div><strong>Закрыл:</strong> ${ticket.closed_by || '—'}</div>
-        <div><strong>Открыт:</strong> ${formatDate(ticket.opened_at)}</div>
-        ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
-        <div><strong>Причина:</strong> —</div> <!-- Причина не сохраняется в tickets.json -->
-        <div><strong>Приоритет:</strong> <span style="color:${ticket.priority_color}">${ticket.priority_emoji} ${ticket.priority_label}</span></div>
-        <div><strong>Оценка:</strong> ${ticket.rating || '—'} ⭐</div>
+      ticketsGrid.innerHTML = tickets.map(ticket => `
+        <div class="ticket-card"
+           data-nickname="${ticket.nickname || ''}"
+           data-description="${ticket.description || ''}"
+           data-category="${ticket.category || ''}"
+           data-opened="${ticket.opened_at || 0}"
+           data-closed="${ticket.closed_at || 0}"
+           data-messages="${ticket.messages || 0}">
+        <a href="transcript-${ticket.id}.html" target="_blank" class="ticket-title">#${ticket.slug}</a>
+        
+        <div class="ticket-meta">
+          <div><strong>ID тикета:</strong> ${ticket.id}</div>
+          <div><strong>Категория:</strong> ${ticket.category || '—'}</div>
+          <div><strong>Открыл:</strong> ${ticket.opened_by || '—'}</div>
+          <div><strong>Закрыл:</strong> ${ticket.closed_by || '—'}</div>
+          <div><strong>Открыт:</strong> ${formatDate(ticket.opened_at)}</div>
+          ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
+          <div><strong>Причина:</strong> —</div>
+          <div><strong>Приоритет:</strong> <span style="color:${ticket.priority_color}">${ticket.priority_emoji} ${ticket.priority_label}</span></div>
+          <div><strong>Оценка:</strong> ${ticket.rating || '—'} ⭐</div>
+        </div>
+        
+        <a href="transcript-${ticket.id}.html" target="_blank" class="view-btn">Открыть</a>
       </div>
-      
-      <a href="transcript-${ticket.id}.html" target="_blank" class="view-btn">Открыть</a>
-    </div>
-      `).join('');
+        `).join('');
     }
 
     function setupFilters() {
