@@ -111,11 +111,22 @@
     .feedback-date {
       color: var(--muted);
       font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+    .feedback-rating {
+      color: var(--error);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .feedback-assigned {
+      color: var(--text);
+      font-weight: 600;
       margin-bottom: 0.75rem;
     }
     .feedback-comment {
       font-style: italic;
       line-height: 1.5;
+      color: var(--muted);
     }
     footer {
       text-align: center;
@@ -128,12 +139,12 @@
   </style>
 </head>
 <body>
-  <div id="loading">Проверка авторизации, пожалуйста, подождите.</div>
+  <div id="loading">Проверка авторизации...</div>
 
   <div id="content">
     <header>
       <div class="header-title">
-        <h1>Негативные отзывы (Оценки 1–3⭐)</h1>
+        <h1>Негативные отзывы (Оценки 1–3)</h1>
       </div>
       <div class="user-info">
         <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
@@ -148,11 +159,11 @@
     </div>
 
     <div class="feedback-grid" id="feedback-grid">
-      <p>Загрузка отзывов, пожалуйста, подождите.</p>
+      <p>Загрузка отзывов...</p>
     </div>
 
     <footer>
-      © 2025 Архив тикетов | Cоздано с помощью бота Alya
+      © 2025 Архив тикетов
     </footer>
   </div>
 
@@ -167,15 +178,10 @@
     const content = document.getElementById('content');
     const feedbackGrid = document.getElementById('feedback-grid');
 
-    function formatDate(timestamp) {
-      if (!timestamp) return '—';
-      return new Date(timestamp * 1000).toLocaleString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+    // Извлекает ID из URL вида "transcript-123456.html"
+    function extractTicketIdFromUrl(url) {
+      const match = url.match(/transcript-(\d+)\.html/);
+      return match ? match[1] : null;
     }
 
     async function checkAuthAndLoad() {
@@ -190,19 +196,41 @@
       document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
       try {
-        const res = await fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/feedback.json');
-        const feedbacks = await res.json();
+        // Загружаем оба файла
+        const [feedbackRes, ticketsRes] = await Promise.all([
+          fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/feedback.json'),
+          fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/tickets.json')
+        ]);
+
+        const feedbacks = await feedbackRes.json();
+        const tickets = await ticketsRes.json();
+
+        // Создаём map: ticket.id (как строка) → ticket
+        const ticketMap = new Map();
+        tickets.forEach(t => {
+          // Приводим id к строке для безопасного сравнения
+          const idStr = String(t.id);
+          ticketMap.set(idStr, t);
+        });
 
         if (feedbacks.length === 0) {
           feedbackGrid.innerHTML = '<p>Нет негативных отзывов</p>';
         } else {
-          feedbackGrid.innerHTML = feedbacks.map(f => `
-            <div class="feedback-card">
-              <div class="feedback-nickname">${f.nickname}</div>
-              <div class="feedback-date">${formatDate(f.timestamp)}</div>
-              <div class="feedback-comment">"${f.comment}"</div>
-            </div>
-          `).join('');
+          feedbackGrid.innerHTML = feedbacks.map(f => {
+            const ticketId = extractTicketIdFromUrl(f.ticket_url);
+            const ticket = ticketId ? ticketMap.get(ticketId) : null;
+            const assignedTo = ticket?.assigned_to || 'Не назначен';
+
+            return `
+              <div class="feedback-card">
+                <div class="feedback-nickname">${f.nickname}</div>
+                <div class="feedback-date">${f.date}</div>
+                <div class="feedback-rating">Оценка: ${f.rating} ⭐</div>
+                <div class="feedback-assigned">Оценка поставлена: ${assignedTo}</div>
+                <div class="feedback-comment">"${f.comment}"</div>
+              </div>
+            `;
+          }).join('');
         }
       } catch (err) {
         feedbackGrid.innerHTML = `<p style="color:var(--error);">Ошибка загрузки: ${err.message}</p>`;
