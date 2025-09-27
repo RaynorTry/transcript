@@ -144,7 +144,7 @@
   <div id="content">
     <header>
       <div class="header-title">
-        <h1>Негативные отзывы (Оценки 1–3⭐)</h1>
+        <h1>Негативные отзывы (Оценки 1–3)</h1>
       </div>
       <div class="user-info">
         <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
@@ -168,6 +168,13 @@
   </div>
 
   <script>
+    // 🔑 СПИСОК РАЗРЕШЁННЫХ АДМИНОВ (замените на реальные ID из Supabase Auth)
+    const ADMIN_IDS = [
+      'ваш-uuid-админа-1',
+      'ваш-uuid-админа-2'
+      // Пример: 'a1b2c3d4-5678-90ab-cdef-1234567890ab'
+    ];
+
     const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
@@ -178,25 +185,33 @@
     const content = document.getElementById('content');
     const feedbackGrid = document.getElementById('feedback-grid');
 
-    // Извлекает ID из URL вида "transcript-123456.html"
     function extractTicketIdFromUrl(url) {
       const match = url.match(/transcript-(\d+)\.html/);
       return match ? match[1] : null;
     }
 
     async function checkAuthAndLoad() {
-      const { data } = await supabaseClient.auth.getSession();
-      if (!data.session) {
+      // 1. Проверяем наличие сессии
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error || !data.session) {
         window.location.href = '/unauthorized.html';
         return;
       }
 
-      const session = data.session;
-      document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-      document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
+      const user = data.session.user;
+      const userId = user.id;
+
+      // 2. Проверяем, есть ли пользователь в списке админов
+      if (!ADMIN_IDS.includes(userId)) {
+        window.location.href = '/unauthorized.html';
+        return;
+      }
+
+      // ✅ Доступ разрешён — загружаем данные
+      document.getElementById('user-avatar').src = user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+      document.getElementById('user-name').textContent = user.user_metadata?.full_name || 'Admin';
 
       try {
-        // Загружаем оба файла
         const [feedbackRes, ticketsRes] = await Promise.all([
           fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/feedback.json'),
           fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/tickets.json')
@@ -205,13 +220,8 @@
         const feedbacks = await feedbackRes.json();
         const tickets = await ticketsRes.json();
 
-        // Создаём map: ticket.id (как строка) → ticket
         const ticketMap = new Map();
-        tickets.forEach(t => {
-          // Приводим id к строке для безопасного сравнения
-          const idStr = String(t.id);
-          ticketMap.set(idStr, t);
-        });
+        tickets.forEach(t => ticketMap.set(String(t.id), t));
 
         if (feedbacks.length === 0) {
           feedbackGrid.innerHTML = '<p>Нет негативных отзывов</p>';
@@ -220,7 +230,6 @@
             const ticketId = extractTicketIdFromUrl(f.ticket_url);
             const ticket = ticketId ? ticketMap.get(ticketId) : null;
             const assignedTo = ticket?.assigned_to || 'Не назначен';
-
             return `
               <div class="feedback-card">
                 <div class="feedback-nickname">${f.nickname}</div>
@@ -248,4 +257,5 @@
     checkAuthAndLoad();
   </script>
 </body>
+</html>
 </html>
