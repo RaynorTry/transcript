@@ -301,7 +301,7 @@
 
     document.getElementById('logout').onclick = async () => {
       await supabaseClient.auth.signOut();
-      window.location.href = '/login.html';
+      window.location.href = '/index.html';
     };
 
     checkAuthAndLoad();
