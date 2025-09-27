@@ -27,9 +27,6 @@
     h2 {
       margin-bottom: 1rem;
     }
-    .card p {
-      margin-bottom: 1.5rem;
-    }
     button {
       background: #5865F2;
       color: white;
@@ -42,7 +39,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin: 0 auto; /* Центрирует кнопку */
+      margin: 0 auto;
     }
     button:hover {
       background: #4752c4;
@@ -61,25 +58,25 @@
     </button>
   </div>
 
-<script>
-  const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
+  <script>
+    const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
-  // Правильная инициализация
-  const { createClient } = supabase;
-  const supabaseClient = createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim());
+    // ✅ Правильная инициализация
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim());
 
-  document.getElementById('login-btn').onclick = async () => {
-    const { error } = await supabaseClient.auth.signInWithOAuth({
-      provider: 'discord',
-      options: {
-        redirectTo: window.location.origin + '/'
+    document.getElementById('login-btn').onclick = async () => {
+      const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'discord',
+        options: {
+          redirectTo: 'https://lolidarkgalaxy.vercel.app/main.html'
+        }
+      });
+      if (error) {
+        alert('Ошибка входа: ' + error.message);
       }
-    });
-    if (error) {
-      alert('Ошибка входа: ' + error.message);
-    }
-  };
-</script>
+    };
+  </script>
 </body>
 </html>
