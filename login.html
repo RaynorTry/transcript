@@ -1,0 +1,31 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Вход в архив</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { background: #1e1e1e; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+    button { background: #5865F2; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>🔐 Архив тикетов</h2>
+  <p>Войдите через Discord</p>
+  <button id="login">Войти</button>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://zzuywzjxsiggpjrblzcb.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw'
+    );
+
+    document.getElementById('login').onclick = async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'discord',
+        options: { redirectTo: 'https://your-project.vercel.app/' } // ← основной архив
+      });
+      if (error) alert('Ошибка: ' + error.message);
+    };
+  </script>
+</body>
+</html>
