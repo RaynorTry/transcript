@@ -246,18 +246,9 @@
         return;
       }
 
-      // Проверка на админа через API
-      try {
-        const res = await fetch('/api/is-admin', {
-          headers: { Authorization: `Bearer ${session.access_token}` }
-        });
-        const { is_admin } = await res.json();
-        if (!is_admin) {
-          loading.innerHTML = '<p style="color:var(--error);">🚫 Доступ запрещён. Требуются права администратора.</p>';
-          return;
-        }
-      } catch (e) {
-        loading.innerHTML = '<p style="color:var(--error);">Ошибка проверки прав доступа.</p>';
+      // Просто проверяем, есть ли сессия — если да, показываем контент
+      if (!data.session) {
+        window.location.href = '/login.html';
         return;
       }
 
