@@ -255,35 +255,41 @@
       });
     }
 
-    function renderTickets(tickets) {
-      const categories = [...new Set(tickets.map(t => t.category))];
-      const categorySelect = document.getElementById('category');
-      categorySelect.innerHTML = '<option value="all">Все категории</option>';
-      categories.forEach(cat => {
-        const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
-        categorySelect.appendChild(opt);
-      });
+  function renderTickets(tickets) {
+    const categories = [...new Set(tickets.map(t => t.category))];
+    const categorySelect = document.getElementById('category');
+    categorySelect.innerHTML = '<option value="all">Все категории</option>';
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      categorySelect.appendChild(opt);
+    });
 
-      ticketsGrid.innerHTML = tickets.map(ticket => `
-        <div class="ticket-card"
-             data-nickname="${ticket.nickname || ''}"
-             data-description="${ticket.description || ''}"
-             data-category="${ticket.category || ''}"
-             data-opened="${ticket.opened_at || 0}"
-             data-closed="${ticket.closed_at || 0}"
-             data-messages="${ticket.messages || 0}">
-          <a href="transcript-${ticket.id}.html" class="ticket-title">#${ticket.slug || ticket.id}</a>
-          <div>
-            <div><strong>Категория:</strong> ${ticket.category || '—'}</div>
-            <div><strong>Ник:</strong> ${ticket.nickname || '—'}</div>
-            <div><strong>Дата:</strong> ${formatDate(ticket.opened_at)}</div>
-            ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
-            <div><strong>Сообщений:</strong> ${ticket.messages || 0}</div>
-          </div>
-          <a href="transcript-${ticket.id}.html" class="view-btn">Открыть</a>
-        </div>
+    ticketsGrid.innerHTML = tickets.map(ticket => `
+      <div class="ticket-card"
+         data-nickname="${ticket.nickname || ''}"
+         data-description="${ticket.description || ''}"
+         data-category="${ticket.category || ''}"
+         data-opened="${ticket.opened_at || 0}"
+         data-closed="${ticket.closed_at || 0}"
+         data-messages="${ticket.messages || 0}">
+      <a href="transcript-${ticket.id}.html" target="_blank" class="ticket-title">#${ticket.slug}</a>
+      
+      <div class="ticket-meta">
+        <div><strong>ID тикета:</strong> ${ticket.id}</div>
+        <div><strong>Категория:</strong> ${ticket.category || '—'}</div>
+        <div><strong>Открыл:</strong> ${ticket.opened_by || '—'}</div>
+        <div><strong>Закрыл:</strong> ${ticket.closed_by || '—'}</div>
+        <div><strong>Открыт:</strong> ${formatDate(ticket.opened_at)}</div>
+        ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
+        <div><strong>Причина:</strong> —</div> <!-- Причина не сохраняется в tickets.json -->
+        <div><strong>Приоритет:</strong> <span style="color:${ticket.priority_color}">${ticket.priority_emoji} ${ticket.priority_label}</span></div>
+        <div><strong>Оценка:</strong> ${ticket.rating || '—'} ⭐</div>
+      </div>
+      
+      <a href="transcript-${ticket.id}.html" target="_blank" class="view-btn">Открыть</a>
+    </div>
       `).join('');
     }
 
