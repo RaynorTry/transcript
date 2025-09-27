@@ -85,7 +85,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 1rem;
+      padding: 1.2rem;
       display: flex;
       align-items: center;
       gap: 1.2rem;
@@ -117,11 +117,16 @@
       font-size: 0.9rem;
       font-weight: 600;
       color: white;
+      text-transform: capitalize;
     }
     .playtime {
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
+      margin-top: 0.6rem;
+      font-size: 1rem;
       color: var(--muted);
+    }
+    .playtime strong {
+      color: var(--text);
+      font-weight: 600;
     }
     footer {
       text-align: center;
@@ -172,13 +177,25 @@
     const content = document.getElementById('content');
     const teamGrid = document.getElementById('team-grid');
 
+    // Перевод ролей на русский
+    const ROLE_TRANSLATE = {
+      "junior_moderator": "Младший модератор",
+      "senior_moderator": "Старший модератор",
+      "moderator": "Модератор",
+      "helper": "Хелпер",
+      "senior_helper": "Старший хелпер",
+      "junior_admin": "Младший администратор",
+      "admin": "Администратор",
+      "senior_admin": "Старший администратор",
+      "chief_admin": "Главный администратор",
+      "curator": "Куратор"
+    };
+
     // Цвета ролей
     function getRoleColor(role) {
-      const r = (role || '').toLowerCase();
-      if (r.includes('chief_admin') || r.includes('senior_admin')) return 'var(--admin)';
-      if (r.includes('admin')) return 'var(--admin)';
-      if (r.includes('moderator')) return 'var(--mod)';
-      if (r.includes('helper')) return 'var(--helper)';
+      if (role.includes('администратор')) return 'var(--admin)';
+      if (role.includes('модератор')) return 'var(--mod)';
+      if (role.includes('хелпер')) return 'var(--helper)';
       return 'var(--accent)';
     }
 
@@ -201,6 +218,11 @@
       }
     }
 
+    // Перевод роли на русский
+    function translateRole(roleKey) {
+      return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
+    }
+
     async function checkAuthAndLoad() {
       const { data } = await supabaseClient.auth.getSession();
       if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
@@ -213,7 +235,6 @@
       document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
       try {
-        // Запрашиваем только dark_galaxy
         const res = await fetch('https://loliland.ru/apiv2/team', {
           headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
         });
@@ -221,22 +242,22 @@
         const data = await res.json();
 
         if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
-          throw new Error('Секция dark_galaxy не найдена или пуста');
+          throw new Error('Секция dark_galaxy не найдена');
         }
 
-        // Берём всех участников из dark_galaxy
+        // Берём всех из dark_galaxy
         const members = data.team.dark_galaxy.map(m => {
           const user = m.user || {};
           return {
             login: user.login || 'Неизвестно',
-            role: m.role || 'Участник',
+            role: translateRole(m.role || 'Участник'),
             avatar: buildAvatarUrl(user.avatarOrSkin),
             today: m.day || 0,
             month: m.month || 0
           };
         });
 
-        // Убираем дубликаты (если есть)
+        // Убираем дубликаты
         const seen = new Set();
         const unique = members.filter(m => {
           if (seen.has(m.login)) return false;
@@ -262,13 +283,16 @@
 
       teamGrid.innerHTML = members.map(m => `
         <div class="member-card">
-          <img class="member-avatar" src="${m.avatar}" alt="${m.login}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+          <img class="member-avatar" 
+               src="${m.avatar}" 
+               alt="${m.login}" 
+               onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
           <div class="member-info">
             <div class="member-name">${m.login}</div>
             <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
             <div class="playtime">
-              Сегодня: ${formatPlaytime(m.today)} • 
-              В этом месяце: ${formatPlaytime(m.month)}
+              🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
+              В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
             </div>
           </div>
         </div>
