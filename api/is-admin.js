@@ -16,6 +16,8 @@ export default async function handler(req, res) {
 
   const discordId = String(data.user.app_metadata?.provider_id || data.user.user_metadata?.provider_id);
   const ADMIN_IDS = (process.env.ADMIN_IDS || '').split(',').map(id => id.trim());
+  console.log('ADMIN_IDS from env:', process.env.ADMIN_IDS);
+  console.log('Parsed ADMIN_IDS:', ADMIN_IDS);
 
   res.json({ is_admin: ADMIN_IDS.includes(discordId) });
 }
