@@ -15,6 +15,7 @@
       font-family: system-ui, sans-serif;
       text-align: center;
       padding: 1rem;
+      margin: 0;
     }
     .card {
       background: #2d2d2d;
@@ -26,6 +27,9 @@
     h2 {
       margin-bottom: 1rem;
     }
+    .card p {
+      margin-bottom: 1.5rem;
+    }
     button {
       background: #5865F2;
       color: white;
@@ -36,8 +40,9 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      margin-top: 1rem;
+      margin: 0 auto; /* Центрирует кнопку */
     }
     button:hover {
       background: #4752c4;
@@ -60,7 +65,7 @@
     const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = supabase.createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim());
 
     document.getElementById('login-btn').onclick = async () => {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -74,6 +79,5 @@
       }
     };
   </script>
-  
 </body>
 </html>
