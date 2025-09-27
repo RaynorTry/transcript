@@ -304,7 +304,7 @@
           <div><strong>Закрыл:</strong> ${ticket.closed_by || '—'}</div>
           <div><strong>Открыт:</strong> ${formatDate(ticket.opened_at)}</div>
           ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
-          <div><strong>Причина:</strong> —</div>
+          <div><strong>Причина:</strong> ${ticket.description || '—'}</div>
           <div><strong>Приоритет:</strong> <span style="color:${ticket.priority_color}">${ticket.priority_emoji} ${ticket.priority_label}</span></div>
           <div><strong>Оценка:</strong> ${ticket.rating || '—'} ⭐</div>
         </div>
