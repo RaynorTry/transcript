@@ -1,30 +1,77 @@
-<html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Вход в архив</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body { background: #1e1e1e; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
-    button { background: #5865F2; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; margin-top: 1rem; }
+    body {
+      background: #1e1e1e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      text-align: center;
+      padding: 1rem;
+    }
+    .card {
+      background: #2d2d2d;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #5865F2;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background: #4752c4;
+    }
   </style>
 </head>
 <body>
-  <h2>🔐 Архив тикетов</h2>
-  <p>Войдите через Discord</p>
-  <button id="login">Войти</button>
+  <div class="card">
+    <h2>🔐 Архив тикетов</h2>
+    <p>Войдите через Discord для доступа</p>
+    <button id="login-btn">
+      <svg width="20" height="20" viewBox="0 0 127.14 96.36" style="fill:currentColor">
+        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53S48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53S91.08,65.69,84.69,65.69Z"/>
+      </svg>
+      Войти через Discord
+    </button>
+  </div>
 
   <script>
-    const supabase = supabase.createClient(
-      'https://zzuywzjxsiggpjrblzcb.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw'
-    );
+    const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
-    document.getElementById('login').onclick = async () => {
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.getElementById('login-btn').onclick = async () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'discord',
-        options: { redirectTo: 'https://your-project.vercel.app/' } // ← основной архив
+        options: {
+          redirectTo: 'https://your-project.vercel.app/' // ← ЗАМЕНИ НА СВОЙ URL
+        }
       });
-      if (error) alert('Ошибка: ' + error.message);
+      if (error) {
+        alert('Ошибка входа: ' + error.message);
+      }
     };
   </script>
 </body>
