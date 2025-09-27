@@ -238,7 +238,7 @@
     const genTime = document.getElementById('gen-time');
 
     async function checkAuthAndLoad() {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await supabaseClient.auth.getSession();
       const session = data.session;
 
       if (!session) {
@@ -370,7 +370,7 @@
     }
 
     document.getElementById('logout').onclick = async () => {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       window.location.href = '/login.html';
     };
 
