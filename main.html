@@ -90,14 +90,18 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
     .search-box input {
       width: 100%;
-      padding: 0.6rem 1rem;
+      padding: 0.75rem 1rem;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--card);
       color: var(--text);
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
     select {
       padding: 0.6rem 1rem;
@@ -155,6 +159,17 @@
     }
     .view-btn:hover {
       background: #3a7be0;
+    }
+    #negative-reviews {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .negative-review {
+      background: #3a2a2a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
     }
     footer {
       text-align: center;
@@ -220,6 +235,11 @@
       <p>Загрузка тикетов...</p>
     </div>
 
+    <div id="negative-reviews">
+      <h2>Негативные отзывы (Оценки 1–3)</h2>
+      <div id="negative-list">Загрузка отзывов...</div>
+    </div>
+
     <footer>
       © 2025 Архив тикетов • Сгенерировано: <span id="gen-time"></span>
     </footer>
@@ -231,11 +251,16 @@
 
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim());
+
     const loading = document.getElementById('loading');
     const content = document.getElementById('content');
     const ticketsGrid = document.getElementById('tickets-grid');
     const totalCount = document.getElementById('total-count');
     const genTime = document.getElementById('gen-time');
+    const negativeList = document.getElementById('negative-list');
+
+    // URL вашего Gist (raw-версия)
+    const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/tickets.json';
 
     async function checkAuthAndLoad() {
       const { data } = await supabaseClient.auth.getSession();
@@ -246,44 +271,38 @@
         return;
       }
 
-      // Просто проверяем, есть ли сессия — если да, показываем контент
-      if (!data.session) {
-        window.location.href = '/login.html';
-        return;
-      }
-
-      // Загрузка тикетов
+      // Загрузка тикетов из Gist
       try {
-        const res = await fetch('/tickets.json?' + Date.now());
-        if (!res.ok) throw new Error('Не удалось загрузить данные');
+        const res = await fetch(GIST_URL + '?' + Date.now());
+        if (!res.ok) throw new Error('Не удалось загрузить данные из Gist');
         const tickets = await res.json();
+
+        // Обновляем UI
+        totalCount.textContent = `Всего тикетов: ${tickets.length}`;
+        genTime.textContent = new Date().toLocaleString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
         renderTickets(tickets);
+        renderNegativeReviews(tickets);
         setupFilters();
+
       } catch (err) {
-        ticketsGrid.innerHTML = `<p style="color:var(--error);">Ошибка: ${err.message}</p>`;
+        ticketsGrid.innerHTML = `<p style="color:var(--error);">Ошибка загрузки: ${err.message}</p>`;
+        negativeList.textContent = 'Не удалось загрузить отзывы';
       }
 
-      // Показ контента
+      // Показываем контент
       loading.style.display = 'none';
       content.style.display = 'block';
 
-      // Инфо пользователя
+      // Информация о пользователе
       document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
       document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
-      document.getElementById('total-count').textContent = `Всего тикетов: ${tickets.length}`;
-      document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-    }
-
-    function formatDate(timestamp) {
-      if (!timestamp) return '—';
-      const date = new Date(timestamp * 1000);
-      return date.toLocaleString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
     }
 
     function renderTickets(tickets) {
@@ -299,23 +318,50 @@
 
       ticketsGrid.innerHTML = tickets.map(ticket => `
         <div class="ticket-card"
-             data-nickname="${ticket.nickname}"
-             data-description="${ticket.description}"
-             data-category="${ticket.category}"
-             data-opened="${ticket.opened_at}"
+             data-nickname="${ticket.nickname || ''}"
+             data-description="${ticket.description || ''}"
+             data-category="${ticket.category || ''}"
+             data-opened="${ticket.opened_at || 0}"
              data-closed="${ticket.closed_at || 0}"
-             data-messages="${ticket.messages}">
-          <a href="transcript-${ticket.id}.html" class="ticket-title">#${ticket.slug}</a>
+             data-messages="${ticket.messages || 0}">
+          <a href="transcript-${ticket.id}.html" class="ticket-title">#${ticket.slug || ticket.id}</a>
           <div class="ticket-meta">
-            <div><strong>Категория:</strong> ${ticket.category}</div>
-            <div><strong>Ник:</strong> ${ticket.nickname}</div>
+            <div><strong>Категория:</strong> ${ticket.category || '—'}</div>
+            <div><strong>Ник:</strong> ${ticket.nickname || '—'}</div>
             <div><strong>Дата:</strong> ${formatDate(ticket.opened_at)}</div>
             ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
-            <div><strong>Сообщений:</strong> ${ticket.messages}</div>
+            <div><strong>Сообщений:</strong> ${ticket.messages || 0}</div>
           </div>
           <a href="transcript-${ticket.id}.html" class="view-btn">Открыть</a>
         </div>
       `).join('');
+    }
+
+    function renderNegativeReviews(tickets) {
+      const negative = tickets.filter(t => t.rating >= 1 && t.rating <= 3);
+      if (negative.length === 0) {
+        negativeList.textContent = 'Нет негативных отзывов';
+        return;
+      }
+
+      negativeList.innerHTML = negative.map(t => `
+        <div class="negative-review">
+          <strong>${t.nickname || 'Аноним'}:</strong> ${t.description || 'Без описания'}<br>
+          <small>Оценка: ${t.rating} ⭐</small>
+        </div>
+      `).join('');
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return '—';
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     }
 
     function setupFilters() {
@@ -330,10 +376,9 @@
 
         const cards = Array.from(ticketsGrid.querySelectorAll('.ticket-card'));
         let filtered = cards.filter(card => {
-          const nickname = card.dataset.nickname.toLowerCase();
-          const description = card.dataset.description.toLowerCase();
-          const id = card.dataset.id;
-          const matchesSearch = nickname.includes(searchTerm) || description.includes(searchTerm) || id.includes(searchTerm);
+          const nickname = (card.dataset.nickname || '').toLowerCase();
+          const description = (card.dataset.description || '').toLowerCase();
+          const matchesSearch = nickname.includes(searchTerm) || description.includes(searchTerm);
           const matchesCategory = category === 'all' || card.dataset.category === category;
           return matchesSearch && matchesCategory;
         });
