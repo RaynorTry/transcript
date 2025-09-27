@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Команда Loliland</title>
+  <title>Команда Dark Galaxy</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
@@ -19,8 +19,6 @@
       --mod: #55aa55;
       --helper: #5555ff;
       --dev: #ffaa00;
-      --builder: #ff55ff;
-      --event: #55ffff;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -141,7 +139,7 @@
   <div id="content">
     <header>
       <div class="header-title">
-        <h1>Команда Loliland</h1>
+        <h1>Команда Dark Galaxy</h1>
       </div>
       <div class="user-info">
         <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
@@ -174,24 +172,33 @@
     const content = document.getElementById('content');
     const teamGrid = document.getElementById('team-grid');
 
-    // Определение цвета роли по названию
+    // Цвета ролей
     function getRoleColor(role) {
       const r = (role || '').toLowerCase();
-      if (r.includes('Админ') || r.includes('admin') || r.includes('Управляющий')) return 'var(--admin)';
-      if (r.includes('Модератор') || r.includes('moder') || r.includes('Куратор')) return 'var(--mod)';
-      if (r.includes('Хелпер') || r.includes('helper')) return 'var(--helper)';
-      if (r.includes('Разраб') || r.includes('dev') || r.includes('Программист')) return 'var(--dev)';
-      if (r.includes('Билдер') || r.includes('builder')) return 'var(--builder)';
-      if (r.includes('Ивент') || r.includes('event')) return 'var(--event)';
+      if (r.includes('chief_admin') || r.includes('senior_admin')) return 'var(--admin)';
+      if (r.includes('admin')) return 'var(--admin)';
+      if (r.includes('moderator')) return 'var(--mod)';
+      if (r.includes('helper')) return 'var(--helper)';
       return 'var(--accent)';
     }
 
-    // Форматирование секунд в чч:мм
-    function formatPlaytime(seconds) {
-      if (!seconds || seconds <= 0) return '0 ч';
-      const h = Math.floor(seconds / 3600);
-      const m = Math.floor((seconds % 3600) / 60);
+    // Формат времени (минуты → ч ч мин)
+    function formatPlaytime(minutes) {
+      if (!minutes || minutes <= 0) return '0 ч';
+      const h = Math.floor(minutes / 60);
+      const m = minutes % 60;
       return `${h} ч ${m} мин`;
+    }
+
+    // Генерация URL аватара
+    function buildAvatarUrl(avatarInfo) {
+      if (!avatarInfo) return 'https://cdn.discordapp.com/embed/avatars/0.png';
+      const { type, id, extension } = avatarInfo;
+      if (type === 'SKIN') {
+        return `https://loliland.ru/api/v2/skins/${id}.${extension}`;
+      } else {
+        return `https://loliland.ru/api/v2/avatars/${id}.${extension}`;
+      }
     }
 
     async function checkAuthAndLoad() {
@@ -206,17 +213,41 @@
       document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
       try {
-        // Загружаем team.json с Gist
-        const res = await fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/team.json');
-        if (!res.ok) throw new Error('Не удалось загрузить team.json');
-        const members = await res.json();
+        // Запрашиваем только dark_galaxy
+        const res = await fetch('https://loliland.ru/apiv2/team', {
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
 
-        if (!Array.isArray(members)) throw new Error('Неверный формат team.json');
+        if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
+          throw new Error('Секция dark_galaxy не найдена или пуста');
+        }
+
+        // Берём всех участников из dark_galaxy
+        const members = data.team.dark_galaxy.map(m => {
+          const user = m.user || {};
+          return {
+            login: user.login || 'Неизвестно',
+            role: m.role || 'Участник',
+            avatar: buildAvatarUrl(user.avatarOrSkin),
+            today: m.day || 0,
+            month: m.month || 0
+          };
+        });
+
+        // Убираем дубликаты (если есть)
+        const seen = new Set();
+        const unique = members.filter(m => {
+          if (seen.has(m.login)) return false;
+          seen.add(m.login);
+          return true;
+        });
 
         document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-        renderTeam(members);
+        renderTeam(unique);
       } catch (err) {
-        teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка загрузки данных: ${err.message}</p>`;
+        teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
       }
 
       loading.style.display = 'none';
@@ -225,26 +256,23 @@
 
     function renderTeam(members) {
       if (members.length === 0) {
-        teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Команда не найдена</p>';
+        teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
         return;
       }
 
-      teamGrid.innerHTML = members.map(m => {
-        const role = m.roles?.[0] || 'Участник';
-        return `
-          <div class="member-card">
-            <img class="member-avatar" src="${m.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png'}" alt="${m.login}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-            <div class="member-info">
-              <div class="member-name">${m.login}</div>
-              <span class="member-role" style="background:${getRoleColor(role)}">${role}</span>
-              <div class="playtime">
-                Сегодня: ${formatPlaytime(m.playtime?.today)} • 
-                В этом месяце: ${formatPlaytime(m.playtime?.month)}
-              </div>
+      teamGrid.innerHTML = members.map(m => `
+        <div class="member-card">
+          <img class="member-avatar" src="${m.avatar}" alt="${m.login}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+          <div class="member-info">
+            <div class="member-name">${m.login}</div>
+            <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
+            <div class="playtime">
+              Сегодня: ${formatPlaytime(m.today)} • 
+              В этом месяце: ${formatPlaytime(m.month)}
             </div>
           </div>
-        `;
-      }).join('');
+        </div>
+      `).join('');
     }
 
     document.getElementById('logout').onclick = async () => {
