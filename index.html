@@ -1,1050 +1,379 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Архив тикетов</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg: #1e1e1e;
+      --card: #2d2d2d;
+      --soft: #3a3a3a;
+      --text: #e0e0e0;
+      --muted: #a0a0a0;
+      --accent: #4d90ff;
+      --header-bg: #252525;
+      --border: #404040;
+      --error: #d9534f;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    #loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-size: 1.2rem;
+    }
+    #content {
+      display: none;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+    header {
+      background: var(--header-bg);
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .header-title h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.25rem;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+    #logout {
+      background: var(--error);
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    select {
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 1rem;
+      min-width: 150px;
+    }
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .ticket-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .ticket-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+    .ticket-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .ticket-meta div {
+      margin: 0.4rem 0;
+      display: flex;
+    }
+    .ticket-meta strong {
+      min-width: 100px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .view-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+    .view-btn:hover {
+      background: #3a7be0;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .user-info {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 1rem;
+      }
+      .ticket-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">Проверка авторизации...</div>
 
-        <!DOCTYPE html>
-        <html lang="ru">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Архив тикетов</title>
-            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-            <style>
-                :root {
-                    --bg: #1e1e1e;
-                    --card: #2d2d2d;
-                    --soft: #3a3a3a;
-                    --text: #e0e0e0;
-                    --muted: #a0a0a0;
-                    --accent: #4d90ff;
-                    --header-bg: #252525;
-                    --header-text: #ffffff;
-                    --filter-bg: #333333;
-                    --border: #404040;
-                }
-                body {
-                    margin: 0;
-                    background: var(--bg);
-                    color: var(--text);
-                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                    line-height: 1.6;
-                    padding: 0;
-                }
-                #login-container {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    background: var(--bg);
-                    color: var(--text);
-                    text-align: center;
-                    padding: 2rem;
-                }
-                #login-container h2 {
-                    margin-bottom: 1rem;
-                    color: var(--header-text);
-                }
-                #login-btn {
-                    background: #5865F2;
-                    color: white;
-                    border: none;
-                    padding: 0.75rem 2rem;
-                    border-radius: 6px;
-                    font-size: 1rem;
-                    font-weight: 600;
-                    cursor: pointer;
-                    margin-top: 1rem;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-                #login-btn:hover {
-                    background: #4752c4;
-                }
-                #user-info {
-                    margin-top: 1rem;
-                    font-size: 0.9rem;
-                    color: var(--muted);
-                }
-                #content-container {
-                    display: none;
-                }
-                header {
-                    background: var(--header-bg);
-                    color: var(--header-text);
-                    padding: 1.5rem;
-                    text-align: center;
-                    border-bottom: 1px solid var(--border);
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-                    position: relative;
-                }
-                #user-profile {
-                    position: absolute;
-                    top: 16px;
-                    right: 16px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 6px;
-                    min-width: 120px; /* ← Добавлено для предотвращения выхода за границы */
-                }
-                #user-avatar {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 0; /* ← Квадратная рамка */
-                    border: 2px solid var(--accent);
-                }
-                #logout-btn {
-                    margin-top: 0.5rem;
-                    padding: 0.25rem 0.6rem; /* ← Уменьшено */
-                    background: #d9534f;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 0.8rem; /* ← Уменьшено */
-                }
-                #admin-badge {
-                    background: #d9534f;
-                    color: white;
-                    padding: 1px 6px; /* ← Уменьшено */
-                    border-radius: 4px;
-                    font-size: 0.7rem; /* ← Уменьшено */
-                    font-weight: bold;
-                    display: none;
-                }
-                header h1 {
-                    margin: 0;
-                    font-size: 1.8rem;
-                    font-weight: 600;
-                }
-                .controls {
-                    display: flex;
-                    gap: 1rem;
-                    padding: 1rem;
-                    background: var(--filter-bg);
-                    flex-wrap: wrap;
-                    align-items: center;
-                    border-bottom: 1px solid var(--border);
-                }
-                .search-box {
-                    flex: 1;
-                    min-width: 200px;
-                }
-                .search-box input {
-                    width: 100%;
-                    padding: 0.5rem;
-                    border: 1px solid var(--border);
-                    border-radius: 6px;
-                    background: var(--card);
-                    color: var(--text);
-                    font-family: inherit;
-                    box-sizing: border-box;
-                }
-                select {
-                    padding: 0.5rem;
-                    border: 1px solid var(--border);
-                    border-radius: 6px;
-                    background: var(--card);
-                    color: var(--text);
-                    font-family: inherit;
-                }
-                .ticket-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                    gap: 1.5rem;
-                    padding: 2rem 1rem;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                }
-                .ticket-card {
-                    background: var(--card);
-                    border: 1px solid var(--border);
-                    border-radius: 8px;
-                    padding: 1.25rem;
-                    transition: transform 0.2s, box-shadow 0.2s;
-                }
-                .ticket-card:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                }
-                .ticket-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 1rem;
-                    flex-wrap: wrap;
-                    gap: 0.5rem;
-                }
-                .ticket-title {
-                    font-weight: 600;
-                    font-size: 1.1rem;
-                    color: var(--accent);
-                    text-decoration: none;
-                }
-                .ticket-meta {
-                    font-size: 0.875rem;
-                    color: var(--muted);
-                    margin: 0.75rem 0;
-                    line-height: 1.5;
-                }
-                .ticket-meta div {
-                    margin: 0.25rem 0;
-                    display: flex;
-                    gap: 0.5rem;
-                }
-                .ticket-meta strong {
-                    min-width: 90px;
-                    color: var(--text);
-                    font-weight: 600;
-                }
-                .ticket-footer {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-top: 1.25rem;
-                    padding-top: 1rem;
-                    border-top: 1px solid var(--border);
-                    font-size: 0.875rem;
-                }
-                .view-btn {
-                    background: var(--accent);
-                    color: #fff;
-                    border: none;
-                    padding: 0.375rem 1rem;
-                    border-radius: 6px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 0.875rem;
-                    transition: background 0.2s;
-                }
-                .view-btn:hover {
-                    background: #3a7be0;
-                }
-                footer {
-                    color: var(--muted);
-                    font-size: 0.875rem;
-                    text-align: center;
-                    padding: 2rem;
-                    border-top: 1px solid var(--border);
-                    margin-top: 2rem;
-                }
-                @media (max-width: 768px) {
-                    .controls {
-                        flex-direction: column;
-                        align-items: stretch;
-                    }
-                    .search-box {
-                        width: 100%;
-                    }
-                    .ticket-grid {
-                        grid-template-columns: 1fr;
-                        padding: 1rem;
-                    }
-                }
-                #feedback-container {
-                    display: none;
-                    padding: 2rem 1rem;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                }
-                .feedback-card {
-                    background: var(--card);
-                    border: 1px solid var(--border);
-                    border-radius: 8px;
-                    padding: 1.25rem;
-                    transition: transform 0.2s, box-shadow 0.2s;
-                }
-                .feedback-card:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                }
-                .feedback-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 1rem;
-                    flex-wrap: wrap;
-                    gap: 0.5rem;
-                }
-                .rating-badge {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.25rem;
-                    padding: 0.25rem 0.5rem;
-                    border-radius: 4px;
-                    font-weight: bold;
-                    font-size: 0.875rem;
-                }
-                .rating-badge-1 { background-color: #d9534f; color: white; }
-                .rating-badge-2 { background-color: #f0ad4e; color: white; }
-                .rating-badge-3 { background-color: #f0ad4e; color: white; }
-                .timestamp {
-                    color: var(--muted);
-                    font-size: 0.875rem;
-                }
-                .feedback-body {
-                    margin-bottom: 1rem;
-                }
-                .feedback-body p {
-                    margin: 0.5rem 0;
-                    color: var(--text);
-                }
-                .feedback-footer {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    font-size: 0.875rem;
-                    color: var(--muted);
-                }
-                .ticket-link {
-                    color: var(--accent);
-                    text-decoration: none;
-                    font-weight: 500;
-                }
-                .ticket-link:hover {
-                    text-decoration: underline;
-                }
-                #back-to-tickets-btn {
-                    margin-bottom: 1rem;
-                    padding: 0.5rem 1rem;
-                    background: #4d90ff;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-weight: 600;
-                }
-            </style>
-        </head>
-        <body>
-            <div id="login-container">
-                <h2>🔐 Доступ к архиву тикетов</h2>
-                <p>Войдите через Discord, чтобы увидеть все тикеты.</p>
-                <button id="login-btn">
-                    <svg width="20" height="20" viewBox="0 0 127.14 96.36" style="fill:currentColor">
-                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53S48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53S91.08,65.69,84.69,65.69Z"/>
-                    </svg>
-                    Войти через Discord
-                </button>
-                <div id="user-info"></div>
-            </div>
-            <div id="content-container">
-                <header>
-                    <div id="user-profile">
-                        <img id="user-avatar" src="" alt="Avatar">
-                        <span id="user-display-name"></span>
-                        <span id="admin-badge">Админ</span>
-                        <button id="logout-btn">Выйти</button>
-                    </div>
-                    <h1>Архив тикетов</h1>
-                    <p>Всего тикетов: 14</p>
-                </header>
-                <div class="controls">
-                    <button id="show-feedback-btn" style="padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Отзывы (1-3⭐)
-                    </button>
-                    <div class="search-box">
-                        <input type="text" id="search" placeholder="Поиск по нику, описанию, ID..." oninput="filterTickets()">
-                    </div>
-                    <select id="category" onchange="filterTickets()">
-                        <option value="all">Все категории</option>
-                        <option value="Вопрос по игре">Вопрос по игре</option><option value="Жалоба-на-игрока">Жалоба-на-игрока</option><option value="Жалоба-на-состав">Жалоба-на-состав</option><option value="Одобрение-варпа">Одобрение-варпа</option><option value="Финансовые-проблемы">Финансовые-проблемы</option>
-                    </select>
-                    <select id="priority" onchange="filterTickets()">
-                        <option value="all">Все приоритеты</option>
-                        <option value="low">🟢 Низкий</option><option value="medium">🟡 Средний</option><option value="high">🟠 Высокий</option><option value="critical">🔴 Критический</option>
-                    </select>
-                    <select id="sort" onchange="sortTickets()">
-                        <option value="opened">По дате открытия</option>
-                        <option value="closed">По дате закрытия</option>
-                        <option value="messages">По кол-ву сообщений</option>
-                    </select>
-                </div>
-                <div class="ticket-grid" id="tickets-grid">
-        
-                <div class="ticket-card"
-                     data-nickname="гогого"
-                     data-description="прошлптыздавл"
-                     data-category="Финансовые-проблемы"
-                     data-opened="1758900252"
-                     data-closed-time="1758900289"
-                     data-messages="4"
-                     data-attachments="0"
-                     data-id="1421155403986636822"
-                     data-number="14"
-                     data-opened-by="Гостоевский"
-                     data-closed-by="Гостоевский"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="1174367291325030440">
-                    <div class="ticket-header">
-                        <a href="transcript-1421155403986636822.html" class="ticket-title">#ticket-finance-14</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Финансовые-проблемы</div>
-                        <div><strong>Ник:</strong> гогого</div>
-                        <div><strong>Открыл:</strong> Гостоевский</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:24</div>
-                        <div><strong>Закрыл:</strong> Гостоевский</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:24</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>4 сообщений</span>
-                        <a href="transcript-1421155403986636822.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758900137"
-                     data-closed-time="1758900186"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421154920731508818"
-                     data-number="13"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421154920731508818.html" class="ticket-title">#ticket-warp-13</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:22</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:23</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421154920731508818.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758899895"
-                     data-closed-time="1758899910"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421153906129633361"
-                     data-number="12"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="low"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421153906129633361.html" class="ticket-title">#ticket-warp-12</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:18</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:18</div>
-                        <div><strong>Приоритет:</strong> 🟢 Низкий</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421153906129633361.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="гост"
-                     data-description="пупуп"
-                     data-category="Вопрос по игре"
-                     data-opened="1758899245"
-                     data-closed-time="1758899327"
-                     data-messages="6"
-                     data-attachments="0"
-                     data-id="1421151179886563468"
-                     data-number="11"
-                     data-opened-by="Гостоевский"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Гостоевский"
-                     data-user-id="1174367291325030440">
-                    <div class="ticket-header">
-                        <a href="transcript-1421151179886563468.html" class="ticket-title">#ticket-question-11</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Вопрос по игре</div>
-                        <div><strong>Ник:</strong> гост</div>
-                        <div><strong>Открыл:</strong> Гостоевский</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:07</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:08</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Гостоевский</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>6 сообщений</span>
-                        <a href="transcript-1421151179886563468.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758898904"
-                     data-closed-time="1758898931"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421149752594006149"
-                     data-number="10"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421149752594006149.html" class="ticket-title">#ticket-report-10</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:01</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:02</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421149752594006149.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="в"
-                     data-description="в"
-                     data-category="Жалоба-на-состав"
-                     data-opened="1758898814"
-                     data-closed-time="1758898841"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1421149373064020050"
-                     data-number="9"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421149373064020050.html" class="ticket-title">#ticket-staff-report-9</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-состав</div>
-                        <div><strong>Ник:</strong> в</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 15:00</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 15:00</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421149373064020050.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="гост"
-                     data-description="райнор, че делать будем, думать или страдать?"
-                     data-category="Вопрос по игре"
-                     data-opened="1758898145"
-                     data-closed-time="1758898173"
-                     data-messages="4"
-                     data-attachments="0"
-                     data-id="1421146566860869663"
-                     data-number="8"
-                     data-opened-by="Гостоевский"
-                     data-closed-by="Гостоевский"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="1174367291325030440">
-                    <div class="ticket-header">
-                        <a href="transcript-1421146566860869663.html" class="ticket-title">#ticket-question-8</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Вопрос по игре</div>
-                        <div><strong>Ник:</strong> гост</div>
-                        <div><strong>Открыл:</strong> Гостоевский</div>
-                        <div><strong>Дата:</strong> 26.09.2025 14:49</div>
-                        <div><strong>Закрыл:</strong> Гостоевский</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 14:49</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>4 сообщений</span>
-                        <a href="transcript-1421146566860869663.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758897949"
-                     data-closed-time="1758898026"
-                     data-messages="2"
-                     data-attachments="1"
-                     data-id="1421145746295623841"
-                     data-number="7"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="critical"
-                     data-assigned="Рэйка"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421145746295623841.html" class="ticket-title">#ticket-warp-7</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 14:45</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 14:47</div>
-                        <div><strong>Приоритет:</strong> 🔴 Критический</div>
-                        <div><strong>Назначен:</strong> Рэйка</div>
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421145746295623841.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758897316"
-                     data-closed-time="1758897346"
-                     data-messages="3"
-                     data-attachments="1"
-                     data-id="1421143090529304688"
-                     data-number="6"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421143090529304688.html" class="ticket-title">#ticket-warp-6</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 14:35</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 14:35</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>3 сообщений</span>
-                        <a href="transcript-1421143090529304688.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="в"
-                     data-description="в"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758894662"
-                     data-closed-time="1758894671"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421131957517029499"
-                     data-number="5"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421131957517029499.html" class="ticket-title">#ticket-report-5</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> в</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 13:51</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 13:51</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421131957517029499.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758893558"
-                     data-closed-time="1758893567"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421127328930463758"
-                     data-number="4"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421127328930463758.html" class="ticket-title">#ticket-warp-4</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 13:32</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 13:32</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421127328930463758.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758892428"
-                     data-closed-time="1758892435"
-                     data-messages="1"
-                     data-attachments="0"
-                     data-id="1421122588188475555"
-                     data-number="3"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421122588188475555.html" class="ticket-title">#ticket-report-3</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 13:13</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 13:13</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>1 сообщений</span>
-                        <a href="transcript-1421122588188475555.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="а"
-                     data-description="а"
-                     data-category="Одобрение-варпа"
-                     data-opened="1758891900"
-                     data-closed-time="1758891919"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421120373738438698"
-                     data-number="2"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421120373738438698.html" class="ticket-title">#ticket-warp-2</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Одобрение-варпа</div>
-                        <div><strong>Ник:</strong> а</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 13:05</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 13:05</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421120373738438698.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                <div class="ticket-card"
-                     data-nickname="в"
-                     data-description="в"
-                     data-category="Жалоба-на-игрока"
-                     data-opened="1758873095"
-                     data-closed-time="1758873108"
-                     data-messages="2"
-                     data-attachments="0"
-                     data-id="1421041502314041364"
-                     data-number="1"
-                     data-opened-by="Рэйка"
-                     data-closed-by="Рэйка"
-                     data-priority="medium"
-                     data-assigned="—"
-                     data-user-id="457254057816489984">
-                    <div class="ticket-header">
-                        <a href="transcript-1421041502314041364.html" class="ticket-title">#ticket-report-1</a>
-                    </div>
-                    <div class="ticket-meta">
-                        <div><strong>Категория:</strong> Жалоба-на-игрока</div>
-                        <div><strong>Ник:</strong> в</div>
-                        <div><strong>Открыл:</strong> Рэйка</div>
-                        <div><strong>Дата:</strong> 26.09.2025 07:51</div>
-                        <div><strong>Закрыл:</strong> Рэйка</div>
-                        <div><strong>Закрыт:</strong> 26.09.2025 07:51</div>
-                        <div><strong>Приоритет:</strong> 🟡 Средний</div>
-                        
-                    </div>
-                    <div class="ticket-footer">
-                        <span>2 сообщений</span>
-                        <a href="transcript-1421041502314041364.html" class="view-btn">Открыть</a>
-                    </div>
-                </div>
-            
-                </div>
-                <div id="feedback-container">
-                    <button id="back-to-tickets-btn">← Назад к тикетам</button>
-                    <h2 style="text-align: center; color: var(--text); margin-bottom: 1.5rem;">Негативные отзывы (Оценки 1–3⭐)</h2>
-                    <div id="feedback-list" class="ticket-grid">
-                        <p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>
-                    </div>
-                </div>
-                <footer>
-                    © 2025 Ticket Bot • Всего тикетов: 14 • Сгенерировано: 26.09.2025 15:24
-                </footer>
-            </div>
-            <script>
-                window.addEventListener('DOMContentLoaded', async function() {
-                    const supabaseUrl = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
-                    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
-                    if (typeof window.supabase === 'undefined') {
-                        document.getElementById('login-container').innerHTML = `
-                            <h2 style="color: #d9534f;">❌ Ошибка</h2>
-                            <p>Supabase SDK не загружен.</p>
-                        `;
-                        return;
-                    }
-                    const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-                    const loginContainer = document.getElementById('login-container');
-                    const contentContainer = document.getElementById('content-container');
-                    const loginBtn = document.getElementById('login-btn');
-                    const logoutBtn = document.getElementById('logout-btn');
-                    const showFeedbackBtn = document.getElementById('show-feedback-btn');
-                    const backToTicketsBtn = document.getElementById('back-to-tickets-btn');
-                    const ticketsGrid = document.getElementById('tickets-grid');
-                    const feedbackContainer = document.getElementById('feedback-container');
-                    const ADMIN_IDS = ["457254057816489984","855078703225372702","1174367291325030440"];
-                    const { data } = await supabase.auth.getSession();
-                    const session = data.session;
-                    updateUI(session);
-                    supabase.auth.onAuthStateChange((event, session) => {
-                        updateUI(session);
-                    });
-                    async function signInWithDiscord() {
-                        const { error } = await supabase.auth.signInWithOAuth({
-                            provider: 'discord',
-                            options: { redirectTo: window.location.origin }
-                        });
-                        if (error) alert('Ошибка входа: ' + error.message);
-                    }
-                    async function signOut() {
-                        await supabase.auth.signOut();
-                        window.location.reload();
-                    }
-                    function updateUI(session) {
-                        if (session) {
-                            const user = session.user;
-                            // 🔑 ИСПРАВЛЕНО: используем provider_id из app_metadata
-                            let discordId = null;
-                            if (user.app_metadata?.provider_id) {
-                                discordId = String(user.app_metadata.provider_id);
-                            } else if (user.user_metadata?.provider_id) {
-                                discordId = String(user.user_metadata.provider_id);
-                            }
-                            console.log("Discord ID из Supabase:", discordId);
-                            console.log("Админ-лист:", ADMIN_IDS);
-                            const isAdmin = discordId && ADMIN_IDS.includes(discordId);
-                            console.log("isAdmin:", isAdmin);
-                            if (!isAdmin) {
-                                loginContainer.style.display = 'flex';
-                                contentContainer.style.display = 'none';
-                                loginContainer.innerHTML = `
-                                    <h2 style="color: #d9534f;">🚫 Доступ запрещён</h2>
-                                    <p>У вас нет прав администратора для просмотра архива тикетов.</p>
-                                    <button id="logout-and-back" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                                        Выйти и вернуться
-                                    </button>
-                                `;
-                                document.getElementById('logout-and-back').addEventListener('click', signOut);
-                                return;
-                            }
-                            // Админ — показываем контент
-                            loginContainer.style.display = 'none';
-                            contentContainer.style.display = 'block';
-                            const avatarUrl = user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-                            const displayName = user.user_metadata?.full_name || user.user_metadata?.preferred_username || 'Admin';
-                            document.getElementById('user-avatar').src = avatarUrl;
-                            document.getElementById('user-display-name').textContent = displayName;
-                            document.getElementById('admin-badge').style.display = 'block';
-                            if (showFeedbackBtn) showFeedbackBtn.style.display = 'inline-block';
-                            const ticketCards = document.querySelectorAll('.ticket-card');
-                            ticketCards.forEach(card => {
-                                card.style.display = 'block';
-                            });
-                        } else {
-                            loginContainer.style.display = 'flex';
-                            contentContainer.style.display = 'none';
-                        }
-                    }
-                    function showFeedbackTab() {
-                        ticketsGrid.style.display = 'none';
-                        feedbackContainer.style.display = 'block';
-                        loadFeedback();
-                    }
-                    function showTicketsTab() {
-                        feedbackContainer.style.display = 'none';
-                        ticketsGrid.style.display = 'grid';
-                    }
-                    async function loadFeedback() {
-                        const feedbackList = document.getElementById('feedback-list');
-                        feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Загрузка отзывов...</p>';
-                        try {
-                            const response = await fetch('https://gist.githubusercontent.com/RaynorTry/e09a956f06b4cb86b0d4182b1325289e/raw/feedback.json');
-                            if (!response.ok) throw new Error('Не удалось загрузить feedback.json');
-                            const feedbackData = await response.json();
-                            if (feedbackData.length === 0) {
-                                feedbackList.innerHTML = '<p style="text-align: center; color: var(--muted); grid-column: 1 / -1;">Нет негативных отзывов.</p>';
-                                return;
-                            }
-                            feedbackList.innerHTML = '';
-                            feedbackData.forEach(feedback => {
-                                const card = document.createElement('div');
-                                card.className = 'feedback-card';
-                                card.innerHTML = `
-                                    <div class="feedback-header">
-                                        <div class="rating-badge rating-badge-${feedback.rating}">
-                                            ${feedback.rating} ⭐
-                                        </div>
-                                        <span class="timestamp">${feedback.date}</span>
-                                    </div>
-                                    <div class="feedback-body">
-                                        <p><strong>Категория:</strong> ${feedback.category}</p>
-                                        <p><strong>Ник:</strong> ${feedback.nickname}</p>
-                                        <p><strong>Тикет:</strong> <a href="${feedback.ticket_url}" class="ticket-link">${feedback.ticket_slug}</a></p>
-                                        <div style="background: var(--soft); padding: 1rem; border-radius: 6px; font-style: italic;">
-                                            "${feedback.comment}"
-                                        </div>
-                                    </div>
-                                    <div class="feedback-footer">
-                                        <span>${feedback.rating} звёзд</span>
-                                    </div>
-                                `;
-                                feedbackList.appendChild(card);
-                            });
-                        } catch (error) {
-                            feedbackList.innerHTML = `<p style="text-align: center; color: #d9534f; grid-column: 1 / -1;">Ошибка: ${error.message}</p>`;
-                        }
-                    }
-                    if (loginBtn) loginBtn.addEventListener('click', signInWithDiscord);
-                    if (logoutBtn) logoutBtn.addEventListener('click', signOut);
-                    if (showFeedbackBtn) showFeedbackBtn.addEventListener('click', showFeedbackTab);
-                    if (backToTicketsBtn) backToTicketsBtn.addEventListener('click', showTicketsTab);
-                    function filterTickets() {
-                        const search = document.getElementById('search').value.toLowerCase();
-                        const category = document.getElementById('category').value;
-                        const priority = document.getElementById('priority').value;
-                        const cards = document.querySelectorAll('.ticket-card');
-                        cards.forEach(card => {
-                            const nickname = card.dataset.nickname.toLowerCase();
-                            const description = card.dataset.description.toLowerCase();
-                            const cat = card.dataset.category;
-                            const id = card.dataset.id;
-                            const number = card.dataset.number;
-                            const openedBy = card.dataset.openedBy.toLowerCase();
-                            const closedBy = card.dataset.closedBy.toLowerCase();
-                            const priorityData = card.dataset.priority;
-                            const assignedTo = card.dataset.assigned.toLowerCase();
-                            const matchesSearch = nickname.includes(search) || 
-                                                  description.includes(search) || 
-                                                  id.includes(search) || 
-                                                  number.includes(search) ||
-                                                  openedBy.includes(search) ||
-                                                  closedBy.includes(search) ||
-                                                  assignedTo.includes(search);
-                            const matchesCategory = category === 'all' || cat === category;
-                            const matchesPriority = priority === 'all' || priorityData === priority;
-                            card.style.display = matchesSearch && matchesCategory && matchesPriority ? 'block' : 'none';
-                        });
-                    }
-                    function sortTickets() {
-                        const sortBy = document.getElementById('sort').value;
-                        const container = document.querySelector('.ticket-grid');
-                        const cards = Array.from(container.querySelectorAll('.ticket-card'));
-                        cards.sort((a, b) => {
-                            let aValue, bValue;
-                            if (sortBy === 'opened') {
-                                aValue = parseInt(a.dataset.opened);
-                                bValue = parseInt(b.dataset.opened);
-                            } else if (sortBy === 'closed') {
-                                aValue = parseInt(a.dataset.closedTime || 0);
-                                bValue = parseInt(b.dataset.closedTime || 0);
-                            } else if (sortBy === 'messages') {
-                                aValue = parseInt(a.dataset.messages);
-                                bValue = parseInt(b.dataset.messages);
-                            }
-                            return bValue - aValue;
-                        });
-                        container.innerHTML = '';
-                        cards.forEach(card => container.appendChild(card));
-                    }
-                    const searchInput = document.getElementById('search');
-                    const categorySelect = document.getElementById('category');
-                    const prioritySelect = document.getElementById('priority');
-                    const sortSelect = document.getElementById('sort');
-                    if (searchInput) searchInput.addEventListener('input', filterTickets);
-                    if (categorySelect) categorySelect.addEventListener('change', filterTickets);
-                    if (prioritySelect) prioritySelect.addEventListener('change', filterTickets);
-                    if (sortSelect) sortSelect.addEventListener('change', sortTickets);
-                });
-            </script>
-        </body>
-        </html>
-        
+  <div id="content">
+    <header>
+      <div class="header-content">
+        <div class="header-title">
+          <h1>Архив тикетов</h1>
+          <div id="total-count">Загрузка...</div>
+        </div>
+        <div class="user-info">
+          <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+          <span id="user-name"></span>
+          <button id="logout">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="search" placeholder="Поиск по нику, описанию, ID...">
+      </div>
+      <select id="category">
+        <option value="all">Все категории</option>
+      </select>
+      <select id="sort">
+        <option value="opened">По дате открытия</option>
+        <option value="closed">По дате закрытия</option>
+        <option value="messages">По кол-ву сообщений</option>
+      </select>
+    </div>
+
+    <div class="ticket-grid" id="tickets-grid">
+      <p>Загрузка тикетов...</p>
+    </div>
+
+    <footer>
+      © 2025 Архив тикетов • Сгенерировано: <span id="gen-time"></span>
+    </footer>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const loading = document.getElementById('loading');
+    const content = document.getElementById('content');
+    const ticketsGrid = document.getElementById('tickets-grid');
+    const totalCount = document.getElementById('total-count');
+    const genTime = document.getElementById('gen-time');
+
+    async function checkAuthAndLoad() {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
+
+      if (!session) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      // Проверка на админа через API
+      try {
+        const res = await fetch('/api/is-admin', {
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+        const { is_admin } = await res.json();
+        if (!is_admin) {
+          loading.innerHTML = '<p style="color:var(--error);">🚫 Доступ запрещён. Требуются права администратора.</p>';
+          return;
+        }
+      } catch (e) {
+        loading.innerHTML = '<p style="color:var(--error);">Ошибка проверки прав доступа.</p>';
+        return;
+      }
+
+      // Загрузка тикетов
+      try {
+        const res = await fetch('/tickets.json?' + Date.now());
+        if (!res.ok) throw new Error('Не удалось загрузить данные');
+        const tickets = await res.json();
+        renderTickets(tickets);
+        setupFilters();
+      } catch (err) {
+        ticketsGrid.innerHTML = `<p style="color:var(--error);">Ошибка: ${err.message}</p>`;
+      }
+
+      // Показ контента
+      loading.style.display = 'none';
+      content.style.display = 'block';
+
+      // Инфо пользователя
+      document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+      document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
+      document.getElementById('total-count').textContent = `Всего тикетов: ${tickets.length}`;
+      document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return '—';
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function renderTickets(tickets) {
+      const categories = [...new Set(tickets.map(t => t.category))];
+      const categorySelect = document.getElementById('category');
+      categorySelect.innerHTML = '<option value="all">Все категории</option>';
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
+      });
+
+      ticketsGrid.innerHTML = tickets.map(ticket => `
+        <div class="ticket-card"
+             data-nickname="${ticket.nickname}"
+             data-description="${ticket.description}"
+             data-category="${ticket.category}"
+             data-opened="${ticket.opened_at}"
+             data-closed="${ticket.closed_at || 0}"
+             data-messages="${ticket.messages}">
+          <a href="transcript-${ticket.id}.html" class="ticket-title">#${ticket.slug}</a>
+          <div class="ticket-meta">
+            <div><strong>Категория:</strong> ${ticket.category}</div>
+            <div><strong>Ник:</strong> ${ticket.nickname}</div>
+            <div><strong>Дата:</strong> ${formatDate(ticket.opened_at)}</div>
+            ${ticket.closed_at ? `<div><strong>Закрыт:</strong> ${formatDate(ticket.closed_at)}</div>` : ''}
+            <div><strong>Сообщений:</strong> ${ticket.messages}</div>
+          </div>
+          <a href="transcript-${ticket.id}.html" class="view-btn">Открыть</a>
+        </div>
+      `).join('');
+    }
+
+    function setupFilters() {
+      const searchInput = document.getElementById('search');
+      const categorySelect = document.getElementById('category');
+      const sortSelect = document.getElementById('sort');
+
+      function filterAndSort() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const category = categorySelect.value;
+        const sortBy = sortSelect.value;
+
+        const cards = Array.from(ticketsGrid.querySelectorAll('.ticket-card'));
+        let filtered = cards.filter(card => {
+          const nickname = card.dataset.nickname.toLowerCase();
+          const description = card.dataset.description.toLowerCase();
+          const id = card.dataset.id;
+          const matchesSearch = nickname.includes(searchTerm) || description.includes(searchTerm) || id.includes(searchTerm);
+          const matchesCategory = category === 'all' || card.dataset.category === category;
+          return matchesSearch && matchesCategory;
+        });
+
+        filtered.sort((a, b) => {
+          let aVal = parseInt(a.dataset.opened);
+          let bVal = parseInt(b.dataset.opened);
+          if (sortBy === 'closed') {
+            aVal = parseInt(a.dataset.closed);
+            bVal = parseInt(b.dataset.closed);
+          } else if (sortBy === 'messages') {
+            aVal = parseInt(a.dataset.messages);
+            bVal = parseInt(b.dataset.messages);
+          }
+          return bVal - aVal;
+        });
+
+        ticketsGrid.innerHTML = '';
+        filtered.forEach(card => ticketsGrid.appendChild(card));
+      }
+
+      searchInput.addEventListener('input', filterAndSort);
+      categorySelect.addEventListener('change', filterAndSort);
+      sortSelect.addEventListener('change', filterAndSort);
+    }
+
+    document.getElementById('logout').onclick = async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/login.html';
+    };
+
+    checkAuthAndLoad();
+  </script>
+</body>
+</html>
