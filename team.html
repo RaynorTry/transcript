@@ -252,66 +252,62 @@
       }
     }
 
-    async function checkAuthAndLoad() {
-      const { data } = await supabaseClient.auth.getSession();
-      if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
-        window.location.href = '/unauthorized.html';
-        return;
-      }
+async function checkAuthAndLoad() {
+  const { data } = await supabaseClient.auth.getSession();
+  if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
+    window.location.href = '/unauthorized.html';
+    return;
+  }
 
-      const session = data.session;
-      document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-      document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
+  const session = data.session;
+  document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+  document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
-      try {
-        const res = await fetch('https://loliland.ru/apiv2/team', {
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+  try {
+    const res = await fetch('https://loliland.ru/apiv2/team', {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
 
-        if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
-          throw new Error('Секция dark_galaxy не найдена');
-        }
-
-        // Получаем полные данные участников
-        const members = data.team.dark_galaxy.map(m => {
-          const user = m.user || {};
-          return {
-            login: user.login || 'Неизвестно',
-            role: translateRole(m.role || 'Участник'),
-            today: m.day || 0,
-            month: m.month || 0,
-            userId: user.id // может понадобиться, но не используется напрямую
-          };
-        });
-
-        // Убираем дубликаты
-        const seen = new Set();
-        const unique = members.filter(m => {
-          if (seen.has(m.login)) return false;
-          seen.add(m.login);
-          return true;
-        });
-
-        // Загружаем аватарки параллельно
-        const membersWithAvatars = await Promise.all(unique.map(async (m) => {
-          const avatarUrl = await fetchAvatarUrl(m.login);
-          return {
-            ...m,
-            avatar: avatarUrl || 'https://cdn.discordapp.com/embed/avatars/0.png'
-          };
-        }));
-
-        document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-        renderTeam(membersWithAvatars);
-      } catch (err) {
-        teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
-      }
-
-      loading.style.display = 'none';
-      content.style.display = 'block';
+    if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
+      throw new Error('Секция dark_galaxy не найдена');
     }
+
+    const members = data.team.dark_galaxy.map(m => {
+      const user = m.user || {};
+      const userId = user.id || null;
+      const login = user.login || 'Неизвестно';
+      const avatar = userId
+        ? `https://loliland.ru/apiv2/user/avatar/medium/${userId}.gif`
+        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+      return {
+        login,
+        role: translateRole(m.role || 'Участник'),
+        today: m.day || 0,
+        month: m.month || 0,
+        avatar
+      };
+    });
+
+    // Убираем дубликаты
+    const seen = new Set();
+    const unique = members.filter(m => {
+      if (seen.has(m.login)) return false;
+      seen.add(m.login);
+      return true;
+    });
+
+    document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
+    renderTeam(unique);
+  } catch (err) {
+    teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+  }
+
+  loading.style.display = 'none';
+  content.style.display = 'block';
+}
 
     function renderTeam(members) {
       if (members.length === 0) {
