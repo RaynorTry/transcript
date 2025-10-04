@@ -43,8 +43,11 @@
     }
     header {
       background: var(--header-bg);
-      padding: 1rem 1.5rem;
+      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -75,6 +78,26 @@
       cursor: pointer;
       font-size: 0.85rem;
     }
+
+    /* Стили навигации как во втором примере */
+    .nav-tabs {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      padding: 0.5rem 1rem;
+      background: var(--card);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-tab.active {
+      background: var(--accent);
+      color: white;
+    }
+
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
@@ -177,13 +200,12 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
     const { createClient } = supabase;
-    const supabaseClient = createClient(SUPABASE_URL.trim(), SUPABASE_ANON_KEY.trim());
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const loading = document.getElementById('loading');
     const content = document.getElementById('content');
     const teamGrid = document.getElementById('team-grid');
 
-    // Перевод ролей на русский
     const ROLE_TRANSLATE = {
       "junior_moderator": "Младший модератор",
       "senior_moderator": "Старший модератор",
@@ -197,7 +219,6 @@
       "curator": "Куратор"
     };
 
-    // Цвета ролей
     function getRoleColor(role) {
       if (role.includes('администратор')) return 'var(--admin)';
       if (role.includes('модератор')) return 'var(--mod)';
@@ -205,7 +226,6 @@
       return 'var(--accent)';
     }
 
-    // Формат времени (минуты → ч ч мин)
     function formatPlaytime(minutes) {
       if (!minutes || minutes <= 0) return '0 ч';
       const h = Math.floor(minutes / 60);
@@ -213,20 +233,23 @@
       return `${h} ч ${m} мин`;
     }
 
-    // Генерация URL аватара
-    function buildAvatarUrl(avatarInfo) {
-      if (!avatarInfo) return 'https://cdn.discordapp.com/embed/avatars/0.png';
-      const { type, id, extension } = avatarInfo;
-      if (type === 'SKIN') {
-        return `https://loliland.ru/api/v2/skins/${id}.${extension}`;
-      } else {
-        return `https://loliland.ru/api/v2/avatars/${id}.${extension}`;
-      }
-    }
-
-    // Перевод роли на русский
     function translateRole(roleKey) {
       return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
+    }
+
+    // Получаем аватар через новый API
+    async function fetchAvatarUrl(login) {
+      try {
+        const res = await fetch(`https://loliland.ru/apiv2/user/profile/playtime/${encodeURIComponent(login)}/dark_galaxy?period=m`, {
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data?.avatarUrl || null;
+      } catch (err) {
+        console.warn('Не удалось загрузить аватар для', login, err);
+        return null;
+      }
     }
 
     async function checkAuthAndLoad() {
@@ -251,15 +274,15 @@
           throw new Error('Секция dark_galaxy не найдена');
         }
 
-        // Берём всех из dark_galaxy
+        // Получаем полные данные участников
         const members = data.team.dark_galaxy.map(m => {
           const user = m.user || {};
           return {
             login: user.login || 'Неизвестно',
             role: translateRole(m.role || 'Участник'),
-            avatar: buildAvatarUrl(user.avatarOrSkin),
             today: m.day || 0,
-            month: m.month || 0
+            month: m.month || 0,
+            userId: user.id // может понадобиться, но не используется напрямую
           };
         });
 
@@ -271,8 +294,17 @@
           return true;
         });
 
+        // Загружаем аватарки параллельно
+        const membersWithAvatars = await Promise.all(unique.map(async (m) => {
+          const avatarUrl = await fetchAvatarUrl(m.login);
+          return {
+            ...m,
+            avatar: avatarUrl || 'https://cdn.discordapp.com/embed/avatars/0.png'
+          };
+        }));
+
         document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-        renderTeam(unique);
+        renderTeam(membersWithAvatars);
       } catch (err) {
         teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
       }
@@ -314,4 +346,3 @@
   </script>
 </body>
 </html>
-
