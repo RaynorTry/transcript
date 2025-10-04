@@ -211,9 +211,10 @@
     }
 
     async function loadTeamData() {
-      const loading = document.getElementById('loading');
-      const content = document.getElementById('content');
-      const teamGrid = document.getElementById('team-grid');
+      // Получаем элементы один раз в начале функции
+      const loadingEl = document.getElementById('loading');
+      const contentEl = document.getElementById('content');
+      const teamGridEl = document.getElementById('team-grid');
 
       try {
         const lifetimeSalaries = await loadLifetimeSalaries();
@@ -262,19 +263,23 @@
         });
 
         document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-        renderTeam(unique);
+        renderTeam(unique, teamGridEl);
       } catch (err) {
         console.error('Ошибка:', err);
-        teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+        if (teamGridEl) {
+          teamGridEl.innerHTML = `<p style="color:#d9534f; padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+        }
       } finally {
-        loading.style.display = 'none';
-        content.style.display = 'block';
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (contentEl) contentEl.style.display = 'block';
       }
     }
 
-    function renderTeam(members) {
+    function renderTeam(members, teamGridEl) {
+      if (!teamGridEl) return;
+
       if (members.length === 0) {
-        teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
+        teamGridEl.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
         return;
       }
 
@@ -282,7 +287,7 @@
         "Администратор", "Старший администратор", "Главный администратор", "Куратор"
       ]);
 
-      teamGrid.innerHTML = members.map(m => {
+      teamGridEl.innerHTML = members.map(m => {
         const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
         const salaryBlock = showSalary
           ? `<div class="salary-info">💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • Всего: <strong>${m.salaryTotal} монет</strong></div>`
@@ -308,6 +313,7 @@
       }).join('');
     }
 
+    // Запуск загрузки при загрузке страницы
     loadTeamData();
   </script>
 </body>
