@@ -366,33 +366,47 @@
       content.style.display = 'block';
     }
 
-    function renderTeam(members) {
-      if (members.length === 0) {
-        teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
-        return;
-      }
+function renderTeam(members) {
+  if (members.length === 0) {
+    teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
+    return;
+  }
 
-      teamGrid.innerHTML = members.map(m => `
-        <div class="member-card">
-          <img class="member-avatar" 
-               src="${m.avatar}" 
-               alt="${m.login}" 
-               onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-          <div class="member-info">
-            <div class="member-name">${m.login}</div>
-            <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
-            <div class="playtime">
-              🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
-              В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
-            </div>
-            <div class="salary-info">
-              💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • 
-              Всего: <strong>${m.salaryTotal} монет</strong>
-            </div>
+  const ROLES_WITHOUT_SALARY = new Set([
+    "Администратор",
+    "Старший администратор",
+    "Главный администратор",
+    "Куратор"
+  ]);
+
+  teamGrid.innerHTML = members.map(m => {
+    const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
+    const salaryBlock = showSalary
+      ? `<div class="salary-info">
+           💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • 
+           Всего: <strong>${m.salaryTotal} монет</strong>
+         </div>`
+      : '';
+
+    return `
+      <div class="member-card">
+        <img class="member-avatar" 
+             src="${m.avatar}" 
+             alt="${m.login}" 
+             onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+        <div class="member-info">
+          <div class="member-name">${m.login}</div>
+          <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
+          <div class="playtime">
+            🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
+            В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
           </div>
+          ${salaryBlock}
         </div>
-      `).join('');
-    }
+      </div>
+    `;
+  }).join('');
+}
 
     document.getElementById('logout').onclick = async () => {
       await supabaseClient.auth.signOut();
