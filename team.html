@@ -79,7 +79,6 @@
       font-size: 0.85rem;
     }
 
-    /* Стили навигации как во втором примере */
     .nav-tabs {
       margin-top: 1rem;
       display: flex;
@@ -100,7 +99,7 @@
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
       gap: 1.2rem;
       margin-top: 1.2rem;
     }
@@ -151,6 +150,15 @@
       color: var(--text);
       font-weight: 600;
     }
+    .salary-info {
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .salary-info strong {
+      color: #FFD700;
+      font-weight: 600;
+    }
     footer {
       text-align: center;
       padding: 1.5rem 0 1rem;
@@ -199,6 +207,27 @@
     const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
+    // === НОВОЕ: Зарплаты по ролям ===
+    const ROLE_SALARY = {
+      "Хелпер": 100,
+      "Старший хелпер": 120,
+      "Младший модератор": 140,
+      "Модератор": 160,
+      "Старший модератор": 180,
+      "Младший администратор": 200,
+      // Админы и выше — 0
+    };
+
+    // Минимальное время для выплаты
+    function getMinMinutes(role) {
+      if (role === "Младший администратор") return 120; // 2 часа
+      if ([
+        "Хелпер", "Старший хелпер",
+        "Младший модератор", "Модератор", "Старший модератор"
+      ].includes(role)) return 180; // 3 часа
+      return 0; // остальные — не получают
+    }
+
     const { createClient } = supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -237,80 +266,103 @@
       return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
     }
 
-    // Получаем аватар через новый API
-    async function fetchAvatarUrl(login) {
+    // === НОВОЕ: Загрузка зарплат за всё время с Gist ===
+    async function loadLifetimeSalaries() {
+      // Замени этот URL на твой реальный Gist Raw URL!
+      const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/32795f841630292fcff37e59a46fdf66/raw/d44ea5d78b1cf95291ed62ca8fd6c446c1ede0d0/salaries.json';
+      
       try {
-        const res = await fetch(`https://loliland.ru/apiv2/user/profile/playtime/${encodeURIComponent(login)}/dark_galaxy?period=m`, {
+        const res = await fetch(GIST_URL, {
           headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
         });
-        if (!res.ok) return null;
+        if (!res.ok) return {};
         const data = await res.json();
-        return data?.avatarUrl || null;
+        return typeof data === 'object' && data !== null ? data : {};
       } catch (err) {
-        console.warn('Не удалось загрузить аватар для', login, err);
-        return null;
+        console.warn('Не удалось загрузить зарплаты за всё время:', err);
+        return {};
       }
     }
 
-async function checkAuthAndLoad() {
-  const { data } = await supabaseClient.auth.getSession();
-  if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
-    window.location.href = '/unauthorized.html';
-    return;
-  }
-
-  const session = data.session;
-  document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-  document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
-
-  try {
-    const res = await fetch('https://loliland.ru/apiv2/team', {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-
-    if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
-      throw new Error('Секция dark_galaxy не найдена');
-    }
-
-    const members = data.team.dark_galaxy.map(m => {
-      const user = m.user || {};
-      const login = user.login || 'Неизвестно';
-      const avatarInfo = user.avatarOrSkin;
-      let avatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
-
-      if (avatarInfo && avatarInfo.id && avatarInfo.extension) {
-        avatar = `https://loliland.ru/apiv2/user/avatar/medium/${avatarInfo.id}.${avatarInfo.extension}`;
+    async function checkAuthAndLoad() {
+      const { data } = await supabaseClient.auth.getSession();
+      if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
+        window.location.href = '/unauthorized.html';
+        return;
       }
 
-      return {
-        login,
-        role: translateRole(m.role || 'Участник'),
-        today: m.day || 0,
-        month: m.month || 0,
-        avatar
-      };
-    });
+      const session = data.session;
+      document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
+      document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
-    // Убираем дубликаты
-    const seen = new Set();
-    const unique = members.filter(m => {
-      if (seen.has(m.login)) return false;
-      seen.add(m.login);
-      return true;
-    });
+      // Загружаем зарплаты за всё время
+      const lifetimeSalaries = await loadLifetimeSalaries();
 
-    document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-    renderTeam(unique);
-  } catch (err) {
-    console.error('Ошибка:', err);
-    teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
-  }
+      try {
+        const res = await fetch('https://loliland.ru/apiv2/team', {
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
 
-  loading.style.display = 'none';
-  content.style.display = 'block';
-}
+        if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
+          throw new Error('Секция dark_galaxy не найдена');
+        }
+
+        const members = data.team.dark_galaxy.map(m => {
+          const user = m.user || {};
+          const login = user.login || 'Неизвестно';
+          const userId = user.id?.toString() || '';
+          const avatarInfo = user.avatarOrSkin;
+          let avatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+          if (avatarInfo && avatarInfo.id && avatarInfo.extension) {
+            avatar = `https://loliland.ru/apiv2/user/avatar/medium/${avatarInfo.id}.${avatarInfo.extension}`;
+          }
+
+          const role = translateRole(m.role || 'Участник');
+          const todayMinutes = m.day || 0;
+          const monthMinutes = m.month || 0;
+
+          // === Расчёт зарплаты за день ===
+          let salaryToday = 0;
+          const minMinutes = getMinMinutes(role);
+          if (todayMinutes >= minMinutes) {
+            salaryToday = ROLE_SALARY[role] || 0;
+          }
+
+          // === Зарплата за всё время ===
+          let salaryTotal = lifetimeSalaries[userId] || 0;
+
+          return {
+            login,
+            role,
+            today: todayMinutes,
+            month: monthMinutes,
+            avatar,
+            salaryToday,
+            salaryTotal
+          };
+        });
+
+        // Убираем дубликаты
+        const seen = new Set();
+        const unique = members.filter(m => {
+          if (seen.has(m.login)) return false;
+          seen.add(m.login);
+          return true;
+        });
+
+        document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
+        renderTeam(unique);
+      } catch (err) {
+        console.error('Ошибка:', err);
+        teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+      }
+
+      loading.style.display = 'none';
+      content.style.display = 'block';
+    }
 
     function renderTeam(members) {
       if (members.length === 0) {
@@ -330,6 +382,10 @@ async function checkAuthAndLoad() {
             <div class="playtime">
               🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
               В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
+            </div>
+            <div class="salary-info">
+              💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • 
+              Всего: <strong>${m.salaryTotal} монет</strong>
             </div>
           </div>
         </div>
