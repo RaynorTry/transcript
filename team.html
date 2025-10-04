@@ -15,10 +15,6 @@
       --header-bg: #252525;
       --border: #404040;
       --error: #d9534f;
-      --admin: #ff5555;
-      --mod: #55aa55;
-      --helper: #5555ff;
-      --dev: #ffaa00;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -207,7 +203,7 @@
     const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
 
-    // === НОВОЕ: Зарплаты по ролям ===
+    // Зарплаты по ролям
     const ROLE_SALARY = {
       "Хелпер": 100,
       "Старший хелпер": 120,
@@ -248,11 +244,21 @@
       "curator": "Куратор"
     };
 
+    // === НОВАЯ ФУНКЦИЯ: точные цвета для каждой роли ===
     function getRoleColor(role) {
-      if (role.includes('администратор')) return 'var(--admin)';
-      if (role.includes('модератор')) return 'var(--mod)';
-      if (role.includes('хелпер')) return 'var(--helper)';
-      return 'var(--accent)';
+      const colorMap = {
+        "Куратор": "#9b59b6",           // Фиолетовый
+        "Главный администратор": "#3498db", // Синий
+        "Старший администратор": "#e91e63", // Пурпурный
+        "Администратор": "#2ecc71",     // Светло-зелёный
+        "Младший администратор": "#8b0000", // Бордовый
+        "Старший модератор": "#e74c3c", // Красный
+        "Модератор": "#f39c12",         // Оранжевый
+        "Младший модератор": "#3498db", // Голубой
+        "Старший хелпер": "#1abc9c",    // Бирюзовый
+        "Хелпер": "#27ae60"             // Зелёный
+      };
+      return colorMap[role] || 'var(--accent)';
     }
 
     function formatPlaytime(minutes) {
@@ -266,9 +272,8 @@
       return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
     }
 
-    // === НОВОЕ: Загрузка зарплат за всё время с Gist ===
+    // Загрузка зарплат за всё время с Gist
     async function loadLifetimeSalaries() {
-      // Замени этот URL на твой реальный Gist Raw URL!
       const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/32795f841630292fcff37e59a46fdf66/raw/d44ea5d78b1cf95291ed62ca8fd6c446c1ede0d0/salaries.json';
       
       try {
@@ -295,7 +300,6 @@
       document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
       document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
 
-      // Загружаем зарплаты за всё время
       const lifetimeSalaries = await loadLifetimeSalaries();
 
       try {
@@ -324,14 +328,12 @@
           const todayMinutes = m.day || 0;
           const monthMinutes = m.month || 0;
 
-          // === Расчёт зарплаты за день ===
           let salaryToday = 0;
           const minMinutes = getMinMinutes(role);
           if (todayMinutes >= minMinutes) {
             salaryToday = ROLE_SALARY[role] || 0;
           }
 
-          // === Зарплата за всё время ===
           let salaryTotal = lifetimeSalaries[userId] || 0;
 
           return {
@@ -345,7 +347,7 @@
           };
         });
 
-        // Убираем дубликаты
+        // Убираем дубликаты по логину
         const seen = new Set();
         const unique = members.filter(m => {
           if (seen.has(m.login)) return false;
