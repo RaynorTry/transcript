@@ -3,7 +3,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Команда Dark Galaxy</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg: #1e1e1e;
@@ -41,63 +40,17 @@
       background: var(--header-bg);
       padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
-    .header-title h1 {
-      font-size: 1.5rem;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 4px;
-      border: 2px solid var(--accent);
-      object-fit: cover;
-    }
-    #logout {
-      background: var(--error);
-      color: white;
-      border: none;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    .nav-tabs {
-      margin-top: 1rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .nav-tab {
-      padding: 0.5rem 1rem;
-      background: var(--card);
-      border-radius: 6px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    .nav-tab.active {
-      background: var(--accent);
-      color: white;
+    header h1 {
+      font-size: 1.8rem;
+      text-align: center;
     }
 
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
       gap: 1.2rem;
-      margin-top: 1.2rem;
     }
     .member-card {
       background: var(--card);
@@ -166,28 +119,15 @@
   </style>
 </head>
 <body>
-  <div id="loading">Проверка авторизации...</div>
+  <div id="loading">Загрузка данных команды...</div>
 
   <div id="content">
     <header>
-      <div class="header-title">
-        <h1>Команда Dark Galaxy</h1>
-      </div>
-      <div class="user-info">
-        <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
-        <span id="user-name"></span>
-        <button id="logout">Выйти</button>
-      </div>
+      <h1>Команда Dark Galaxy</h1>
     </header>
 
-    <div class="nav-tabs">
-      <a href="/main.html" class="nav-tab">Все тикеты</a>
-      <a href="/feedback.html" class="nav-tab">Негативные отзывы</a>
-      <a href="/team.html" class="nav-tab active">Команда</a>
-    </div>
-
     <div class="team-grid" id="team-grid">
-      <p>Загрузка команды...</p>
+      <p>Загрузка...</p>
     </div>
 
     <footer>
@@ -196,13 +136,6 @@
   </div>
 
   <script>
-    const ADMIN_IDS = [
-      '238e6e15-77e6-48fc-a429-3a92131616cb',
-      '2b416a6d-c01e-4c0f-a92b-b4df0f02f09e'
-    ];
-    const SUPABASE_URL = 'https://zzuywzjxsiggpjrblzcb.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dXl3emp4c2lnZ3BqcmJsemNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NDEwNDYsImV4cCI6MjA3NDIxNzA0Nn0.ZBodjmJ6zRvqh6-eFVIKN83Z6TYxSelW13E46t93LJw';
-
     // Зарплаты по ролям
     const ROLE_SALARY = {
       "Хелпер": 100,
@@ -211,25 +144,16 @@
       "Модератор": 160,
       "Старший модератор": 180,
       "Младший администратор": 200,
-      // Админы и выше — 0
     };
 
-    // Минимальное время для выплаты
     function getMinMinutes(role) {
-      if (role === "Младший администратор") return 120; // 2 часа
+      if (role === "Младший администратор") return 120;
       if ([
         "Хелпер", "Старший хелпер",
         "Младший модератор", "Модератор", "Старший модератор"
-      ].includes(role)) return 180; // 3 часа
-      return 0; // остальные — не получают
+      ].includes(role)) return 180;
+      return 0;
     }
-
-    const { createClient } = supabase;
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const loading = document.getElementById('loading');
-    const content = document.getElementById('content');
-    const teamGrid = document.getElementById('team-grid');
 
     const ROLE_TRANSLATE = {
       "junior_moderator": "Младший модератор",
@@ -244,21 +168,20 @@
       "curator": "Куратор"
     };
 
-    // === НОВАЯ ФУНКЦИЯ: точные цвета для каждой роли ===
     function getRoleColor(role) {
       const colorMap = {
-        "Куратор": "#9b59b6",           // Фиолетовый
-        "Главный администратор": "#3498db", // Синий
-        "Старший администратор": "#e91e63", // Пурпурный
-        "Администратор": "#2ecc71",     // Светло-зелёный
-        "Младший администратор": "#8b0000", // Бордовый
-        "Старший модератор": "#e74c3c", // Красный
-        "Модератор": "#f39c12",         // Оранжевый
-        "Младший модератор": "#3498db", // Голубой
-        "Старший хелпер": "#1abc9c",    // Бирюзовый
-        "Хелпер": "#27ae60"             // Зелёный
+        "Куратор": "#9b59b6",
+        "Главный администратор": "#3498db",
+        "Старший администратор": "#e91e63",
+        "Администратор": "#2ecc71",
+        "Младший администратор": "#8b0000",
+        "Старший модератор": "#e74c3c",
+        "Модератор": "#f39c12",
+        "Младший модератор": "#3498db",
+        "Старший хелпер": "#1abc9c",
+        "Хелпер": "#27ae60"
       };
-      return colorMap[role] || 'var(--accent)';
+      return colorMap[role] || '#4d90ff';
     }
 
     function formatPlaytime(minutes) {
@@ -272,10 +195,8 @@
       return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
     }
 
-    // Загрузка зарплат за всё время с Gist
     async function loadLifetimeSalaries() {
       const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/32795f841630292fcff37e59a46fdf66/raw/d44ea5d78b1cf95291ed62ca8fd6c446c1ede0d0/salaries.json';
-      
       try {
         const res = await fetch(GIST_URL, {
           headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
@@ -289,20 +210,14 @@
       }
     }
 
-    async function checkAuthAndLoad() {
-      const { data } = await supabaseClient.auth.getSession();
-      if (!data.session || !ADMIN_IDS.includes(data.session.user.id)) {
-        window.location.href = '/unauthorized.html';
-        return;
-      }
-
-      const session = data.session;
-      document.getElementById('user-avatar').src = session.user.user_metadata?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png';
-      document.getElementById('user-name').textContent = session.user.user_metadata?.full_name || 'Admin';
-
-      const lifetimeSalaries = await loadLifetimeSalaries();
+    async function loadTeamData() {
+      const loading = document.getElementById('loading');
+      const content = document.getElementById('content');
+      const teamGrid = document.getElementById('team-grid');
 
       try {
+        const lifetimeSalaries = await loadLifetimeSalaries();
+
         const res = await fetch('https://loliland.ru/apiv2/team', {
           headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
         });
@@ -336,18 +251,9 @@
 
           let salaryTotal = lifetimeSalaries[userId] || 0;
 
-          return {
-            login,
-            role,
-            today: todayMinutes,
-            month: monthMinutes,
-            avatar,
-            salaryToday,
-            salaryTotal
-          };
+          return { login, role, today: todayMinutes, month: monthMinutes, avatar, salaryToday, salaryTotal };
         });
 
-        // Убираем дубликаты по логину
         const seen = new Set();
         const unique = members.filter(m => {
           if (seen.has(m.login)) return false;
@@ -360,60 +266,49 @@
       } catch (err) {
         console.error('Ошибка:', err);
         teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+      } finally {
+        loading.style.display = 'none';
+        content.style.display = 'block';
       }
-
-      loading.style.display = 'none';
-      content.style.display = 'block';
     }
 
-function renderTeam(members) {
-  if (members.length === 0) {
-    teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
-    return;
-  }
+    function renderTeam(members) {
+      if (members.length === 0) {
+        teamGrid.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
+        return;
+      }
 
-  const ROLES_WITHOUT_SALARY = new Set([
-    "Администратор",
-    "Старший администратор",
-    "Главный администратор",
-    "Куратор"
-  ]);
+      const ROLES_WITHOUT_SALARY = new Set([
+        "Администратор", "Старший администратор", "Главный администратор", "Куратор"
+      ]);
 
-  teamGrid.innerHTML = members.map(m => {
-    const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
-    const salaryBlock = showSalary
-      ? `<div class="salary-info">
-           💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • 
-           Всего: <strong>${m.salaryTotal} монет</strong>
-         </div>`
-      : '';
+      teamGrid.innerHTML = members.map(m => {
+        const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
+        const salaryBlock = showSalary
+          ? `<div class="salary-info">💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • Всего: <strong>${m.salaryTotal} монет</strong></div>`
+          : '';
 
-    return `
-      <div class="member-card">
-        <img class="member-avatar" 
-             src="${m.avatar}" 
-             alt="${m.login}" 
-             onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-        <div class="member-info">
-          <div class="member-name">${m.login}</div>
-          <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
-          <div class="playtime">
-            🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
-            В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
+        return `
+          <div class="member-card">
+            <img class="member-avatar" 
+                 src="${m.avatar}" 
+                 alt="${m.login}" 
+                 onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="member-info">
+              <div class="member-name">${m.login}</div>
+              <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
+              <div class="playtime">
+                🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
+                В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
+              </div>
+              ${salaryBlock}
+            </div>
           </div>
-          ${salaryBlock}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+        `;
+      }).join('');
+    }
 
-    document.getElementById('logout').onclick = async () => {
-      await supabaseClient.auth.signOut();
-      window.location.href = '/index.html';
-    };
-
-    checkAuthAndLoad();
+    loadTeamData();
   </script>
 </body>
 </html>
