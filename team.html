@@ -276,11 +276,13 @@ async function checkAuthAndLoad() {
 
     const members = data.team.dark_galaxy.map(m => {
       const user = m.user || {};
-      const userId = user.id || null;
       const login = user.login || 'Неизвестно';
-      const avatar = userId
-        ? `https://loliland.ru/apiv2/user/avatar/medium/${userId}.gif`
-        : 'https://cdn.discordapp.com/embed/avatars/0.png';
+      const avatarInfo = user.avatarOrSkin;
+      let avatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
+
+      if (avatarInfo && avatarInfo.id && avatarInfo.extension) {
+        avatar = `https://loliland.ru/apiv2/user/avatar/medium/${avatarInfo.id}.${avatarInfo.extension}`;
+      }
 
       return {
         login,
@@ -302,6 +304,7 @@ async function checkAuthAndLoad() {
     document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
     renderTeam(unique);
   } catch (err) {
+    console.error('Ошибка:', err);
     teamGrid.innerHTML = `<p style="color:var(--error); padding: 1.5rem;">Ошибка: ${err.message}</p>`;
   }
 
