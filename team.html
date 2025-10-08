@@ -135,186 +135,208 @@
     </footer>
   </div>
 
-  <script>
-    // Зарплаты по ролям
-    const ROLE_SALARY = {
-      "Хелпер": 100,
-      "Старший хелпер": 120,
-      "Младший модератор": 140,
-      "Модератор": 160,
-      "Старший модератор": 180,
-      "Младший администратор": 200,
+<script>
+  // === Настройки ===
+  const ROLE_SALARY = {
+    "Хелпер": 100,
+    "Старший хелпер": 120,
+    "Младший модератор": 140,
+    "Модератор": 160,
+    "Старший модератор": 180,
+    "Младший администратор": 200,
+  };
+
+  const ROLES_WITHOUT_SALARY = new Set([
+    "Администратор", "Старший администратор", "Главный администратор", "Куратор"
+  ]);
+
+  function getMinMinutes(role) {
+    if (role === "Младший администратор") return 120;
+    if ([
+      "Хелпер", "Старший хелпер",
+      "Младший модератор", "Модератор", "Старший модератор"
+    ].includes(role)) return 180;
+    return 0;
+  }
+
+  const ROLE_TRANSLATE = {
+    "junior_moderator": "Младший модератор",
+    "senior_moderator": "Старший модератор",
+    "moderator": "Модератор",
+    "helper": "Хелпер",
+    "senior_helper": "Старший хелпер",
+    "junior_admin": "Младший администратор",
+    "admin": "Администратор",
+    "senior_admin": "Старший администратор",
+    "chief_admin": "Главный администратор",
+    "curator": "Куратор"
+  };
+
+  function getRoleColor(role) {
+    const colorMap = {
+      "Куратор": "#9b59b6",
+      "Главный администратор": "#3498db",
+      "Старший администратор": "#e91e63",
+      "Администратор": "#2ecc71",
+      "Младший администратор": "#8b0000",
+      "Старший модератор": "#e74c3c",
+      "Модератор": "#f39c12",
+      "Младший модератор": "#3498db",
+      "Старший хелпер": "#1abc9c",
+      "Хелпер": "#27ae60"
     };
+    return colorMap[role] || '#4d90ff';
+  }
 
-    function getMinMinutes(role) {
-      if (role === "Младший администратор") return 120;
-      if ([
-        "Хелпер", "Старший хелпер",
-        "Младший модератор", "Модератор", "Старший модератор"
-      ].includes(role)) return 180;
-      return 0;
+  function formatPlaytime(minutes) {
+    if (!minutes || minutes <= 0) return '0 ч';
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${h} ч ${m} мин`;
+  }
+
+  function translateRole(roleKey) {
+    return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
+  }
+
+  // === НОВОЕ: Расчёт бонуса ===
+  function calculateBonusPercent(minutes) {
+    if (minutes >= 600) return 0.5; // +50%
+    if (minutes >= 300) return 0.2; // +20%
+    return 0.0;
+  }
+
+  function formatBonusInfo(baseSalary, minutes) {
+    if (baseSalary <= 0) return { total: 0, bonusText: '' };
+    const bonusPct = calculateBonusPercent(minutes);
+    const total = Math.floor(baseSalary * (1 + bonusPct));
+    let bonusText = '';
+    if (bonusPct > 0) {
+      bonusText = ` (+${Math.round(bonusPct * 100)}%)`;
     }
+    return { total, bonusText };
+  }
 
-    const ROLE_TRANSLATE = {
-      "junior_moderator": "Младший модератор",
-      "senior_moderator": "Старший модератор",
-      "moderator": "Модератор",
-      "helper": "Хелпер",
-      "senior_helper": "Старший хелпер",
-      "junior_admin": "Младший администратор",
-      "admin": "Администратор",
-      "senior_admin": "Старший администратор",
-      "chief_admin": "Главный администратор",
-      "curator": "Куратор"
-    };
-
-    function getRoleColor(role) {
-      const colorMap = {
-        "Куратор": "#9b59b6",
-        "Главный администратор": "#3498db",
-        "Старший администратор": "#e91e63",
-        "Администратор": "#2ecc71",
-        "Младший администратор": "#8b0000",
-        "Старший модератор": "#e74c3c",
-        "Модератор": "#f39c12",
-        "Младший модератор": "#3498db",
-        "Старший хелпер": "#1abc9c",
-        "Хелпер": "#27ae60"
-      };
-      return colorMap[role] || '#4d90ff';
+  // === Загрузка данных ===
+  async function loadLifetimeSalaries() {
+    const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/32795f841630292fcff37e59a46fdf66/raw/d44ea5d78b1cf95291ed62ca8fd6c446c1ede0d0/salaries.json';
+    try {
+      const res = await fetch(GIST_URL, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+      });
+      if (!res.ok) return {};
+      const data = await res.json();
+      return typeof data === 'object' && data !== null ? data : {};
+    } catch (err) {
+      console.warn('Не удалось загрузить зарплаты за всё время:', err);
+      return {};
     }
+  }
 
-    function formatPlaytime(minutes) {
-      if (!minutes || minutes <= 0) return '0 ч';
-      const h = Math.floor(minutes / 60);
-      const m = minutes % 60;
-      return `${h} ч ${m} мин`;
-    }
+  async function loadTeamData() {
+    const loadingEl = document.getElementById('loading');
+    const contentEl = document.getElementById('content');
+    const teamGridEl = document.getElementById('team-grid');
 
-    function translateRole(roleKey) {
-      return ROLE_TRANSLATE[roleKey] || roleKey.charAt(0).toUpperCase() + roleKey.slice(1);
-    }
+    try {
+      const lifetimeSalaries = await loadLifetimeSalaries();
 
-    async function loadLifetimeSalaries() {
-      const GIST_URL = 'https://gist.githubusercontent.com/RaynorTry/32795f841630292fcff37e59a46fdf66/raw/d44ea5d78b1cf95291ed62ca8fd6c446c1ede0d0/salaries.json';
-      try {
-        const res = await fetch(GIST_URL, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
-        });
-        if (!res.ok) return {};
-        const data = await res.json();
-        return typeof data === 'object' && data !== null ? data : {};
-      } catch (err) {
-        console.warn('Не удалось загрузить зарплаты за всё время:', err);
-        return {};
+      const res = await fetch('https://loliland.ru/apiv2/team', {
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
+        throw new Error('Секция dark_galaxy не найдена');
       }
-    }
 
-    async function loadTeamData() {
-      // Получаем элементы один раз в начале функции
-      const loadingEl = document.getElementById('loading');
-      const contentEl = document.getElementById('content');
-      const teamGridEl = document.getElementById('team-grid');
+      const members = data.team.dark_galaxy.map(m => {
+        const user = m.user || {};
+        const login = user.login || 'Неизвестно';
+        const userId = user.id?.toString() || '';
+        const avatarInfo = user.avatarOrSkin;
+        let avatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
 
-      try {
-        const lifetimeSalaries = await loadLifetimeSalaries();
-
-        const res = await fetch('https://loliland.ru/apiv2/team', {
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; TeamPage/1.0)' }
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-
-        if (!data.team?.dark_galaxy || !Array.isArray(data.team.dark_galaxy)) {
-          throw new Error('Секция dark_galaxy не найдена');
+        if (avatarInfo && avatarInfo.id && avatarInfo.extension) {
+          avatar = `https://loliland.ru/apiv2/user/avatar/medium/${avatarInfo.id}.${avatarInfo.extension}`;
         }
 
-        const members = data.team.dark_galaxy.map(m => {
-          const user = m.user || {};
-          const login = user.login || 'Неизвестно';
-          const userId = user.id?.toString() || '';
-          const avatarInfo = user.avatarOrSkin;
-          let avatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
+        const role = translateRole(m.role || 'Участник');
+        const todayMinutes = m.day || 0;
+        const monthMinutes = m.month || 0;
 
-          if (avatarInfo && avatarInfo.id && avatarInfo.extension) {
-            avatar = `https://loliland.ru/apiv2/user/avatar/medium/${avatarInfo.id}.${avatarInfo.extension}`;
-          }
+        let salaryToday = 0;
+        let bonusText = '';
+        const baseSalary = ROLE_SALARY[role] || 0;
+        const minMinutes = getMinMinutes(role);
 
-          const role = translateRole(m.role || 'Участник');
-          const todayMinutes = m.day || 0;
-          const monthMinutes = m.month || 0;
-
-          let salaryToday = 0;
-          const minMinutes = getMinMinutes(role);
-          if (todayMinutes >= minMinutes) {
-            salaryToday = ROLE_SALARY[role] || 0;
-          }
-
-          let salaryTotal = lifetimeSalaries[userId] || 0;
-
-          return { login, role, today: todayMinutes, month: monthMinutes, avatar, salaryToday, salaryTotal };
-        });
-
-        const seen = new Set();
-        const unique = members.filter(m => {
-          if (seen.has(m.login)) return false;
-          seen.add(m.login);
-          return true;
-        });
-
-        document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
-        renderTeam(unique, teamGridEl);
-      } catch (err) {
-        console.error('Ошибка:', err);
-        if (teamGridEl) {
-          teamGridEl.innerHTML = `<p style="color:#d9534f; padding: 1.5rem;">Ошибка: ${err.message}</p>`;
+        if (todayMinutes >= minMinutes && baseSalary > 0 && !ROLES_WITHOUT_SALARY.has(role)) {
+          const bonusInfo = formatBonusInfo(baseSalary, todayMinutes);
+          salaryToday = bonusInfo.total;
+          bonusText = bonusInfo.bonusText;
         }
-      } finally {
-        if (loadingEl) loadingEl.style.display = 'none';
-        if (contentEl) contentEl.style.display = 'block';
+
+        const salaryTotal = lifetimeSalaries[userId] || 0;
+
+        return { login, role, today: todayMinutes, month: monthMinutes, avatar, salaryToday, salaryTotal, bonusText };
+      });
+
+      const seen = new Set();
+      const unique = members.filter(m => {
+        if (seen.has(m.login)) return false;
+        seen.add(m.login);
+        return true;
+      });
+
+      document.getElementById('gen-time').textContent = new Date().toLocaleString('ru-RU');
+      renderTeam(unique, teamGridEl);
+    } catch (err) {
+      console.error('Ошибка:', err);
+      if (teamGridEl) {
+        teamGridEl.innerHTML = `<p style="color:#d9534f; padding: 1.5rem;">Ошибка: ${err.message}</p>`;
       }
+    } finally {
+      if (loadingEl) loadingEl.style.display = 'none';
+      if (contentEl) contentEl.style.display = 'block';
+    }
+  }
+
+  function renderTeam(members, teamGridEl) {
+    if (!teamGridEl) return;
+
+    if (members.length === 0) {
+      teamGridEl.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
+      return;
     }
 
-    function renderTeam(members, teamGridEl) {
-      if (!teamGridEl) return;
+    teamGridEl.innerHTML = members.map(m => {
+      const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
+      const salaryBlock = showSalary
+        ? `<div class="salary-info">💰 Зарплата за день: <strong>${m.salaryToday} монет${m.bonusText}</strong> • Всего: <strong>${m.salaryTotal} монет</strong></div>`
+        : '';
 
-      if (members.length === 0) {
-        teamGridEl.innerHTML = '<p style="padding: 1.5rem; color: var(--muted);">Нет данных для отображения</p>';
-        return;
-      }
-
-      const ROLES_WITHOUT_SALARY = new Set([
-        "Администратор", "Старший администратор", "Главный администратор", "Куратор"
-      ]);
-
-      teamGridEl.innerHTML = members.map(m => {
-        const showSalary = !ROLES_WITHOUT_SALARY.has(m.role);
-        const salaryBlock = showSalary
-          ? `<div class="salary-info">💰 Зарплата за день: <strong>${m.salaryToday} монет</strong> • Всего: <strong>${m.salaryTotal} монет</strong></div>`
-          : '';
-
-        return `
-          <div class="member-card">
-            <img class="member-avatar" 
-                 src="${m.avatar}" 
-                 alt="${m.login}" 
-                 onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-            <div class="member-info">
-              <div class="member-name">${m.login}</div>
-              <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
-              <div class="playtime">
-                🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
-                В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
-              </div>
-              ${salaryBlock}
+      return `
+        <div class="member-card">
+          <img class="member-avatar" 
+               src="${m.avatar}" 
+               alt="${m.login}" 
+               onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+          <div class="member-info">
+            <div class="member-name">${m.login}</div>
+            <span class="member-role" style="background:${getRoleColor(m.role)}">${m.role}</span>
+            <div class="playtime">
+              🕒 Сегодня: <strong>${formatPlaytime(m.today)}</strong> • 
+              В этом месяце: <strong>${formatPlaytime(m.month)}</strong>
             </div>
+            ${salaryBlock}
           </div>
-        `;
-      }).join('');
-    }
+        </div>
+      `;
+    }).join('');
+  }
 
-    // Запуск загрузки при загрузке страницы
-    loadTeamData();
-  </script>
+  loadTeamData();
+</script>
 </body>
 </html>
