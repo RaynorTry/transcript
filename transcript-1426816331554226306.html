@@ -1,0 +1,531 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-4</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #d9534f;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-4</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Финансовые проблемы</div>
+                    <div><strong>ID тикета:</strong> 1426816331554226306</div>
+                    <div><strong>Открыт в:</strong> 12.10.2025 06:18</div>
+                    <div><strong>Всего сообщений:</strong> 20</div>
+                    <div><strong>Закрыт в:</strong> 12.10.2025 06:23</div>
+                    <div><strong>Всего вложений:</strong> 1</div>
+                    <div><strong>Открыт пользователем:</strong> Dmitriy_Romanovich</div>
+                    <div><strong>Закрыт пользователем:</strong> Dmitriy_Romanovich</div>
+                    <div><strong>Назначен:</strong> Raynor</div>
+                </div>
+            </div>
+            <div class="container">
+        
+            <div class="embed-system">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="time">СИСТЕМА • 12.10.2025 06:18</div>
+                    <div class="field"><strong>Никнейм игрока:</strong> FunnyFlq</div>
+                    <div class="field"><strong>Причина обращения:</strong> привет</div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:18</span>
+                    </div>
+                    <div class='text'><p>Ого</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:18</span>
+                    </div>
+                    <div class='text'><p>прошел неправильный ник</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:18</span>
+                    </div>
+                    <div class='text'><p>у меня не проходит)</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:19</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1426817628571435049/dmitriy_funny_20251012_061951_image.png?ex=68ec9af7&is=68eb4977&hm=fa9f644186bee3fd256c424a8a2e0831e94612adea28e3a5adbd62acb5843290&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:19</span>
+                    </div>
+                    <div class='text'><p>@Raynor</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:20</span>
+                    </div>
+                    <div class='text'><p>что нибудь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:20</span>
+                    </div>
+                    <div class='text'><p>мне инетересен больше лог</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:20</span>
+                    </div>
+                    <div class='text'><p>какой будет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:20</span>
+                    </div>
+                    <div class='text'><p>и ломается ли тикет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:21</span>
+                    </div>
+                    <div class='text'><p><iframe width="560" height="315" src="https://www.youtube.com/embed/hzNanOOkQfo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:21</span>
+                    </div>
+                    <div class='text'><p>еще так для просмотра</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:21</span>
+                    </div>
+                    <div class='text'><p>закрывай)</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:22</span>
+                    </div>
+                    <div class='text'><p>погоди</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:22</span>
+                    </div>
+                    <div class='text'><p>ща</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:22</span>
+                    </div>
+                    <div class='text'><p>хочу сломать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:22</span>
+                    </div>
+                    <div class='text'><p><img src="https://cdn.discordapp.com/emojis/1169628013206454322.png" alt=":Mem11:" class="emoji" width="24" height="24"></p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:23</span>
+                    </div>
+                    <div class='text'><p>😄</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:23</span>
+                    </div>
+                    <div class='text'><p>[2;41m[1;2mПОПОЛНЕНИЕ БАЛАНСА ИЗ БЕЛАРУСИ ИЛИ КАЗАХСТАНА:[0m[2;41m[0m
+
+Для пополнения баланса необходимо выполнить следующие действия:
+[1;2m[1;36m[1;32m[1;37m1)[0m[1;32m[0m[1;36m[0m[0m Войдите в свой личный кабинет на сайте [2;36m[1;36m[4;36mLoliLand.ru[0m[1;36m[0m[2;36m[0m введя логин и пароль.
+[2;37m[1;37m2)[0m[2;37m[0m Перейдите в раздел "[2;36m[1;36m[4;36mПополнить счёт[0m[1;36m[0m[2;36m[0m".
+[2;37m[1;37m3)[0m[2;37m[0m В окне ниже укажите необходимую сумму для пополнения баланса.
+[2;37m[1;37m4)[0m[2;37m[0m Выберите способ оплаты "[2;36m[1;36m[4;36mPayPal[0m[1;36m[0m[2;36m[0m" и нажмите кнопку "[2;36m[1;36m[4;36mПожертвовать[0m[1;36m[0m[2;36m[0m".
+[2;37m[1;37m5)[0m[2;37m[0m Вас перенаправит на платёжный шлюз "[1;2m[4;2m[4;36mPayPal[0m[0m[0m", где необходимо ввести следующие данные:
+- [4;2mE-Mail адрес[0m;
+- [4;2mФамилия, имя, отчество[0m (или фамилия и имя с банковской карты);
+- [4;2mИндекс[0m (любые 6 цифр, по стандарту "[2;36m[1;36m[4;36m220001[0m[1;36m[0m[2;36m[0m" для Беларуси или "[2;36m[1;36m[4;36m010000[0m[1;36m[0m[2;36m[0m" для Казахстана);
+- [4;2mНомер карты[0m (16 цифр), [4;2mсрок действия карты[0m, [4;2mCVC код[0m (3 цифры на обратной стороне карты);
+- [4;2mПоставить две галочки ниже[0m (обработка персональных данных и согласие с платежём).
+[2;37m[1;37m6)[0m[2;37m[0m Нажать кнопку "[2;36m[4;36m[1;36mОплатить[0m[4;36m[0m[2;36m[0m".</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/520109814190178304/a_311fd577f6c7d5d003a38315e2acbd93.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Dmitriy\_Romanovich</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.10.2025 06:23</span>
+                    </div>
+                    <div class='text'><p>ПОПОЛНЕНИЕ БАЛАНСА ИЗ БЕЛАРУСИ ИЛИ КАЗАХСТАНА:
+
+Для пополнения баланса необходимо выполнить следующие действия:
+1) Войдите в свой личный кабинет на сайте LoliLand.ru введя логин и пароль.
+2) Перейдите в раздел "Пополнить счёт".
+3) В окне ниже укажите необходимую сумму для пополнения баланса.
+4) Выберите способ оплаты "PayPal" и нажмите кнопку "Пожертвовать".
+5) Вас перенаправит на платёжный шлюз "PayPal", где необходимо ввести следующие данные:
+- E-Mail адрес;
+- Фамилия, имя, отчество (или фамилия и имя с банковской карты);
+- Индекс (любые 6 цифр, по стандарту "220001" для Беларуси или "010000" для Казахстана);
+- Номер карты (16 цифр), срок действия карты, CVC код (3 цифры на обратной стороне карты);
+- Поставить две галочки ниже (обработка персональных данных и согласие с платежём).
+6) Нажать кнопку "Оплатить".</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 12.10.2025 06:23
+            </footer>
+        </body>
+        </html>
+        
