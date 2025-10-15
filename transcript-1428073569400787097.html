@@ -1,0 +1,496 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-30</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #f0ad4e;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-30</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Жалоба на игрока</div>
+                    <div><strong>ID тикета:</strong> 1428073569400787097</div>
+                    <div><strong>Открыт в:</strong> 15.10.2025 17:34</div>
+                    <div><strong>Всего сообщений:</strong> 19</div>
+                    <div><strong>Закрыт в:</strong> 15.10.2025 17:41</div>
+                    <div><strong>Всего вложений:</strong> 3</div>
+                    <div><strong>Открыт пользователем:</strong> Meo</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> None</div>
+                </div>
+            </div>
+            <div class="container">
+        
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">15.10.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>@Meo</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>И все еще не понимаю, вы закрыли тикет, не решив мою проблему</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">15.10.2025 17:35</span>
+                    </div>
+                    <div class='text'><p>Если Вы напишите еще один раз, я выдам Вам роль "наказанный", Вы более не сможете писать тикеты и в чат нашего дискорда. Я Вам сообщил, что наказание было выдано верно. В чем еще Вы хотите разобраться?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:36</span>
+                    </div>
+                    <div class='text'><p>Что конкретно вы имеете в виду под организацией флуда</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:36</span>
+                    </div>
+                    <div class='text'><p>Вы должны помогать игрокам, а в итоге, не можете объяснить мою не правоту</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">15.10.2025 17:37</span>
+                    </div>
+                    <div class='text'><p>Если вы не видите здесь флуд, ну я как бы не знаю что еще Вам на это сообщить</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1428075320128573440/rayka228_20251015_173713_image.png?ex=68f12e48&is=68efdcc8&hm=75f0f0ee6e64c357ca63cdc3904c42fb104c031d16627f85a78a8cae9283905d&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1428075326260383776/rayka228_20251015_173713_image.png?ex=68f12e4a&is=68efdcca&hm=8e985888fd1ffb2a7efb1b9d6fa7497f7c941a7c79036e600bf98b0e91e6e5f4&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:37</span>
+                    </div>
+                    <div class='text'><p>Флуд  — малосодержательные и нетематические сообщения в интернет-форумах и чатах, зачастую занимающие большие объёмы. Технический флуд представляет собой хакерскую атаку с большим количеством запросов, приводящую к отказу в обслуживании. В некоторых ситуациях флудом считается несколько сообщений подряд от одного игрового лица.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:38</span>
+                    </div>
+                    <div class='text'><p>Смысл и содержание есть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:38</span>
+                    </div>
+                    <div class='text'><p>Игроки не против</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:38</span>
+                    </div>
+                    <div class='text'><p>Соответственно в тему</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:38</span>
+                    </div>
+                    <div class='text'><p>А соответственно выдано не верно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">15.10.2025 17:38</span>
+                    </div>
+                    <div class='text'><p>малосодержательные и нетематические сообщения в интернет-форумах и чатах, зачастую занимающие большие объёмы. - в вашем же описании на скриншотах вот четко видно это.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:39</span>
+                    </div>
+                    <div class='text'><p>Согласин, в плане тематики, но если игрокам нравится, значит в тему, не так ли?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:39</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1428075331558047940/check5353_20251015_173938_image.png?ex=68f12e4b&is=68efdccb&hm=f33af4bc3e1ec7092a2a550557d49aeb683e421bb1fb0ad0283a69b91fdc08f6&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:39</span>
+                    </div>
+                    <div class='text'><p>Вот на этом скриншоте видно, что игрок был не против\</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">15.10.2025 17:40</span>
+                    </div>
+                    <div class='text'><p>Я не вижу смысла продолжать диалог. Я сообщаю, наказание было выдано верно. Еще раз откроете тикет я выдам роль "наказанный".</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/428968628474478642/ee6aadb838ba58ff16b271c7717ae9da.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Meo</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">15.10.2025 17:41</span>
+                    </div>
+                    <div class='text'><p>Угрожать мне не нужно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/b23e59f0e0a44c5be1ccab1881f98eec.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">15.10.2025 17:41</span>
+                    </div>
+                    <div class='text'><p>Всего доброго.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">15.10.2025 17:41</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Наказан**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 15.10.2025 17:41
+            </footer>
+        </body>
+        </html>
+        
