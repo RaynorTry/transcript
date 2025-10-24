@@ -1,0 +1,453 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-79</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-79</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Вопрос по игре</div>
+                    <div><strong>ID тикета:</strong> 1431302162696245323</div>
+                    <div><strong>Открыт в:</strong> 24.10.2025 15:23</div>
+                    <div><strong>Всего сообщений:</strong> 16</div>
+                    <div><strong>Закрыт в:</strong> 24.10.2025 17:07</div>
+                    <div><strong>Всего вложений:</strong> 5</div>
+                    <div><strong>Открыт пользователем:</strong> tbbm7</div>
+                    <div><strong>Закрыт пользователем:</strong> 666Devils</div>
+                    <div><strong>Назначен:</strong> 666Devils</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 24.10.2025 15:23</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `tbbm7`</div>
+                        <div class="field"><strong>Причина обращения:</strong> разборки</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:24</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1431328231499239495/tbbm7_20251024_152450_image.png?ex=68fd03cb&is=68fbb24b&hm=1387c42395c341d0316cc43009b1cab0f5a74d8784d6efc3e130f82dc9157cc5&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:25</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1431328238705184910/tbbm7_20251024_152502_image.png?ex=68fd03cc&is=68fbb24c&hm=272caafebad0f4330b5ce878500c0dd79c5b86238507eded7b321742426cbad5&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:25</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1431328245499957471/tbbm7_20251024_152515_image.png?ex=68fd03ce&is=68fbb24e&hm=cb3e8b3110dae35113742d19a2850b5f862328fb7c1c051bf5ae661bd1cac2f3&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 15:25</span>
+                    </div>
+                    <div class='text'><p>Здравствуйте, откуда у вас тогда данные предметы?</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1431328254643536043/jackpot277353_20251024_152547_image.png?ex=68fd03d0&is=68fbb250&hm=3e0ee6496c5730fb840f2683f991baffd6f5dd2000baa48b471fc0c8bc5b5834&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:26</span>
+                    </div>
+                    <div class='text'><p>без понятия, я этого ни у кого не брал</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 15:26</span>
+                    </div>
+                    <div class='text'><p>а кто тогда может знать?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:28</span>
+                    </div>
+                    <div class='text'><p>возможно veteran744, я просто закупился душами и по сути ничего более не делал</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 15:28</span>
+                    </div>
+                    <div class='text'><p>У вас есть возможность уточнить у него?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 15:29</span>
+                    </div>
+                    <div class='text'><p>да, написал ему</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 15:29</span>
+                    </div>
+                    <div class='text'><p>Хорошо, когда ответит пришлите сюда скриншот ответа</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 16:35</span>
+                    </div>
+                    <div class='text'><p>После разговора с `Veteran744` у вас будут изъяты предметы (1скрин), а так же Блоки нейтрония, у вас остались вопросы?</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1431328261488640173/jackpot277353_20251024_163517_image.png?ex=68fd03d2&is=68fbb252&hm=69d8ce54cd1f74891340f2db1f9642cc7df9d5b7562c8d6c3b881abedea25e5e&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/8e4c854c5003631d6c71b0a88aa24220.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 16:52</span>
+                    </div>
+                    <div class='text'><p>Хочу предупредить. Согласно пункту правил 4.2 хранение предметов также приравнивается к нарушению. На первый раз выносим Вам предупреждение. При повторном нарушении будут приняты меры. Приятной игры на нашем сервере.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/286543538039029761/c67ca33b67104164180c75718e7436f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">tbbm7</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">24.10.2025 17:05</span>
+                    </div>
+                    <div class='text'><p>вопросов нет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/760506722333884448/b9a8c18ea29e943c9c399c0c7f563bb1.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">666Devils</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">24.10.2025 17:06</span>
+                    </div>
+                    <div class='text'><p>Удачной игры</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">24.10.2025 17:07</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Ресурсы изъяты, пред по п.п. 4.2**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 24.10.2025 17:07
+            </footer>
+        </body>
+        </html>
+        
