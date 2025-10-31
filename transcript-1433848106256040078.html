@@ -1,0 +1,297 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-125</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-125</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Завершение гонки</div>
+                    <div><strong>ID тикета:</strong> 1433848106256040078</div>
+                    <div><strong>Открыт в:</strong> 31.10.2025 16:00</div>
+                    <div><strong>Всего сообщений:</strong> 4</div>
+                    <div><strong>Закрыт в:</strong> 31.10.2025 17:52</div>
+                    <div><strong>Всего вложений:</strong> 9</div>
+                    <div><strong>Открыт пользователем:</strong> Iamviksh</div>
+                    <div><strong>Закрыт пользователем:</strong> Xan241</div>
+                    <div><strong>Назначен:</strong> Xan241</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 31.10.2025 16:00</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Iamviksh`</div>
+                        <div class="field"><strong>Причина обращения:</strong> Постройка к конкурсу хеллоуина</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/995431712446238750/6c5996770c985bcd6e5b68131ff2ba04.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Iamviksh</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">31.10.2025 16:00</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876390545068113/iamviksh_20251031_160044_ft8FhTYM7h38TAylobApGLf2A4EeUD1TPc8mnCJ3lTdH9fILP49mlaZo6E9gBMTcNHBA6XgAQg4_yJ_8U5asiORA.jpg?ex=690648f3&is=6904f773&hm=a57e7dadb6787d0e481450f06fb8bd36fc15a47040c9d2b2a82b64057b4bee9b&" alt="ft8FhTYM7h38TAylobApGLf2A4EeUD1TPc8mnCJ3lTdH9fILP49mlaZo6E9gBMTcNHBA6XgAQg4_yJ_8U5asiORA.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876397440503961/iamviksh_20251031_160044_WxV0Bh1YJH8BWxoFYU8l0j3jZiEFGj6UN5bjyn2-LkdsFt9LMaZLVaIrHNdeWD-ltqJZJDBKo7wx9e3wq1-8YXsa.jpg?ex=690648f5&is=6904f775&hm=e925e5dc2194347ceb17b6910f876f7c6db5342c936334258258fde5b7c79f1e&" alt="WxV0Bh1YJH8BWxoFYU8l0j3jZiEFGj6UN5bjyn2-LkdsFt9LMaZLVaIrHNdeWD-ltqJZJDBKo7wx9e3wq1-8YXsa.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876402612080660/iamviksh_20251031_160044_dQpeGEbcuNfBv9-zUDnH6NftMpuYHncOcK8tS6751QB1-nIZIuePcjY3VVGgrXQN4S71aqgAYZ_MWM1N9r-Zju0E.jpg?ex=690648f6&is=6904f776&hm=c99e14df977774b35d28cabccb2a387659419be075af75154bda1d54fdbccc6d&" alt="dQpeGEbcuNfBv9-zUDnH6NftMpuYHncOcK8tS6751QB1-nIZIuePcjY3VVGgrXQN4S71aqgAYZ_MWM1N9r-Zju0E.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876407653498931/iamviksh_20251031_160044_Rrb6ZbgMHAD6kFhoOLvbSgNQahL-4s-b_xZ8S06Ahl3wZNXgNjrc8EtOe7pTYY16uoM_KjCtIAws-yZZdC48IgNa.jpg?ex=690648f7&is=6904f777&hm=550b7fa7237083084d6ca5aab14e335d3465efc3a94995ff41f64f302d2fb8fc&" alt="Rrb6ZbgMHAD6kFhoOLvbSgNQahL-4s-b_xZ8S06Ahl3wZNXgNjrc8EtOe7pTYY16uoM_KjCtIAws-yZZdC48IgNa.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876412531736777/iamviksh_20251031_160044_WGKd_UqAlIXjW9aaT_BQ-Nr7q3u1jA7oO_nfLKdTS-Ptenl0RpSULwh2cKtM40JtR0TY3ijqebfMWMtmMdW4SwuO.jpg?ex=690648f8&is=6904f778&hm=7fd9d540b27446d0a7231f1e86dce4663785b522e6f25e6f2f5bbaa23d1f8a22&" alt="WGKd_UqAlIXjW9aaT_BQ-Nr7q3u1jA7oO_nfLKdTS-Ptenl0RpSULwh2cKtM40JtR0TY3ijqebfMWMtmMdW4SwuO.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876419779362917/iamviksh_20251031_160044_flV_nhhPugLfOZezgsy7fbymJj5Pv1r3TqVyCFQCAc6D7x0U5BvC9-a5DqTk56sLRBYD-s4YkwB4_Y6hHBO7hAiI.jpg?ex=690648fa&is=6904f77a&hm=04c5e27f1652cbd67c5b517bc30a408b23835fd8331eca57476d8733c38428d5&" alt="flV_nhhPugLfOZezgsy7fbymJj5Pv1r3TqVyCFQCAc6D7x0U5BvC9-a5DqTk56sLRBYD-s4YkwB4_Y6hHBO7hAiI.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876426326675657/iamviksh_20251031_160044_f9gY7hStIqAeOHJX96f28ZuDXNH9wHccqHj5Kld9QKF3UznhEn6mmg3CXQ045GfUXg_JmjFgHp-au3Z1NNarL6JB.jpg?ex=690648fc&is=6904f77c&hm=7d62a32429d7d2bc5de3687e106143837d4daf3a8b3cdf6483b6bc78c464f4a9&" alt="f9gY7hStIqAeOHJX96f28ZuDXNH9wHccqHj5Kld9QKF3UznhEn6mmg3CXQ045GfUXg_JmjFgHp-au3Z1NNarL6JB.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876434387992627/iamviksh_20251031_160044_yTJYpm6ReLwTJNK6QJYlyCF1D24yyVMmzVVDwNRVk9JaIetQZulnxTAiEzOIrgBSYRznU-6LJQh6bIgDu-H5rd20.jpg?ex=690648fe&is=6904f77e&hm=509e52e3d114b79872328d470e2af34a628462fa203c5613ccd198c256259a26&" alt="yTJYpm6ReLwTJNK6QJYlyCF1D24yyVMmzVVDwNRVk9JaIetQZulnxTAiEzOIrgBSYRznU-6LJQh6bIgDu-H5rd20.jpg"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1433876444018249829/iamviksh_20251031_160044_DoEiGhTuasb7zi-MjkLVnrMaPTjCDPEDgrGfkZs9Ok9_edrFI4fUN17VRab78iBiT5LdPMBofPTqNnHIQSuDt_PP.jpg?ex=69064900&is=6904f780&hm=3f73a7483e44419bfc0a993885d2c16795ca2b5b5f1f0cd51b9a5acb7ebd8ef7&" alt="DoEiGhTuasb7zi-MjkLVnrMaPTjCDPEDgrGfkZs9Ok9_edrFI4fUN17VRab78iBiT5LdPMBofPTqNnHIQSuDt_PP.jpg"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/855078703225372702/6718d7d8a32bbbcfbb9d618bb75404ff.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Xan241</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">31.10.2025 17:52</span>
+                    </div>
+                    <div class='text'><p>Здравствуйте, спасибо за участие, в скором времени будут написаны результаты в канале #╠︱📢новости-сервера</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">31.10.2025 17:52</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Одобрение постройки**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 31.10.2025 17:53
+            </footer>
+        </body>
+        </html>
+        
