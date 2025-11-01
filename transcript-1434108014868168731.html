@@ -1,0 +1,1169 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-132</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-132</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Вопрос по игре</div>
+                    <div><strong>ID тикета:</strong> 1434108014868168731</div>
+                    <div><strong>Открыт в:</strong> 01.11.2025 09:13</div>
+                    <div><strong>Всего сообщений:</strong> 71</div>
+                    <div><strong>Закрыт в:</strong> 01.11.2025 13:39</div>
+                    <div><strong>Всего вложений:</strong> 1</div>
+                    <div><strong>Открыт пользователем:</strong> Idk 400lvl</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> Lormunty</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 01.11.2025 09:13</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `letat`</div>
+                        <div class="field"><strong>Причина обращения:</strong> как быстро делать сингулярности</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 09:13</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1434175048381366433/duuma8_20251101_091331_image.png?ex=69075f19&is=69060d99&hm=3d3c30744e5d55eb2c03adf00385a090e696ff4fa2656e4c3ed4bc53736d923e&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 09:15</span>
+                    </div>
+                    <div class='text'><p>для того чтобы быстро получать сингулярности, можно поставить к конденсатору материи разливочный мехаизм (4шт)
+в него кладём генератор воды и в 3 разных слота по 1 улучшению выталкиватель жидкости</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 09:29</span>
+                    </div>
+                    <div class='text'><p>Покажите систему</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:28</span>
+                    </div>
+                    <div class='text'><p>@Lormunty</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/708616355024207884/652c94ab72eac5eb77061f1be1fb7d0c.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Akemi</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">01.11.2025 10:28</span>
+                    </div>
+                    <div class='text'><p>Поздравляем @Idk 400lvl! Ты достиг 3 уровня!</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 10:37</span>
+                    </div>
+                    <div class='text'><p>Не дома</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:48</span>
+                    </div>
+                    <div class='text'><p>Как долго ожидать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:48</span>
+                    </div>
+                    <div class='text'><p>Хех</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:50</span>
+                    </div>
+                    <div class='text'><p>Как вам хэлуин Обнова в тдс?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 10:57</span>
+                    </div>
+                    <div class='text'><p>Завтра, вечер по мск</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 10:58</span>
+                    </div>
+                    <div class='text'><p>Так как вы начали разговор не по теме тикет закрываю</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:58</span>
+                    </div>
+                    <div class='text'><p>Стой</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:58</span>
+                    </div>
+                    <div class='text'><p>Ну ты мне не чего не говоришь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:58</span>
+                    </div>
+                    <div class='text'><p>Схемы нет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 10:59</span>
+                    </div>
+                    <div class='text'><p>Я описал понятными словами схему</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 10:59</span>
+                    </div>
+                    <div class='text'><p>Прочтите внимательно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:59</span>
+                    </div>
+                    <div class='text'><p>Я не понимаю как должно выглядеть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 10:59</span>
+                    </div>
+                    <div class='text'><p>Больше тонкостей</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 11:00</span>
+                    </div>
+                    <div class='text'><p>Как из жидкостей получиться сингулярность</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 11:00</span>
+                    </div>
+                    <div class='text'><p>Я связь не улавливую</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 11:03</span>
+                    </div>
+                    <div class='text'><p>Какой конденсатор материи?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 11:16</span>
+                    </div>
+                    <div class='text'><p>Доброго времени суток в игре есть NEI введите там конденсатор материи</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 11:17</span>
+                    </div>
+                    <div class='text'><p>Схемы мы вам не обязаны предоставлять, особенно в тикете. На сервере обратитесь к модераторам, добавьте в рг и они помогут</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:43</span>
+                    </div>
+                    <div class='text'><p>Айди блока</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:44</span>
+                    </div>
+                    <div class='text'><p>Во-первых я не создатель рг, создатель рг не может зайти, во-вторых мне в тиките показывали схемы и даже видео</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:45</span>
+                    </div>
+                    <div class='text'><p>В-третьих администраторы модеры отказываются мне помочь, мне помогают одни и те же люди, @Lormunty @NeoRoy и гост данные хелперы модеры не находится на сервере но на то время, щас я не знаю так-как я пока не могу зайтиб</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 12:49</span>
+                    </div>
+                    <div class='text'><p>можно вопрос к тебе, ты вообще не фармил сингулярности?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 12:49</span>
+                    </div>
+                    <div class='text'><p>раз не знаешь основ</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1174367291325030440/e1ff4c964bf8f233adf01aa7795b4b69.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">ghosts34444</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 12:50</span>
+                    </div>
+                    <div class='text'><p>Доброго времени суток! Примерно во сколько вы можете зайти на сервер?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:51</span>
+                    </div>
+                    <div class='text'><p>Когда мы перешли на "ты"?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 12:51</span>
+                    </div>
+                    <div class='text'><p>От вас слишком много вопросов что мне проще общаться на ты</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:51</span>
+                    </div>
+                    <div class='text'><p>Нет не фармил я закупал, когда надо много милионово надо делать самостоятельно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Ок</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Это не от меня зависит увы</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Примерно в 19 по Мск</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1174367291325030440/e1ff4c964bf8f233adf01aa7795b4b69.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">ghosts34444</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Хорошо, в это время я буду на сервере</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Пример в это время я буду находиться на севере</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 12:52</span>
+                    </div>
+                    <div class='text'><p>Отлично</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:26</span>
+                    </div>
+                    <div class='text'><p>Я говорю что мы не обязаны этого делать, тот кто хочет из администраторов, он может это сделать(но только если захочет) мы готовы помогать только когда это затрачивает максимум минуту-две. Но разжёвывать мод от а до я мы не обязаны.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:29</span>
+                    </div>
+                    <div class='text'><p>Н вот и заключается помощь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:29</span>
+                    </div>
+                    <div class='text'><p>Делайте гайды</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:30</span>
+                    </div>
+                    <div class='text'><p>Я знаю полностью AE но не знаю как получать сингулярность, потому-что я этим не занималься</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:31</span>
+                    </div>
+                    <div class='text'><p>Очень за вас рад, я высказал свою точку зрения, гайды в разработке.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:31</span>
+                    </div>
+                    <div class='text'><p>Я всегда в больших командах где люди этим занимаются, а в замен я помогаю с форестри</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:31</span>
+                    </div>
+                    <div class='text'><p>На какие моды</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:32</span>
+                    </div>
+                    <div class='text'><p>На все поидее будем делать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:32</span>
+                    </div>
+                    <div class='text'><p>Вы говорите в разработки, а щас поидее</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:32</span>
+                    </div>
+                    <div class='text'><p>Возможно в квесты встроим</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:33</span>
+                    </div>
+                    <div class='text'><p>Ну в разработке</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:33</span>
+                    </div>
+                    <div class='text'><p>В квестах на автоматизацию нечего не было про сингулярность</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:33</span>
+                    </div>
+                    <div class='text'><p>Хотя я полностью закрыл ветку</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:33</span>
+                    </div>
+                    <div class='text'><p>Либо я слепой либо я не знаю</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>Эти квесты будут заменены в следующем вайпе</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>На столько радикально</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>На данный момент вопросы остались?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>Мне даже стало интересно поиграть у вас на сервере больше чем вайп</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:35</span>
+                    </div>
+                    <div class='text'><p>Вопросик маленький</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>Слушаю</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>Я когда закрываю тикит</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>Ну или кто-то другой</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>Потом в лс бот отправляет инфу и просит оценить от 1-5 зачем это?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>Это на что-то влияет?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Да, фидбек собираем</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/596c03b4a1587f5b27b5f203b67ecf29.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Вам не сложно нам приятно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Для того человека который отвечал на тикит</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Всм?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.11.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Обратную связь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:38</span>
+                    </div>
+                    <div class='text'><p>Я вот у вас на проекте долго играю много тикитов открывал, но по поводу оценки вижу в первую</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1007252159244550204/bd84984a52aa95a6ade1d97c84a9ac68.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Idk 400lvl</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 13:38</span>
+                    </div>
+                    <div class='text'><p>Удачи</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">01.11.2025 13:39</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Вопрос решен будет в игре**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 01.11.2025 13:39
+            </footer>
+        </body>
+        </html>
+        
