@@ -1,0 +1,336 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-136</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-136</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Завершение гонки</div>
+                    <div><strong>ID тикета:</strong> 1434280119794532466</div>
+                    <div><strong>Открыт в:</strong> 01.11.2025 20:37</div>
+                    <div><strong>Всего сообщений:</strong> 8</div>
+                    <div><strong>Закрыт в:</strong> 02.11.2025 18:07</div>
+                    <div><strong>Всего вложений:</strong> 4</div>
+                    <div><strong>Открыт пользователем:</strong> happy_song_</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> NeoRoy</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 01.11.2025 20:37</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `notforsale789`</div>
+                        <div class="field"><strong>Причина обращения:</strong> notforsale789</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/442646827775426571/2f80524830dabf1465b8b3fb872fd5f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">happy\_song\_</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 20:37</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1434604874082816150/happy_song__20251101_203759_2025-11-01_21.56.35.png?ex=6908ef67&is=69079de7&hm=eaf35a7ab8b17b8436f1bf8683385cb439731c0a28b99886d391cadd15ac3e0d&" alt="2025-11-01_21.56.35.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1434604880504553472/happy_song__20251101_203759_2025-11-01_21.56.44.png?ex=6908ef69&is=69079de9&hm=5a5949f145e6b4c2404da24573ff0b32c54330c99324c2de9b55da7bfaeb296d&" alt="2025-11-01_21.56.44.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/442646827775426571/2f80524830dabf1465b8b3fb872fd5f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">happy\_song\_</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 20:40</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1434604885722009640/happy_song__20251101_204009_2025-10-30_22.35.34.png?ex=6908ef6a&is=69079dea&hm=e0e3badf4b0f8b2cd8fb41ff29264d4ea8de358ff50292c17b2d51a8a8133659&" alt="2025-10-30_22.35.34.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/442646827775426571/2f80524830dabf1465b8b3fb872fd5f8.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">happy\_song\_</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.11.2025 20:41</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1434604892923756719/happy_song__20251101_204101_image.png?ex=6908ef6c&is=69079dec&hm=1012138943dc6b50cca9dd6ade2148726831de29ce8dc2b2251e913bbba93637&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/8e4c854c5003631d6c71b0a88aa24220.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">02.11.2025 00:14</span>
+                    </div>
+                    <div class='text'><p>pokoy999 отсутствует на сервеве.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/8e4c854c5003631d6c71b0a88aa24220.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">02.11.2025 00:15</span>
+                    </div>
+                    <div class='text'><p>19 место</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">02.11.2025 18:07</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **18 место**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 02.11.2025 18:07
+            </footer>
+        </body>
+        </html>
+        
