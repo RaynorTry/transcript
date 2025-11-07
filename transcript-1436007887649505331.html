@@ -1,0 +1,492 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-155</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-155</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Завершение гонки</div>
+                    <div><strong>ID тикета:</strong> 1436007887649505331</div>
+                    <div><strong>Открыт в:</strong> 06.11.2025 15:02</div>
+                    <div><strong>Всего сообщений:</strong> 20</div>
+                    <div><strong>Закрыт в:</strong> 07.11.2025 19:49</div>
+                    <div><strong>Всего вложений:</strong> 18</div>
+                    <div><strong>Открыт пользователем:</strong> Nesson</div>
+                    <div><strong>Закрыт пользователем:</strong> Alya</div>
+                    <div><strong>Назначен:</strong> NeoRoy</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 06.11.2025 15:02</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `NessonMine`</div>
+                        <div class="field"><strong>Причина обращения:</strong> Завершение гонки</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:03</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442421973221447/nesson123321_20251106_150306_2025-11-06_215747.png?ex=690f9ec1&is=690e4d41&hm=37b9dca961d2069cdfa10bf629480993570783aeb7894dd39ecacee21eb609e3&" alt="2025-11-06_215747.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442430135074956/nesson123321_20251106_150306_2025-11-06_215753.png?ex=690f9ec3&is=690e4d43&hm=49a97b8cd8b9ce70b1ed81adb79c609ade2be775cb925a92df96f6de1c04720b&" alt="2025-11-06_215753.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442437722832926/nesson123321_20251106_150306_2025-11-06_215802.png?ex=690f9ec4&is=690e4d44&hm=e4de7d41c3d3892231c6fb749b4fe621d5e06e340177dde37762d6f16719055d&" alt="2025-11-06_215802.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442444647628840/nesson123321_20251106_150306_2025-11-06_215810.png?ex=690f9ec6&is=690e4d46&hm=fba585077bdbf153402de88dbae508042580f937259c125a3d653f5bfc06f8d2&" alt="2025-11-06_215810.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442452247576687/nesson123321_20251106_150306_2025-11-06_215818.png?ex=690f9ec8&is=690e4d48&hm=bdf8e88eaf8f31f736fa5aa964a597bd3cdbb0c1fbed6289bb8de8a09fb7bca1&" alt="2025-11-06_215818.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442458354487398/nesson123321_20251106_150306_2025-11-06_215824.png?ex=690f9ec9&is=690e4d49&hm=cec82a962189c4709d19ff018f7a67cd7bba662c2977a21042394616638d17d1&" alt="2025-11-06_215824.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442465178488922/nesson123321_20251106_150306_2025-11-06_215831.png?ex=690f9ecb&is=690e4d4b&hm=ed836a2c5c0da92d25e52c96aec49c3b3d17e44ebc5e5007685b6f8c2eadacbb&" alt="2025-11-06_215831.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442471889375375/nesson123321_20251106_150306_2025-11-06_215838.png?ex=690f9ecd&is=690e4d4d&hm=24125d7f7c830dfabce38f5d4230a1ed4bbc57d6d87e82333c0eb881e94e0db1&" alt="2025-11-06_215838.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:03</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442480085176440/nesson123321_20251106_150313_2025-11-06_215701.png?ex=690f9ecf&is=690e4d4f&hm=9fa62dad13e33c6cb17ed78a24b506eb3688f644411fe0d560e23699a052cb8a&" alt="2025-11-06_215701.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442487840571442/nesson123321_20251106_150313_2025-11-06_215707.png?ex=690f9ed0&is=690e4d50&hm=bb45ea6cc2fd1e3034fdfe5d5f3a24c66484138050e818856b19f0bfb4b79cba&" alt="2025-11-06_215707.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442495151243376/nesson123321_20251106_150313_2025-11-06_215713.png?ex=690f9ed2&is=690e4d52&hm=924d6548de4c9d04b884c2b0fe05017b52a48da61ecab3e0b16e3bb7bc611099&" alt="2025-11-06_215713.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442502163857599/nesson123321_20251106_150313_2025-11-06_215723.png?ex=690f9ed4&is=690e4d54&hm=f068bff1be767aa06b25021b18da0a58b3a8880b0d9070caed5d038763694d26&" alt="2025-11-06_215723.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442509218676849/nesson123321_20251106_150313_2025-11-06_215731.png?ex=690f9ed6&is=690e4d56&hm=ed8436ed08bfe5398c1c8354e7f5cd1c175b23dab82a2e37023d275a583fbf0c&" alt="2025-11-06_215731.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442516411912352/nesson123321_20251106_150313_2025-11-06_215739.png?ex=690f9ed7&is=690e4d57&hm=79c82ad107a2a64bbebf5c454d7a624e9d0080bf7aae25ada302ae0aa6f145fe&" alt="2025-11-06_215739.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442523634634934/nesson123321_20251106_150313_2025-11-06_215747.png?ex=690f9ed9&is=690e4d59&hm=06ac719e388a79e4f03cdb11f4ec99ac4e650f4de1d2ad8cc8a0ed65c71e19f6&" alt="2025-11-06_215747.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:03</span>
+                    </div>
+                    <div class='text'><p>по поводу кодекса и тв конденсатора</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:03</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1436442529343082546/nesson123321_20251106_150355_image.png?ex=690f9eda&is=690e4d5a&hm=fde4c329191639df2a97b4702c3cc37a33c472dc37f13780e4d67685e2220010&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:04</span>
+                    </div>
+                    <div class='text'><p>что делать в таком случае?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.11.2025 15:04</span>
+                    </div>
+                    <div class='text'><p>Видео?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:04</span>
+                    </div>
+                    <div class='text'><p>да</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.11.2025 15:05</span>
+                    </div>
+                    <div class='text'><p>На ютуб</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.11.2025 15:05</span>
+                    </div>
+                    <div class='text'><p>И ссылкой</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:05</span>
+                    </div>
+                    <div class='text'><p>а надо видеть как я выкладываю?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_ce20c952000c9e16862a3e689b456844.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.11.2025 15:05</span>
+                    </div>
+                    <div class='text'><p>Просто Крафта хватит</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:05</span>
+                    </div>
+                    <div class='text'><p>а ну я тогда обрежу его и все</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:08</span>
+                    </div>
+                    
+                    <div class="attachments file"><a href="https://cdn.discordapp.com/attachments/1418611419032584202/1436442533319282779/nesson123321_20251106_150815_IMG_7194.MP4?ex=690f9edb&is=690e4d5b&hm=e8c69042bc74e4342144404ece094d0d9fc0a8ec7485342862f8ae2d7c926311&" target="_blank">📎 IMG_7194.MP4</a></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:08</span>
+                    </div>
+                    
+                    <div class="attachments file"><a href="https://cdn.discordapp.com/attachments/1418611419032584202/1436442538436333689/nesson123321_20251106_150825_IMG_7196.MP4?ex=690f9edc&is=690e4d5c&hm=c60eddccb7ff234ceaf3240269deef73866b641cd788fc8ecc8dfc4eb03e0818&" target="_blank">📎 IMG_7196.MP4</a></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/938378201330245632/545984cfd281bab643b31cb907c35f16.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Nesson</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.11.2025 15:08</span>
+                    </div>
+                    <div class='text'><p>все</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/8e4c854c5003631d6c71b0a88aa24220.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.11.2025 19:44</span>
+                    </div>
+                    <div class='text'><p>Принято, ожидайте информации  про позицию</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">07.11.2025 19:49</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Автозакрытие: нет ответа от пользователя в течение 24 часов после ответа администратора.**</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">07.11.2025 19:49</span>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 07.11.2025 19:49
+            </footer>
+        </body>
+        </html>
+        
