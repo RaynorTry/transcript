@@ -1,0 +1,702 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-260</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-260</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Технические проблемы</div>
+                    <div><strong>ID тикета:</strong> 1444726460232499302</div>
+                    <div><strong>Открыт в:</strong> 30.11.2025 16:27</div>
+                    <div><strong>Всего сообщений:</strong> 35</div>
+                    <div><strong>Закрыт в:</strong> 01.12.2025 11:21</div>
+                    <div><strong>Всего вложений:</strong> 4</div>
+                    <div><strong>Открыт пользователем:</strong> NikitaBratskiy</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> Raynor</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 30.11.2025 16:27</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `TreNT`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> Играл все было хорошо резко стало глючить тепать обратно, особенно это проявляется когда жму тп на варп, перестает работать все, тепает обратно</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">30.11.2025 16:29</span>
+                    </div>
+                    <div class='text'><p>/ping пришлите пожалуйста</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:30</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1444726460232499302/1444727239571931343/image.png?ex=692e6b57&is=692d19d7&hm=8f63b92df276d1ebff83e8559cec40f61c20d8c446f5d0cc945b48774c210e23&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:31</span>
+                    </div>
+                    <div class='text'><p>я уже качал заново перезагружал ноут драйвера проверил модем перезагрузил</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:31</span>
+                    </div>
+                    <div class='text'><p>что только не пробовал</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:43</span>
+                    </div>
+                    <div class='text'><p>еще что-то?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:43</span>
+                    </div>
+                    <div class='text'><p>или пока ждать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:51</span>
+                    </div>
+                    <div class='text'><p>а вот так на варпе</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 16:51</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1444726460232499302/1444732643907469464/image.png?ex=692e7060&is=692d1ee0&hm=d6adc065fa22d847ce2db77e0303df47736946b04bcdc040a4d6c9a71c72eb89&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 17:02</span>
+                    </div>
+                    <div class='text'><p>@Lormunty</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:17</span>
+                    </div>
+                    <div class='text'><p>@Raynor</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:30</span>
+                    </div>
+                    <div class='text'><p>Алеееее</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:31</span>
+                    </div>
+                    <div class='text'><p>я хочу поиграть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:32</span>
+                    </div>
+                    <div class='text'><p>@ghosts34444</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:32</span>
+                    </div>
+                    <div class='text'><p>пригласите кого нибудь пжлст</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1174367291325030440/e1ff4c964bf8f233adf01aa7795b4b69.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">ghosts34444</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">30.11.2025 18:32</span>
+                    </div>
+                    <div class='text'><p>Доброго времени суток. С данным вопросом обращайтесь к старшей администрации.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:33</span>
+                    </div>
+                    <div class='text'><p>так меня игнорят все</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">30.11.2025 18:33</span>
+                    </div>
+                    <div class='text'><p>я пол дня сижу в тикете этом</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.12.2025 00:17</span>
+                    </div>
+                    <div class='text'><p>По первому вашему скриншоту видно, что максимальный Пинг у вас был 1800, на данный момент какой Пинг? Проблема так же актуальна?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:16</span>
+                    </div>
+                    <div class='text'><p>на варпе</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1444726460232499302/1444889797976916082/image.png?ex=692e59fc&is=692d087c&hm=b8f623a6201c56867bc953d872c1e10d2f43081154f10172305033beb7572f1e&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:16</span>
+                    </div>
+                    <div class='text'><p>на home</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1444726460232499302/1444889947264913408/image.png?ex=692e5a20&is=692d08a0&hm=12ae7a5736f084b23d7e88c9e52b5aa1cfabe9cbfc3c0542098b8157556708fd&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>это продолжалось несколько часов</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>вчера вечером</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>после часов 6</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>и до вечера я не мог поиграть нормально</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>то есть на home все было нормально</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>это происходило когда делал тп на варпы любые</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:17</span>
+                    </div>
+                    <div class='text'><p>вот в чем дело</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:18</span>
+                    </div>
+                    <div class='text'><p>проверю еще вечером так как днем на работе</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:18</span>
+                    </div>
+                    <div class='text'><p>интернет не мог лагать на протяжении нескольких часов я првоерял его и макс пинг был когда переключался с Ethernet на Wi-Fi</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:19</span>
+                    </div>
+                    <div class='text'><p>пока тикет не закрывайте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:22</span>
+                    </div>
+                    <div class='text'><p>если бы проблема была в интернете я думаю и дома лагало бы</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/803871369909239858/de67e8fd494410a91b33af4427149d7d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NikitaBratskiy</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">01.12.2025 03:23</span>
+                    </div>
+                    <div class='text'><p>а так только на варпах</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">01.12.2025 06:27</span>
+                    </div>
+                    <div class='text'><p>Вчера была большая нагрузка на сервер. Уже работают над увеличением мощностей, в ближайшее время будет исправлено. Возможно еще остались вопросы?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/13e6d08cc0a2d2cff5709fa46301e146.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">01.12.2025 11:21</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **ответ дан**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 01.12.2025 11:21
+            </footer>
+        </body>
+        </html>
+        
