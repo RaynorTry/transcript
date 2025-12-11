@@ -1,0 +1,1419 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-313</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-313</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Финансовые проблемы</div>
+                    <div><strong>ID тикета:</strong> 1448370519173763123</div>
+                    <div><strong>Открыт в:</strong> 10.12.2025 17:47</div>
+                    <div><strong>Всего сообщений:</strong> 90</div>
+                    <div><strong>Закрыт в:</strong> 11.12.2025 15:41</div>
+                    <div><strong>Всего вложений:</strong> 4</div>
+                    <div><strong>Открыт пользователем:</strong> ╭∩╮（︶︿︶）╭∩╮</div>
+                    <div><strong>Закрыт пользователем:</strong> NeoRoy</div>
+                    <div><strong>Назначен:</strong> NeoRoy</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 10.12.2025 17:47</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `FlarensI`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> Купил сегодня посох силы и недавно узнал что можно туда сделать зачар на жнеца 10 узнавал у хелпера подсказал что можно перекинуть зачар с меча другова через дизэнчантер купил хамелеон меч но перекинуть нельзя хочу запросить возврат средс за зачары и меч хамелеона ну и если возможно снять эти деньги что потратил на зачары и закинуть их на посох силы</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">10.12.2025 17:52</span>
+                    </div>
+                    <div class='text'><p>Вам нужно перенести зачарование на посох?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 18:09</span>
+                    </div>
+                    <div class='text'><p>lf</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 18:09</span>
+                    </div>
+                    <div class='text'><p>да если возможно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 18:09</span>
+                    </div>
+                    <div class='text'><p>если нет то вернуть деньги</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">10.12.2025 18:41</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1448370519173763123/1448384200435564628/image.png?ex=693bb927&is=693a67a7&hm=4ffaa81a572304c437a40f5459102cbbeefb43af22059ac1eeba30ead1328b76&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">10.12.2025 18:42</span>
+                    </div>
+                    <div class='text'><p>перенес</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 19:04</span>
+                    </div>
+                    <div class='text'><p>нет ток заговор огня есть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 19:04</span>
+                    </div>
+                    <div class='text'><p>ост нету</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 19:04</span>
+                    </div>
+                    <div class='text'><p>проверь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 19:06</span>
+                    </div>
+                    <div class='text'><p>.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">10.12.2025 19:09</span>
+                    </div>
+                    <div class='text'><p>Скриншот с Вашего инвентаря</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">10.12.2025 19:17</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1448370519173763123/1448393220861202615/Screenshot_3.png?ex=693bc18d&is=693a700d&hm=e17735368629daf304aa846b575631c811f1f85f5e70b58471a4e95b293eef02&" alt="Screenshot_3.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 07:03</span>
+                    </div>
+                    <div class='text'><p>Вы показываете другой посох, не тот который администратор Вам положил в инвентарь. За обман администрации возможна блокировка аккаунта. У Вас остались еще вопросы?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:22</span>
+                    </div>
+                    <div class='text'><p>ты на приколе?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:22</span>
+                    </div>
+                    <div class='text'><p>у меня всего один посох</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:22</span>
+                    </div>
+                    <div class='text'><p>или вы работать не хотите</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:23</span>
+                    </div>
+                    <div class='text'><p>если не хотите так верить зайдите проверьте базу или проверьте по консоли</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:23</span>
+                    </div>
+                    <div class='text'><p>с таким отношение можноо вообще не играть и не донатить на проэкте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:26</span>
+                    </div>
+                    <div class='text'><p>думал норм серв а администрация такая же как и в городе ток за карман думает</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:26</span>
+                    </div>
+                    <div class='text'><p>спасибо за игру.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:33</span>
+                    </div>
+                    <div class='text'><p>Каким образом на жезле изменилась добыча с 2 уровня на 3, пропала удача, и изменилась острота?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>обычным у меня кирка с кита есть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>я от туда снял дез инчантером</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>т повесил на посох</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:34</span>
+                    </div>
+                    <div class='text'><p>а остроту и жнеца с меча</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:35</span>
+                    </div>
+                    <div class='text'><p>потому что ваши админы не могут быстро отвектить на тикет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:35</span>
+                    </div>
+                    <div class='text'><p>я сделал и ждал</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:35</span>
+                    </div>
+                    <div class='text'><p>Я вам заменил посох. Манипуляции Вы проводили после замены</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>нет</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:36</span>
+                    </div>
+                    <div class='text'><p>до замены</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>и почему там ток огонь 10 весит лучше вы мне обьясните</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Эти зачарования я не трогал. Каким образом они заменились?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>если не можете сделать снимай все и возвращайте деньги</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>тебе их в руки передать?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:37</span>
+                    </div>
+                    <div class='text'><p>Скриншот посоха за 20 минут до Вашего скриншота</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:38</span>
+                    </div>
+                    <div class='text'><p>они в сундуке леждат</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:38</span>
+                    </div>
+                    <div class='text'><p>тобиж тогда когда я прочитал а не сделал</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:39</span>
+                    </div>
+                    <div class='text'><p>Вы говорите что манипуляции с посохом были до замены</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:39</span>
+                    </div>
+                    <div class='text'><p>Объясните почему тогда разницу видно в зачарованиях?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:40</span>
+                    </div>
+                    <div class='text'><p>вы видимо смс не читаешь</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:40</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1448370519173763123/1448670835283067021/Screenshot_4.png?ex=693c1b5a&is=693ac9da&hm=75dbe1c6210e6221f0f68b58b3b1eeee5b1c50744163ca60a2bc0f0bc782f5d4&" alt="Screenshot_4.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:40</span>
+                    </div>
+                    <div class='text'><p>хотя  я не прав</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:40</span>
+                    </div>
+                    <div class='text'><p>вы</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:40</span>
+                    </div>
+                    <div class='text'><p>извините</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:41</span>
+                    </div>
+                    <div class='text'><p>Ваши сообщения не сходятся</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:41</span>
+                    </div>
+                    <div class='text'><p>Я не взаимодействовал с перечисленными заклинаниями а лишь заменил те, про которые Вы просили</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:41</span>
+                    </div>
+                    <div class='text'><p>ну конечно у вас ничего не сойдется чтобы вашу ошибку оправдать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:42</span>
+                    </div>
+                    <div class='text'><p>тут даже прикол не в зачарованиях, а в посохе, у тебя он на 80 урона, администратор положил на 72 урона</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:42</span>
+                    </div>
+                    <div class='text'><p>а не смушает зачар на остроту?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:42</span>
+                    </div>
+                    <div class='text'><p>была 3</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:42</span>
+                    </div>
+                    <div class='text'><p>я менял с меча на 5</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:43</span>
+                    </div>
+                    <div class='text'><p>Была 3 после замены</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:44</span>
+                    </div>
+                    <div class='text'><p>Короче я не собираюсь вам доказывать свою правоту</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:44</span>
+                    </div>
+                    <div class='text'><p>если не хотите решать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:44</span>
+                    </div>
+                    <div class='text'><p>Как она стала 5 если вы манипуляций после замены не проводили?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:44</span>
+                    </div>
+                    <div class='text'><p>то верните деньги за все</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:44</span>
+                    </div>
+                    <div class='text'><p>Вам уже вернули зачарования на посохе, куда вы их дели?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:45</span>
+                    </div>
+                    <div class='text'><p>я их даже в глаза не видел</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:45</span>
+                    </div>
+                    <div class='text'><p>Ожидайте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:45</span>
+                    </div>
+                    <div class='text'><p>вот скриншот с вашего инвенторя</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:46</span>
+                    </div>
+                    <div class='text'><p>Я проверю ситуацию с посохом.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:47</span>
+                    </div>
+                    <div class='text'><p>я все сказал хотите верьте хотите нет но если не делаете и ток обвиняете меня то я требую вернуть все деньги</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/708616355024207884/aa1e2f0068fff118184830ded02188c0.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Akemi</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">11.12.2025 13:47</span>
+                    </div>
+                    <div class='text'><p>Поздравляем @╭∩╮（︶︿︶）╭∩╮! Ты достиг 2 уровня!</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:52</span>
+                    </div>
+                    <div class='text'><p>Ознакомьтесь с 1.3 
+
+Так же хотелось бы задать вопрос открывали ли вы инвентарь посоха когда проверяли, мне самому стало интересно как изменились заяврования если по вашим словам вы с ним манипулировали до замены  главным администратором, а не после</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:53</span>
+                    </div>
+                    <div class='text'><p>ну туда зачары ложатся конечно я открывал на обычной зачаровалке он не чарится</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:54</span>
+                    </div>
+                    <div class='text'><p>туда надо книгу положить зачареную в инвентарь посоха</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:54</span>
+                    </div>
+                    <div class='text'><p>Так вы его открыли после замены получается</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 13:54</span>
+                    </div>
+                    <div class='text'><p>Верно?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:55</span>
+                    </div>
+                    <div class='text'><p>ну да я часто открываю чтобы фильтр предметов менять</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:55</span>
+                    </div>
+                    <div class='text'><p>это запрешено?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 13:57</span>
+                    </div>
+                    <div class='text'><p>там еще глубина копания меняется и тд</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:23</span>
+                    </div>
+                    <div class='text'><p>@╭∩╮（︶︿︶）╭∩╮ Ну смотрите, примерно понял в чём проблема. Гл. Администратор обменял вам посох, после вы начали манипулировать с книжками, и они просто исчезли. Ошибки со стороны гл Администратора я не вижу потому что посох вам был обменян, а дальше уже ошибка с вашей стороны т.к. вы их решили поменять, а согласно пункту правил 1.6 администрация не обязана возвращать вещи если они были утрачены.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:30</span>
+                    </div>
+                    <div class='text'><p>тобиж вы хотите сказать что я слепой?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:31</span>
+                    </div>
+                    <div class='text'><p>хорошо раз не обязаня окей тогда я хочу вернуть деньги потраченые на игру</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:31</span>
+                    </div>
+                    <div class='text'><p>пункт правил 1.3</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:32</span>
+                    </div>
+                    <div class='text'><p>Тобиж вы деньги не хотите возвращать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:35</span>
+                    </div>
+                    <div class='text'><p>у меня придут гл администраторы и мы обсудим вашу проблему ещё раз, но по правилам я уже рассказал, так что не ожидайте слишком многого</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:35</span>
+                    </div>
+                    <div class='text'><p>Вы называете меня слепым! Делаете виноватым и не хотите возвращать деньги мне очень нравится отношение админов</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:36</span>
+                    </div>
+                    <div class='text'><p>Я очень счастлив что начал играть на данном проекте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:37</span>
+                    </div>
+                    <div class='text'><p>Всё желание играть дальше отбивается за раз</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:37</span>
+                    </div>
+                    <div class='text'><p>После взаимодействия с книгами они пропали?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:37</span>
+                    </div>
+                    <div class='text'><p>Их не было</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:37</span>
+                    </div>
+                    <div class='text'><p>Появилось ток заговор огня который я увидел</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:38</span>
+                    </div>
+                    <div class='text'><p>Остальных не было!!!!!</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:38</span>
+                    </div>
+                    <div class='text'><p>Книжки выдали</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:38</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1448370519173763123/1448700517797597224/image.png?ex=693c36fe&is=693ae57e&hm=5393284f2a1640b929c4e81a97cb718b645dfc3190ede9cc62cae712af98c1ec&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/320539089243996160/108ff8c5503296cee0d7357b99f4f847.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">╭∩╮（︶︿︶）╭∩╮</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">11.12.2025 15:39</span>
+                    </div>
+                    <div class='text'><p>Неужели спасибо за убитый день и желание играть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">11.12.2025 15:40</span>
+                    </div>
+                    <div class='text'><p>В повторных ситуациях возврата больше не будет. Приятной игры на наших серверах.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">11.12.2025 15:41</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Решено**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 11.12.2025 15:41
+            </footer>
+        </body>
+        </html>
+        
