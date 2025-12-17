@@ -1,0 +1,820 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-360</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #f0ad4e;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-360</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Жалоба на игрока</div>
+                    <div><strong>ID тикета:</strong> 1450423884443815949</div>
+                    <div><strong>Открыт в:</strong> 16.12.2025 09:46</div>
+                    <div><strong>Всего сообщений:</strong> 44</div>
+                    <div><strong>Закрыт в:</strong> 17.12.2025 02:47</div>
+                    <div><strong>Всего вложений:</strong> 3</div>
+                    <div><strong>Открыт пользователем:</strong> Rifla_Korolev</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> None</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 16.12.2025 09:46</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Rifla_Korolev`</div>
+                        <div class="field"><strong>Ник игрока, на которого жалоба:</strong> `Miley_Cyrus`</div>
+                        
+                        <div class="field"><strong>Причина обращения:</strong> Давайте вспомним немного ситуацию прошлую. Вот меня забанили на 14 дней за грифенство у модера Дока. Воровал катализаторы и мелочи всякое. Давайте обсудим логически. Когда миля забанили на 1 день, и решил слить меня. Из-за него меня забанили на 14 дней. Рассудим по факту. Я у модератора воровал давно. Неделю назад может даже больше. Миля у меня в рг тоже достаточно давно. Когда он был в агресси из-за того что вы ему выдали бан и слил меня. Что я воровал у модера, но по факту же он тоже считается как соучастник, что он этот ситуацию знал, и говорил что я красавчик и тд, но ладно одно дело когда я воровал и он сразу сообщил в тикет не считается соучастник. Но когда больше недели знал ситуацию и тупо скрывал, и на последнем моменте слил меня, по факту считается как соучастник, что он Заранее не сообщил.</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:47</span>
+                    </div>
+                    <div class='text'><p>Он же по факту воспользовался этими катализатором, который он знал что это ворованный</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:47</span>
+                    </div>
+                    <div class='text'><p>И также его друг</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:48</span>
+                    </div>
+                    <div class='text'><p>Вот обратите внимание на фотографиях</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:48</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1450423884443815949/1450424343115993119/IMG_7501.png?ex=6943252e&is=6941d3ae&hm=b61841320a075afc30f91b48377a44c8340f7d41a82a246a26dd037435a0c8c2&" alt="IMG_7501.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1450423884443815949/1450424343703191614/IMG_7502.png?ex=6943252f&is=6941d3af&hm=7fe91abde6cbfc7c5741cddd7d0162c9318b5b1438c0113cbead1fa9c649dfc5&" alt="IMG_7502.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:48</span>
+                    </div>
+                    <div class='text'><p>В группе сидели только миля и его друг санко(если правильно назвал его)</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:48</span>
+                    </div>
+                    <div class='text'><p>Эти оба люди знали ситуацию.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:49</span>
+                    </div>
+                    <div class='text'><p>Мои тиммейты, не знали ситуацию вообще. Потому что не сидят там в группе. У меня dayvv, пчеловод хороший, не знал что гриферил. Все время он занимался пчелками</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:49</span>
+                    </div>
+                    <div class='text'><p>4 чел добавил в рг, эти люди пришли пару дней назад, тоже не знают ситуацию</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:50</span>
+                    </div>
+                    <div class='text'><p>Печенюха - это девушка, не шарит вообще в модах. Абсолютно 0. Она увлекается строительством.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:50</span>
+                    </div>
+                    <div class='text'><p>Другие 2 тиммейта не играют (уехали на вахту по работе)</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 09:53</span>
+                    </div>
+                    <div class='text'><p>Получается соучастник 
+Miley_Cyrus и sanko (не помню ник его), я думаю вы сможете ник найти по дс его. Он же проверку проходил по-любому</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 11:06</span>
+                    </div>
+                    <div class='text'><p>В двух словах что вы от нас хотите можно?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 11:06</span>
+                    </div>
+                    <div class='text'><p>@Rifla_Korolev</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:06</span>
+                    </div>
+                    <div class='text'><p>Чтоб было справедливо</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:06</span>
+                    </div>
+                    <div class='text'><p>Его в бан</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:06</span>
+                    </div>
+                    <div class='text'><p>За соучастник</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:07</span>
+                    </div>
+                    <div class='text'><p>Раз так получилось</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:07</span>
+                    </div>
+                    <div class='text'><p>Мне многие сказали, люди, что я бы забанил его как соучастник</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:07</span>
+                    </div>
+                    <div class='text'><p>Долговременно передал информацию</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 11:18</span>
+                    </div>
+                    <div class='text'><p>Ожидайте. Разбираюсь с Вашей ситуацией</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 11:41</span>
+                    </div>
+                    <div class='text'><p>Это Ваш бывший тиммейт, я правильно понимаю?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:53</span>
+                    </div>
+                    <div class='text'><p>Да</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 11:53</span>
+                    </div>
+                    <div class='text'><p>Удалю его из рг позже</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 15:30</span>
+                    </div>
+                    <div class='text'><p>Жду вашего ответа</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 15:30</span>
+                    </div>
+                    <div class='text'><p>Человек будет наказан?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 16:06</span>
+                    </div>
+                    <div class='text'><p>Учитывая что в воровстве напрямую учавствовали только Вы - наказание было выдано именно Вам. Данный игрок получит предупреждение. Все игроки региона дисквалифицированы с гонки.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 16:59</span>
+                    </div>
+                    <div class='text'><p>И роль тоже не получат?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:02</span>
+                    </div>
+                    <div class='text'><p>Если он занял гонку на тмр, 26 место. Тоже дисквалифицирован?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:11</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1450423884443815949/1450535841037291520/IMG_7506.png?ex=6942e446&is=694192c6&hm=5ecab0b802c9052b2eeaf79964ec637855932351e35c69d2894f8830d7b8c12f&" alt="IMG_7506.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:11</span>
+                    </div>
+                    <div class='text'><p>Утверждает что безопасности стоят где-то</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:11</span>
+                    </div>
+                    <div class='text'><p>И в любом моменте может грифануть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:12</span>
+                    </div>
+                    <div class='text'><p>Помогите найти где спрятано безопасности</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:12</span>
+                    </div>
+                    <div class='text'><p>И убрать их</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 17:33</span>
+                    </div>
+                    <div class='text'><p>Пересоберите МЭ куб, так Вы будете уверены в том, что там нет лишних подключений</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 17:33</span>
+                    </div>
+                    <div class='text'><p>ТМР не относится к нашему серверу.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 17:33</span>
+                    </div>
+                    <div class='text'><p>На нашем сервере в этом вайпе роль не получит</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>Также как и Вы</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>Это долго очень</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>Да мне и не надо роль</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>Есть же логи, где стоят безопасности</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/331681098155294720/3520c6dfda9074dd2c85582994e41dfb.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">NeoRoy</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">16.12.2025 17:34</span>
+                    </div>
+                    <div class='text'><p>МЭ Визуализатор сети используйте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Rifla\_Korolev</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">16.12.2025 17:35</span>
+                    </div>
+                    <div class='text'><p>Окей</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">17.12.2025 02:47</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **ответ дан**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 17.12.2025 02:47
+            </footer>
+        </body>
+        </html>
+        
