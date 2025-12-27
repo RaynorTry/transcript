@@ -1,0 +1,546 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-394</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-394</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Технические проблемы</div>
+                    <div><strong>ID тикета:</strong> 1454454395977859094</div>
+                    <div><strong>Открыт в:</strong> 27.12.2025 12:42</div>
+                    <div><strong>Всего сообщений:</strong> 24</div>
+                    <div><strong>Закрыт в:</strong> 27.12.2025 14:01</div>
+                    <div><strong>Всего вложений:</strong> 5</div>
+                    <div><strong>Открыт пользователем:</strong> 1 MMR</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> Raynor</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 27.12.2025 12:42</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Gdenocok`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> Прошёл сборку, не засчитывает 2 квеста</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 12:42</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1454454395977859094/1454454421957116038/image.png?ex=695125bc&is=694fd43c&hm=2b483d33a58873128877e4ebdeb40a37c15c85b54fea57fe39a91427a9f030a1&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 12:42</span>
+                    </div>
+                    <div class='text'><p>вот скриншот двух предметов что не сдаются</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 12:44</span>
+                    </div>
+                    <div class='text'><p>сказли в прошлом тикете приложить скриншот двух предметов</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">27.12.2025 12:53</span>
+                    </div>
+                    <div class='text'><p>Кодекс сдаётся</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 12:54</span>
+                    </div>
+                    <div class='text'><p>мне сказали не сдаётся</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 12:55</span>
+                    </div>
+                    <div class='text'><p>мл.админ начало ника Mr... не помню полностью</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:02</span>
+                    </div>
+                    <div class='text'><p>я ещё в чате спрашивал за конденсатор, он сказал такой же баг с квестом и на кодекс</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">27.12.2025 13:03</span>
+                    </div>
+                    <div class='text'><p>Скриншот выполненных веток пришлите</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:04</span>
+                    </div>
+                    <div class='text'><p>секунду</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:04</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1454454395977859094/1454459905820987544/image.png?ex=69512ad8&is=694fd958&hm=1867781cb03eba2876c9de4f874c2b51f6355da80332e9362b80e4037b970592&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">27.12.2025 13:04</span>
+                    </div>
+                    <div class='text'><p>Не вижу ника</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:04</span>
+                    </div>
+                    <div class='text'><p>а как сделать с ником?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:05</span>
+                    </div>
+                    <div class='text'><p>если подскажите сделаю</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/a4aedbd1a5698ff36506f4976c0e4f6d.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">27.12.2025 13:05</span>
+                    </div>
+                    <div class='text'><p>#╔︱🎮выдача-ролей там всё написано</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:08</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1454454395977859094/1454460955080790119/image.png?ex=69512bd2&is=694fda52&hm=f5cd5707ae8598aade9b80bb82361deea0baf473fa500a118db1c007453c6347&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1454454395977859094/1454460955504279552/image.png?ex=69512bd2&is=694fda52&hm=635e0e917067be34597aebd493a83369e9b37930380d86e97f1b9ca148ddbd3f&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:08</span>
+                    </div>
+                    <div class='text'><p>единственное с испытанием не найду как себя увидеть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:08</span>
+                    </div>
+                    <div class='text'><p>квесты закрывают</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:09</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1454454395977859094/1454461101239570462/image.png?ex=69512bf5&is=694fda75&hm=c0b2d9e0d09a34d5acf702ba195385e6070bfa8b889616b0884e0db3243144d6&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:09</span>
+                    </div>
+                    <div class='text'><p>во кусочек видно</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/639385266288852993/a16c953fafc4624e50d5d279b6cac32f.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">1 MMR</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">27.12.2025 13:28</span>
+                    </div>
+                    <div class='text'><p>сдела всё как так но не знаю почему весь ник не виден</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">27.12.2025 14:00</span>
+                    </div>
+                    <div class='text'><p>47 место</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">27.12.2025 14:01</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **47 место**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 27.12.2025 14:01
+            </footer>
+        </body>
+        </html>
+        
