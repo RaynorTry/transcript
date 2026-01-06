@@ -1,0 +1,461 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-431</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #f0ad4e;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-431</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Жалоба на состав</div>
+                    <div><strong>ID тикета:</strong> 1458068120458625179</div>
+                    <div><strong>Открыт в:</strong> 06.01.2026 12:02</div>
+                    <div><strong>Всего сообщений:</strong> 16</div>
+                    <div><strong>Закрыт в:</strong> 06.01.2026 12:11</div>
+                    <div><strong>Всего вложений:</strong> 3</div>
+                    <div><strong>Открыт пользователем:</strong> fantom?</div>
+                    <div><strong>Закрыт пользователем:</strong> Raynor</div>
+                    <div><strong>Назначен:</strong> None</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 06.01.2026 12:02</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Neu4_`</div>
+                        
+                        <div class="field"><strong>Ник администратора, на которого жалоба:</strong> `Raynor`</div>
+                        <div class="field"><strong>Причина обращения:</strong> Где тут оскорбление сервера и/или проекта?
+
+Спросил как в новом зелёном интерфейсе использовать NEI, в итоге ни как.
+Со мной согласились игроки, что новый интерфейс имеет недочёты.
+Спросил как его отключать и назвал новый интерфейс не удобным, раз в нём не работают основные игровые механики.
+Пожелал его создателю везде иметь такой интерфейс.</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:02</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1458068120458625179/1458068149155922124/image.png?ex=695e4b48&is=695cf9c8&hm=377ad759c9df7569f039e2370e0525fd23c88abc7831785091c7248c44037551&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:03</span>
+                    </div>
+                    <div class='text'><p>"Зелено-блевотным" - это не оскорбление по вашему?</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1458068120458625179/1458068535539531828/image.png?ex=695e4ba4&is=695cfa24&hm=f4ac5206d95b4595dc32b27bfafbe15d2c7a9f1aaa7f41b35458081d3fd2bd95&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1458068120458625179/1458068536009167019/image.png?ex=695e4ba4&is=695cfa24&hm=a94de41916bed34716d419399209c3d1700b97bb0a6f896db4c8a9f571ed5458&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:04</span>
+                    </div>
+                    <div class='text'><p>Именно так я и написал, где тут оскорбление проекта?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:04</span>
+                    </div>
+                    <div class='text'><p>Это и является оскорблением создателя данного интерфейса.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:05</span>
+                    </div>
+                    <div class='text'><p>Собирается ли интерфейс дорабатываться? Я как год назад заходил так и сейчас в нём всё так же не работает nei, в терминалах активируются бинды инвентаря и тд</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:05</span>
+                    </div>
+                    <div class='text'><p>Соответственно создатель тот кто делал эту UI для нашего сервера = оскорбление сервера.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:06</span>
+                    </div>
+                    <div class='text'><p>Тут не подскажу, разработчики занимаются этим, я им не являюсь.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:06</span>
+                    </div>
+                    <div class='text'><p>Если бы моё мнение было выражено в тикете я бы тоже бан получил за оскорбление проекта?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:06</span>
+                    </div>
+                    <div class='text'><p>Мнение можно выразить в нормальном контексте, а не как вы это сделали.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:07</span>
+                    </div>
+                    <div class='text'><p>1 Субьективная оценка переливающихся зелёных тонов
+2 Искреннее желание дать создателю понять на сколько неудобно его творение в действии</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:09</span>
+                    </div>
+                    <div class='text'><p>Перекинь тикет в раздел идей или как там</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:10</span>
+                    </div>
+                    <div class='text'><p>По правилу 2.8 бан должен был быть на всегда, так как оскорбление было не таким значительным, сократили Вам срок бана до 2-х дней. Бан снят не будет. Вы можете самостоятельно написать Ваши недовольства в данный канал: https://discordapp.com/channels/1285150074636206110/1285227532639015043 Остались еще какие-то вопросы?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/812526663455604746/ceb8d7a70d138532178cad721d23c593.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">fantom?</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">06.01.2026 12:10</span>
+                    </div>
+                    <div class='text'><p>Да, перенеси сам, у тебя же есть такая возможность?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/e2a2f4248b96a3a9764fe901e6b55476.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Raynor</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">06.01.2026 12:11</span>
+                    </div>
+                    <div class='text'><p>Нет, у меня нет такой возможности. Тикет закрою, всего доброго.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">06.01.2026 12:11</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **Ответ дан.**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 06.01.2026 12:11
+            </footer>
+        </body>
+        </html>
+        
