@@ -1,0 +1,377 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-462</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #f0ad4e;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-462</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Технические проблемы</div>
+                    <div><strong>ID тикета:</strong> 1459207511121985599</div>
+                    <div><strong>Открыт в:</strong> 09.01.2026 15:29</div>
+                    <div><strong>Всего сообщений:</strong> 10</div>
+                    <div><strong>Закрыт в:</strong> —</div>
+                    <div><strong>Всего вложений:</strong> 9</div>
+                    <div><strong>Открыт пользователем:</strong> Granas</div>
+                    <div><strong>Закрыт пользователем:</strong> None</div>
+                    <div><strong>Назначен:</strong> None</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 09.01.2026 15:29</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `KeppMaster`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> У других все легко крафтится(одним запросом демон душа дракона) а у меня элементарно не делаются даже договора. Не то что души за один запрос</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:30</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459207590998442173/image.png?ex=69627078&is=69611ef8&hm=3207235ab7fbc653bc8cd0a596b78254853ce1e80c098c53b83b5fbeda99b944&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459207591455494184/image.png?ex=69627078&is=69611ef8&hm=c4e7df60c2f68aba1394d59bc643bfd705bac1410fe92a0a690873ee2f568fb1&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459207591904280727/image.png?ex=69627078&is=69611ef8&hm=b3ab9fa0bcc7446b2aebcb328ef7b9285291018c22cbd5966fb86cb8c5591a7f&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:30</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459207635273256980/image.png?ex=69627083&is=69611f03&hm=d1858d86e350ab5e4c338c3abebb439c170caf100e08ce136658ca03333cc9e0&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:30</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459207745612943451/image.png?ex=6962709d&is=69611f1d&hm=f85969b200fb4ab0e48a7a2f0d77d314859bf696a40e75d3dbae927572607513&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:31</span>
+                    </div>
+                    <div class='text'><p>Все есть на шаблонах без замещения. Все уже посмотрел. Еще вчера спокойной все работало. После рестарта какая-то фигня</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1174367291325030440/d014898aab3bb2f6f72321fd3fb9d24c.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">ghosts34444</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">09.01.2026 15:31</span>
+                    </div>
+                    <div class='text'><p>Доброго времени суток! Есть ли у вас фейк-крафты?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:32</span>
+                    </div>
+                    <div class='text'><p>Все проверил, не нашел. Но договоры элементарно кровавые кристаллы только в этих наполнителях и странно что при заказе договора люца. Он не видит шаблоны всех кристаллов. Это не единственный предмет, который показывает мне, что у меня типо нет крафта сопутствующих итоговому предмету. Хотя все есть</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:33</span>
+                    </div>
+                    <div class='text'><p>все время пишет это</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459208529717231821/image.png?ex=69627158&is=69611fd8&hm=2567e5234e13553c7b6e7d6e327762023fd3bb23b48c4879353a405ebdb665da&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:34</span>
+                    </div>
+                    <div class='text'><p>Чтобы отбросить ответ о больших крафтах. Запускаю 1 договор люца</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459208706951479359/image.png?ex=69627182&is=69612002&hm=4bb2fad6a5c5fd77b074acda3a28be1f66b24de40f37d391217fa3e2fa97b39d&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/313306064042983436/46c8159f65907e585aa44253dd2b1f63.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Granas</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">09.01.2026 15:35</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459208853181956237/image.png?ex=696271a5&is=69612025&hm=8d73f4c7fa8cb9569b2f82556c018d23dc0becf660c9b8376407d9ea78bc4251&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1459207511121985599/1459208853567569980/image.png?ex=696271a5&is=69612025&hm=56a4d389acbd67899ab21e0e4a91ea365f5334ede0d513e8f854679bc832e8aa&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 09.01.2026 16:17
+            </footer>
+        </body>
+        </html>
+        
