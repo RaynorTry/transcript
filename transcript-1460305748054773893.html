@@ -1,0 +1,351 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-493</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-493</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Вопрос по игре</div>
+                    <div><strong>ID тикета:</strong> 1460305748054773893</div>
+                    <div><strong>Открыт в:</strong> 12.01.2026 16:13</div>
+                    <div><strong>Всего сообщений:</strong> 8</div>
+                    <div><strong>Закрыт в:</strong> 12.01.2026 16:15</div>
+                    <div><strong>Всего вложений:</strong> 1</div>
+                    <div><strong>Открыт пользователем:</strong> 𝓅𝑜𝓁𝑜𝓉𝑒𝓃𝒸𝑒𝕡𝕣𝕠𝕖𝕓𝕒𝕝</div>
+                    <div><strong>Закрыт пользователем:</strong> Lormunty</div>
+                    <div><strong>Назначен:</strong> Lormunty</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 12.01.2026 16:13</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Foreverzerotwo`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> обязательны ли ветки квестов для закрытия ветки "Супернова", а точнее будет ли она засчитана без выполнения остальных веток ?</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/680316269290979339/a_b2351af1e34b586e65f366d5a8b8bfeb.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">𝓅𝑜𝓁𝑜𝓉𝑒𝓃𝒸𝑒𝕡𝕣𝕠𝕖𝕓𝕒𝕝</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">12.01.2026 16:14</span>
+                    </div>
+                    
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1460305748054773893/1460305845442052117/image.png?ex=69666f4c&is=69651dcc&hm=3eefeb2072a9df34fda70a7caa16882fb91f679e3baef3b852a607de3368a52d&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.01.2026 16:14</span>
+                    </div>
+                    <div class='text'><p>только одноименную ветку с ролью надо выполнить</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/680316269290979339/a_b2351af1e34b586e65f366d5a8b8bfeb.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">𝓅𝑜𝓁𝑜𝓉𝑒𝓃𝒸𝑒𝕡𝕣𝕠𝕖𝕓𝕒𝕝</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">12.01.2026 16:14</span>
+                    </div>
+                    <div class='text'><p>т.е можно только супернову?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">12.01.2026 16:15</span>
+                    </div>
+                    <div class='text'><p>да</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/680316269290979339/a_b2351af1e34b586e65f366d5a8b8bfeb.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">𝓅𝑜𝓁𝑜𝓉𝑒𝓃𝒸𝑒𝕡𝕣𝕠𝕖𝕓𝕒𝕝</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">12.01.2026 16:15</span>
+                    </div>
+                    <div class='text'><p>сябки, удачи гайс</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/680316269290979339/a_b2351af1e34b586e65f366d5a8b8bfeb.gif?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">𝓅𝑜𝓁𝑜𝓉𝑒𝓃𝒸𝑒𝕡𝕣𝕠𝕖𝕓𝕒𝕝</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">12.01.2026 16:15</span>
+                    </div>
+                    <div class='text'><p>&lt;br&gt;<img src="https://cdn.discordapp.com/stickers/1391698849055248466.png" alt="Sticker: AbsoluteEmilia" class="sticker"></p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Alya</span>
+                        <span class='badge staff'>Staff</span>
+                        <span class="time">12.01.2026 16:15</span>
+                    </div>
+                    <div class='text'><p>🔒 **Тикет закрывается**. Причина: **не указана**</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 12.01.2026 16:15
+            </footer>
+        </body>
+        </html>
+        
