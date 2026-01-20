@@ -1,0 +1,587 @@
+
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Транскрипт #ticket-556</title>
+            <style>
+                :root {
+                    --bg: #1e1e1e;
+                    --card: #2d2d2d;
+                    --soft: #3a3a3a;
+                    --text: #e0e0e0;
+                    --muted: #a0a0a0;
+                    --accent: #4d90ff;
+                    --user: #3a4a60;
+                    --staff: #3a5040;
+                    --admin: #503a3a;
+                    --system: #404040;
+                    --header-bg: #252525;
+                    --header-text: #ffffff;
+                    --border: #404040;
+                    --priority-color: #ff9800;
+                }
+                body {
+                    margin: 0;
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                }
+                .header {
+                    background: var(--header-bg);
+                    color: var(--header-text);
+                    padding: 24px;
+                    text-align: center;
+                    border-bottom: 1px solid var(--border);
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .header h1 {
+                    margin: 0 0 8px;
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+                .header-meta {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                    text-align: left;
+                    margin-top: 16px;
+                    font-size: 14px;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .header-meta div {
+                    background: var(--soft);
+                    padding: 12px;
+                    border-radius: 8px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .header-meta strong {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                    font-size: 13px;
+                }
+                @media (max-width: 768px) {
+                    .header-meta {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                .container {
+                    max-width: 900px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .embed-system {
+                    background: var(--system);
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent);
+                    display: flex;
+                    gap: 12px;
+                    align-items: flex-start;
+                }
+                .embed-system .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .embed-system .content {
+                    flex: 1;
+                }
+                .embed-system .time {
+                    font-size: 12px;
+                    color: var(--muted);
+                    margin-bottom: 8px;
+                }
+                .embed-system .field {
+                    margin: 6px 0;
+                    font-size: 14px;
+                }
+                .embed-system .field strong {
+                    color: var(--text);
+                    margin-right: 6px;
+                    font-weight: 600;
+                }
+                .msg {
+                    display: flex;
+                    gap: 12px;
+                    padding: 14px;
+                    border-radius: 8px;
+                    margin: 12px 0;
+                    background: var(--card);
+                    border: 1px solid var(--border);
+                    transition: box-shadow 0.2s ease;
+                }
+                .msg:hover {
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    flex: 0 0 40px;
+                    object-fit: cover;
+                }
+                .content {
+                    flex: 1;
+                }
+                .headerline {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+                .name {
+                    font-weight: 600;
+                }
+                .time {
+                    color: var(--muted);
+                    font-size: 12px;
+                }
+                .badge {
+                    display: inline-block;
+                    padding: 2px 8px;
+                    font-size: 11px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    color: #fff;
+                }
+                .badge.user {
+                    background: var(--accent);
+                }
+                .badge.staff {
+                    background: #5cb85c;
+                }
+                .badge.admin {
+                    background: #d9534f;
+                }
+                .text p {
+                    margin: 6px 0;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .attachments {
+                    margin-top: 8px;
+                }
+                .attachments img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    border: 1px solid var(--border);
+                    margin-top: 8px;
+                }
+                .file a {
+                    display: inline-block;
+                    margin-top: 8px;
+                    background: var(--soft);
+                    border: 1px solid var(--border);
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    color: var(--accent);
+                    text-decoration: none;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                }
+                .file a:hover {
+                    background: #4a4a4a;
+                }
+                footer {
+                    color: var(--muted);
+                    font-size: 13px;
+                    text-align: center;
+                    padding: 24px;
+                    border-top: 1px solid var(--border);
+                    margin-top: 30px;
+                }
+                .emoji {
+                    width: 24px;
+                    height: 24px;
+                    vertical-align: middle;
+                    margin: 0 2px;
+                }
+                .sticker {
+                    max-width: 320px;
+                    max-height: 320px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+                .gif {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 8px;
+                    margin: 8px 0;
+                    border: 1px solid var(--border);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ticket-556</h1>
+                <div class="header-meta">
+                    <div><strong>Категория:</strong> Технические проблемы</div>
+                    <div><strong>ID тикета:</strong> 1462922452907720734</div>
+                    <div><strong>Открыт в:</strong> 19.01.2026 21:31</div>
+                    <div><strong>Всего сообщений:</strong> 26</div>
+                    <div><strong>Закрыт в:</strong> —</div>
+                    <div><strong>Всего вложений:</strong> 1</div>
+                    <div><strong>Открыт пользователем:</strong> Амралёт</div>
+                    <div><strong>Закрыт пользователем:</strong> None</div>
+                    <div><strong>Назначен:</strong> Algrinus</div>
+                </div>
+            </div>
+            <div class="container">
+        
+                <div class="embed-system">
+                    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+                    <div class="content">
+                        <div class="time">СИСТЕМА • 19.01.2026 21:31</div>
+                        <div class="field"><strong>Никнейм игрока:</strong> `Anigiluss`</div>
+                        
+                        
+                        <div class="field"><strong>Причина обращения:</strong> Проблема с выбиванием трофея узурпатора, убил уже около 2к их и при этом ни одного трофея не выпало</div>
+                    </div>
+                </div>
+                
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/278540213603532801/ba1c21ea1c94e7164bc60a0c4b379f2a.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Algrinus</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">19.01.2026 21:42</span>
+                    </div>
+                    <div class='text'><p>доброго времени суток, шанс на выподения трафея никак не умножается от количества существ. Шанс идет 1 существо 5%. Шансы на дроб трофееф передам чтоб пересмотрели. В данный момент увеличить шансы не возможно.</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 21:56</span>
+                    </div>
+                    <div class='text'><p>Я и не говорю что шанс умножается как либо, просто за 2к узурпаторов хотябы 1 или 2 могли выпать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 21:57</span>
+                    </div>
+                    <div class='text'><p>И сюда то этому шанс там далеко не 5%</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/278540213603532801/ba1c21ea1c94e7164bc60a0c4b379f2a.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Algrinus</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">19.01.2026 21:57</span>
+                    </div>
+                    <div class='text'><p>каждый раз после убийства узурпатора шанс обновляется на каждого узурпатора 5%</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 21:59</span>
+                    </div>
+                    <div class='text'><p>Добыча каким либо образом влияет на шанс выпадения трофея?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/278540213603532801/ba1c21ea1c94e7164bc60a0c4b379f2a.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Algrinus</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">19.01.2026 22:08</span>
+                    </div>
+                    <div class='text'><p>нет, как вариант попробуйте в другом реалме еще поубивать. Если все так же будет тикет повторно откройте</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 22:09</span>
+                    </div>
+                    <div class='text'><p>сейчас попробую  в верхем мире</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 22:11</span>
+                    </div>
+                    <div class='text'><p>В верхнем мире выпал 1 трофей</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/278540213603532801/ba1c21ea1c94e7164bc60a0c4b379f2a.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Algrinus</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">19.01.2026 22:12</span>
+                    </div>
+                    <div class='text'><p>хорошо, передам информацию старшему составу. Проверят</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 22:12</span>
+                    </div>
+                    <div class='text'><p>ну это как-то не нормально что я не могу их  у меня на базе призывать</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">19.01.2026 22:13</span>
+                    </div>
+                    <div class='text'><p>точнее фармить трофеи</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 03:13</span>
+                    </div>
+                    <div class='text'><p>@Амралёт добрый день, кем вам приходится игрок Faradenza_denza?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:27</span>
+                    </div>
+                    <div class='text'><p>мой тиммейт который стоит афк на базе, а что?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 03:28</span>
+                    </div>
+                    <div class='text'><p>А что он тогда делает в ваших твинках?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:28</span>
+                    </div>
+                    <div class='text'><p>каких твинках</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 03:31</span>
+                    </div>
+                    <div class='text'><p>Вы же понимаете что это нарушение 4.6, если будете говорить что не передавали аккаунт то это приведёт ещё к бану по 2.11</p></div>
+                    <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1462922452907720734/1463013005813088480/image.png?ex=6970488a&is=696ef70a&hm=b776f19ba50f26e35943e9013951b7f96347822e17b3c3f8d5b9c9dfe6365329&" alt="image.png"></div>
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:34</span>
+                    </div>
+                    <div class='text'><p>Из всех аккаунтов что я тут вижу только 1 является моим твинком, и это Nautiluss</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 03:37</span>
+                    </div>
+                    <div class='text'><p>ну вы передали ему аккаунт, он в него зашёл, соответсвенно появился у вас в твинках
+
+передача аккаунта на нашем проекте карается перманентным баном</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:37</span>
+                    </div>
+                    <div class='text'><p>я не передавал ему аккаунт, и вообще</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:37</span>
+                    </div>
+                    <div class='text'><p>никому, тк я знаю что за это дают бан</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:38</span>
+                    </div>
+                    <div class='text'><p>В чём смысл мне так делать и потом думать что об этом не узнают</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 03:39</span>
+                    </div>
+                    <div class='text'><p>Твинки говорят об обратном</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:40</span>
+                    </div>
+                    <div class='text'><p>Я в душе не чаю как он мог там появится</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/409365760427687948/cfcb4c6753baffdce82236ab4a4763a4.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Амралёт</span>
+                        <span class='badge user'>User</span>
+                        <span class="time">20.01.2026 03:40</span>
+                    </div>
+                    <div class='text'><p>иначе какой мне смысл сидеть сборки закрывать если будет бан?</p></div>
+                    
+                </div>
+            </div>
+            
+            <div class="msg">
+                <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+                <div class="content">
+                    <div class="headerline">
+                        <span class="name">Lormunty</span>
+                        <span class='badge admin'>Admin</span>
+                        <span class="time">20.01.2026 04:00</span>
+                    </div>
+                    <div class='text'><p>Твинки появляются только после того как другой игрок вошёл на своём пк в ваш аккаунт, либо вы вошли в аккаунт игрока, за то что вы отказываетесь признавать к блокировке по 4.6 добавилась блокировка по 2.11, всего хорошего.</p></div>
+                    
+                </div>
+            </div>
+            
+            </div>
+            <footer>
+                Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 20.01.2026 07:14
+            </footer>
+        </body>
+        </html>
+        
