@@ -1,0 +1,324 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-566</title>
+<style>
+:root {
+--bg: #1e1e1e;
+--card: #2d2d2d;
+--soft: #3a3a3a;
+--text: #e0e0e0;
+--muted: #a0a0a0;
+--accent: #4d90ff;
+--user: #3a4a60;
+--staff: #3a5040;
+--admin: #503a3a;
+--system: #404040;
+--header-bg: #252525;
+--header-text: #ffffff;
+--border: #404040;
+--priority-color: #f0ad4e;
+}
+body {
+margin: 0;
+background: var(--bg);
+color: var(--text);
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+line-height: 1.6;
+}
+.header {
+background: var(--header-bg);
+color: var(--header-text);
+padding: 24px;
+text-align: center;
+border-bottom: 1px solid var(--border);
+box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+margin: 0 0 8px;
+font-size: 24px;
+font-weight: 600;
+}
+.header-meta {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+text-align: left;
+margin-top: 16px;
+font-size: 14px;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+}
+.header-meta div {
+background: var(--soft);
+padding: 12px;
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+}
+.header-meta strong {
+color: var(--text);
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 13px;
+}
+@media (max-width: 768px) {
+.header-meta {
+grid-template-columns: 1fr;
+}
+}
+.container {
+max-width: 900px;
+margin: 30px auto;
+padding: 0 20px;
+}
+.embed-system {
+background: var(--system);
+border-radius: 8px;
+padding: 16px;
+margin: 20px 0;
+border-left: 4px solid var(--accent);
+display: flex;
+gap: 12px;
+align-items: flex-start;
+}
+.embed-system .avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.embed-system .content {
+flex: 1;
+}
+.embed-system .time {
+font-size: 12px;
+color: var(--muted);
+margin-bottom: 8px;
+}
+.embed-system .field {
+margin: 6px 0;
+font-size: 14px;
+}
+.embed-system .field strong {
+color: var(--text);
+margin-right: 6px;
+font-weight: 600;
+}
+.msg {
+display: flex;
+gap: 12px;
+padding: 14px;
+border-radius: 8px;
+margin: 12px 0;
+background: var(--card);
+border: 1px solid var(--border);
+transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.content {
+flex: 1;
+}
+.headerline {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 6px;
+font-size: 14px;
+}
+.name {
+font-weight: 600;
+}
+.time {
+color: var(--muted);
+font-size: 12px;
+}
+.badge {
+display: inline-block;
+padding: 2px 8px;
+font-size: 11px;
+border-radius: 4px;
+font-weight: 500;
+color: #fff;
+}
+.badge.user {
+background: var(--accent);
+}
+.badge.staff {
+background: #5cb85c;
+}
+.badge.admin {
+background: #d9534f;
+}
+.text p {
+margin: 6px 0;
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+.attachments {
+margin-top: 8px;
+}
+.attachments img {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+border: 1px solid var(--border);
+margin-top: 8px;
+}
+.file a {
+display: inline-block;
+margin-top: 8px;
+background: var(--soft);
+border: 1px solid var(--border);
+padding: 8px 12px;
+border-radius: 6px;
+color: var(--accent);
+text-decoration: none;
+font-size: 13px;
+transition: background 0.2s;
+}
+.file a:hover {
+background: #4a4a4a;
+}
+footer {
+color: var(--muted);
+font-size: 13px;
+text-align: center;
+padding: 24px;
+border-top: 1px solid var(--border);
+margin-top: 30px;
+}
+.emoji {
+width: 24px;
+height: 24px;
+vertical-align: middle;
+margin: 0 2px;
+}
+.sticker {
+max-width: 320px;
+max-height: 320px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+.gif {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>ticket-566</h1>
+<div class="header-meta">
+<div><strong>Категория:</strong> Жалоба на игрока</div>
+<div><strong>ID тикета:</strong> 1463279785647145114</div>
+<div><strong>Открыт в:</strong> 20.01.2026 21:11</div>
+<div><strong>Всего сообщений:</strong> 6</div>
+<div><strong>Закрыт в:</strong> 20.01.2026 21:16</div>
+<div><strong>Всего вложений:</strong> 7</div>
+<div><strong>Открыт пользователем:</strong> Drake Album</div>
+<div><strong>Закрыт пользователем:</strong> Drake Album</div>
+<div><strong>Назначен:</strong> None</div>
+</div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="time">СИСТЕМА • 20.01.2026 21:11</div>
+<div class="field"><strong>Никнейм игрока:</strong> `JoshoLion`</div>
+<div class="field"><strong>Ник игрока, на которого жалоба:</strong> `Nikeron71`</div>
+
+<div class="field"><strong>Причина обращения:</strong> игрок нарушает правило 2.2</div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/355778348284379137/90c8e2d2e31afe465f96f7f02bddea7a.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Drake Album</span>
+<span class='badge user'>User</span>
+<span class="time">20.01.2026 21:11</span>
+</div>
+
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279853670240481/2026-01-20_23.09.25.png?ex=6971410f&is=696fef8f&hm=8991df70813d885e54e9d23d96725e4bc483a00046bdf2cbc939dc499fde486e&" alt="2026-01-20_23.09.25.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279854060437544/2026-01-20_23.09.47.png?ex=6971410f&is=696fef8f&hm=a0bff802f8eec95c6c9d923fc432c54a3469476b4bd9c196fd1f11295c3814f2&" alt="2026-01-20_23.09.47.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279854580400209/2026-01-20_23.09.53.png?ex=6971410f&is=696fef8f&hm=a29e58688470aef9ba2cf7fc23ca8e83ce3e87bb237e746ec0953e532e1ae036&" alt="2026-01-20_23.09.53.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279854878331073/2026-01-20_23.10.28.png?ex=6971410f&is=696fef8f&hm=3e1772cf1db88ccbade77bd0ced4c2939c4b945ed70d7a07b9971fe445e3005d&" alt="2026-01-20_23.10.28.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279855528575017/2026-01-20_23.10.47.png?ex=6971410f&is=696fef8f&hm=89bc49bbccee3b20d0902cd9a9ed20899e64654c617ecc4509adcb32fe6eb347&" alt="2026-01-20_23.10.47.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279855889023037/2026-01-20_23.11.03.png?ex=69714110&is=696fef90&hm=a01b6ff4e81cf0459022f635bc8b606d35a82762a6ba48e198f4f1cb09667fef&" alt="2026-01-20_23.11.03.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1463279785647145114/1463279856447000690/2026-01-20_23.09.21.png?ex=69714110&is=696fef90&hm=d60491a5890bd2cc26cfdcccc415506793f25ceea6144e08b403852bf474f4b2&" alt="2026-01-20_23.09.21.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/355778348284379137/90c8e2d2e31afe465f96f7f02bddea7a.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Drake Album</span>
+<span class='badge user'>User</span>
+<span class="time">20.01.2026 21:13</span>
+</div>
+<div class='text'><p>а и 2.1 тоже там</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/278540213603532801/ba1c21ea1c94e7164bc60a0c4b379f2a.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Algrinus</span>
+<span class='badge admin'>Admin</span>
+<span class="time">20.01.2026 21:14</span>
+</div>
+<div class='text'><p>Игроку выдано наказание, у вас еще остались вопросы?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/355778348284379137/90c8e2d2e31afe465f96f7f02bddea7a.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Drake Album</span>
+<span class='badge user'>User</span>
+<span class="time">20.01.2026 21:15</span>
+</div>
+<div class='text'><p>нет, спасибо</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Alya</span>
+<span class='badge staff'>Staff</span>
+<span class="time">20.01.2026 21:16</span>
+</div>
+<div class='text'><p>🔒 **Тикет закрывается**. Причина: **не указана**</p></div>
+
+</div>
+</div>
+
+</div>
+<footer>
+Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 20.01.2026 21:16
+</footer>
+</body>
+</html>
