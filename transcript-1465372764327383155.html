@@ -1,0 +1,795 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-590</title>
+<style>
+:root {
+--bg: #1e1e1e;
+--card: #2d2d2d;
+--soft: #3a3a3a;
+--text: #e0e0e0;
+--muted: #a0a0a0;
+--accent: #4d90ff;
+--user: #3a4a60;
+--staff: #3a5040;
+--admin: #503a3a;
+--system: #404040;
+--header-bg: #252525;
+--header-text: #ffffff;
+--border: #404040;
+--priority-color: #f0ad4e;
+}
+body {
+margin: 0;
+background: var(--bg);
+color: var(--text);
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+line-height: 1.6;
+}
+.header {
+background: var(--header-bg);
+color: var(--header-text);
+padding: 24px;
+text-align: center;
+border-bottom: 1px solid var(--border);
+box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+margin: 0 0 8px;
+font-size: 24px;
+font-weight: 600;
+}
+.header-meta {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+text-align: left;
+margin-top: 16px;
+font-size: 14px;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+}
+.header-meta div {
+background: var(--soft);
+padding: 12px;
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+}
+.header-meta strong {
+color: var(--text);
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 13px;
+}
+@media (max-width: 768px) {
+.header-meta {
+grid-template-columns: 1fr;
+}
+}
+.container {
+max-width: 900px;
+margin: 30px auto;
+padding: 0 20px;
+}
+.embed-system {
+background: var(--system);
+border-radius: 8px;
+padding: 16px;
+margin: 20px 0;
+border-left: 4px solid var(--accent);
+display: flex;
+gap: 12px;
+align-items: flex-start;
+}
+.embed-system .avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.embed-system .content {
+flex: 1;
+}
+.embed-system .time {
+font-size: 12px;
+color: var(--muted);
+margin-bottom: 8px;
+}
+.embed-system .field {
+margin: 6px 0;
+font-size: 14px;
+}
+.embed-system .field strong {
+color: var(--text);
+margin-right: 6px;
+font-weight: 600;
+}
+.msg {
+display: flex;
+gap: 12px;
+padding: 14px;
+border-radius: 8px;
+margin: 12px 0;
+background: var(--card);
+border: 1px solid var(--border);
+transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.content {
+flex: 1;
+}
+.headerline {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 6px;
+font-size: 14px;
+}
+.name {
+font-weight: 600;
+}
+.time {
+color: var(--muted);
+font-size: 12px;
+}
+.badge {
+display: inline-block;
+padding: 2px 8px;
+font-size: 11px;
+border-radius: 4px;
+font-weight: 500;
+color: #fff;
+}
+.badge.user {
+background: var(--accent);
+}
+.badge.staff {
+background: #5cb85c;
+}
+.badge.admin {
+background: #d9534f;
+}
+.text p {
+margin: 6px 0;
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+.attachments {
+margin-top: 8px;
+}
+.attachments img {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+border: 1px solid var(--border);
+margin-top: 8px;
+}
+.file a {
+display: inline-block;
+margin-top: 8px;
+background: var(--soft);
+border: 1px solid var(--border);
+padding: 8px 12px;
+border-radius: 6px;
+color: var(--accent);
+text-decoration: none;
+font-size: 13px;
+transition: background 0.2s;
+}
+.file a:hover {
+background: #4a4a4a;
+}
+footer {
+color: var(--muted);
+font-size: 13px;
+text-align: center;
+padding: 24px;
+border-top: 1px solid var(--border);
+margin-top: 30px;
+}
+.emoji {
+width: 24px;
+height: 24px;
+vertical-align: middle;
+margin: 0 2px;
+}
+.sticker {
+max-width: 320px;
+max-height: 320px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+.gif {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>ticket-590</h1>
+<div class="header-meta">
+<div><strong>Категория:</strong> Вопрос по игре</div>
+<div><strong>ID тикета:</strong> 1465372764327383155</div>
+<div><strong>Открыт в:</strong> 26.01.2026 15:48</div>
+<div><strong>Всего сообщений:</strong> 42</div>
+<div><strong>Закрыт в:</strong> 26.01.2026 16:27</div>
+<div><strong>Всего вложений:</strong> 9</div>
+<div><strong>Открыт пользователем:</strong> Worthless</div>
+<div><strong>Закрыт пользователем:</strong> Worthless</div>
+<div><strong>Назначен:</strong> None</div>
+</div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="time">СИСТЕМА • 26.01.2026 15:48</div>
+<div class="field"><strong>Никнейм игрока:</strong> `Yrisky`</div>
+
+
+<div class="field"><strong>Причина обращения:</strong> Добрый вечер, я вчера нарушил правило 4.2 и мне снесли ресурсы которые я получил с раздачи. Но некоторые ресурсы были моими (моего тиммейта) и их сломали, прошу возрат ресурсов. Название и скрины ресурсов я вам сейчас отправлю</div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 15:49</span>
+</div>
+<div class='text'><p>Механизмы возвращены не будут, так как получены за ресурсы полученные с раздачи, как освобожусь выдам вам покупки за рубли</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/708616355024207884/aa1e2f0068fff118184830ded02188c0.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Akemi</span>
+<span class='badge staff'>Staff</span>
+<span class="time">26.01.2026 15:49</span>
+</div>
+<div class='text'><p>Поздравляем @Lormunty! Ты достиг 8 уровня!</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:49</span>
+</div>
+<div class='text'><p>Почему??</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:50</span>
+</div>
+<div class='text'><p>Я их у Nilej купил за ресурсы</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:50</span>
+</div>
+<div class='text'><p>Я хз как доказать, он может потдвердить</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:50</span>
+</div>
+<div class='text'><p>подтвердить*</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 15:51</span>
+</div>
+<div class='text'><p>так а ресурсы ты получил при помощи чего?
+при помощи других ресурсов которые получил с раздачи
+соответственно мехи изъяты</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:52</span>
+</div>
+<div class='text'><p>Нет</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>Я железные блоки получил с репликатор</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>Я объединитель материи с генами</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>Шли в ките леги</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>За минут 10-20 1кк жб на фармилось</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>Я всё точно подсчитал сколько стоит 64 железного блоков</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>72 монеты</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 15:53</span>
+</div>
+<div class='text'><p>Если судить по железным слиткам</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 15:57</span>
+</div>
+<div class='text'><p>Ты мне чейчас своими словами сказал чтобы я ещё и игрока с ником Nilej  на сутки забанил
+так как равноценность товаров определяется из ценности крафта, а не цены в магазине</p></div>
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465375010507198557/image.png?ex=6978e053&is=69778ed3&hm=6db45566aa6fd61713c3baea47a9bdc9509eb168a15c2d59d72f0d5cc1397725&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:06</span>
+</div>
+<div class='text'><p>так лормунти</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:06</span>
+</div>
+<div class='text'><p>64 железных слитков стоят 8</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:06</span>
+</div>
+<div class='text'><p>в крафте 9 слитков</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:06</span>
+</div>
+<div class='text'><p>то есть 9*8</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:06</span>
+</div>
+<div class='text'><p>равно 72</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:07</span>
+</div>
+
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465377539156348990/image.png?ex=6978e2ae&is=6977912e&hm=949c359687c9cb6d6924d704b13d9a47f14f24d5278941bc68aad3f2220fa13e&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:08</span>
+</div>
+<div class='text'><p>А на механизмах цена имеется</p></div>
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465377912663314616/image.png?ex=6978e307&is=69779187&hm=aa307df18beaa16f03a86d7fe2c08dafc56162f97e15a243eef1a91ed1faf2c3&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:08</span>
+</div>
+<div class='text'><p>для данного крафта равноценно 4 ниоб слитка 2 ниоб микросхемы и ниоб корпус - 1 промышенный мех</p></div>
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465377980954968285/image.png?ex=6978e318&is=69779198&hm=0aec228d3a819a53aa93fc666a9048a8e633f4b70281bc4531088dac2d9ba9be&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:09</span>
+</div>
+<div class='text'><p>А</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:09</span>
+</div>
+<div class='text'><p>Типо так?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:09</span>
+</div>
+<div class='text'><p>Крч, проще в некст раз у вас спрашивать буду</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:09</span>
+</div>
+<div class='text'><p>Не хочу этой всей хуйни</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:16</span>
+</div>
+<div class='text'><p>киты за тебя и твоего тиммейта</p></div>
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465379811122741524/image.png?ex=6978e4cc&is=6977934c&hm=35de79cdbf61d4335074f788d0381dd6a4a281fac148dc41138ee038552b678e&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:16</span>
+</div>
+<div class='text'><p>доказательств по другим, ресурсам я так и не увидел</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:17</span>
+</div>
+<div class='text'><p>Ты лишнюю ману батарею асгарда дал</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:18</span>
+</div>
+<div class='text'><p>Я ещё щас в инвентарь положу забери</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:21</span>
+</div>
+<div class='text'><p>Хорошо, у меня вопрос последний, а за какие ресы я бы мог купить металлоформовки синг и т.п.</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:21</span>
+</div>
+<div class='text'><p>?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:23</span>
+</div>
+<div class='text'><p>тиимейту я твоему написал, если продолжите прятать ресурсы последует блокировка ьез возможности разбана</p></div>
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465381696378507438/image.png?ex=6978e68d&is=6977950d&hm=b99448d46b6946d5d1ebc5dac8a2ff7d201e17744ec026c3c5a1dd5fef74ff27&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465381696860983437/image.png?ex=6978e68e&is=6977950e&hm=75329a3348a8978a46bd066463ba0aa2f326a6db7b2f6713a4e7728ce01e57ac&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465381697322487881/image.png?ex=6978e68e&is=6977950e&hm=6ef7a14eb15c0dc7e8a3de457a7ca098fd6f94572eec3b0c04a5b0d2999a1fba&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:24</span>
+</div>
+
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465372764327383155/1465381773587382497/image.png?ex=6978e6a0&is=69779520&hm=e720873cbf9a0051695d25dace4eef7dbe51036faa028219977f2cbc9b6c6bf2&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:24</span>
+</div>
+<div class='text'><p>Ок</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:27</span>
+</div>
+<div class='text'><p>Закрывать тикет?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 16:27</span>
+</div>
+<div class='text'><p>ну если у вас докв по ресурсам что куплены за рубли больше нет то закрывай</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/936978153207902269/31cdebf08d86b83450f0d3b5da4ce3fd.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Worthless</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:27</span>
+</div>
+<div class='text'><p>ок</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Alya</span>
+<span class='badge staff'>Staff</span>
+<span class="time">26.01.2026 16:27</span>
+</div>
+<div class='text'><p>🔒 **Тикет закрывается**. Причина: **не указана**</p></div>
+
+</div>
+</div>
+
+</div>
+<footer>
+Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 26.01.2026 16:27
+</footer>
+</body>
+</html>
