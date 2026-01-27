@@ -1,0 +1,541 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-589</title>
+<style>
+:root {
+--bg: #1e1e1e;
+--card: #2d2d2d;
+--soft: #3a3a3a;
+--text: #e0e0e0;
+--muted: #a0a0a0;
+--accent: #4d90ff;
+--user: #3a4a60;
+--staff: #3a5040;
+--admin: #503a3a;
+--system: #404040;
+--header-bg: #252525;
+--header-text: #ffffff;
+--border: #404040;
+--priority-color: #f0ad4e;
+}
+body {
+margin: 0;
+background: var(--bg);
+color: var(--text);
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+line-height: 1.6;
+}
+.header {
+background: var(--header-bg);
+color: var(--header-text);
+padding: 24px;
+text-align: center;
+border-bottom: 1px solid var(--border);
+box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+margin: 0 0 8px;
+font-size: 24px;
+font-weight: 600;
+}
+.header-meta {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 12px;
+text-align: left;
+margin-top: 16px;
+font-size: 14px;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+}
+.header-meta div {
+background: var(--soft);
+padding: 12px;
+border-radius: 8px;
+display: flex;
+flex-direction: column;
+}
+.header-meta strong {
+color: var(--text);
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 13px;
+}
+@media (max-width: 768px) {
+.header-meta {
+grid-template-columns: 1fr;
+}
+}
+.container {
+max-width: 900px;
+margin: 30px auto;
+padding: 0 20px;
+}
+.embed-system {
+background: var(--system);
+border-radius: 8px;
+padding: 16px;
+margin: 20px 0;
+border-left: 4px solid var(--accent);
+display: flex;
+gap: 12px;
+align-items: flex-start;
+}
+.embed-system .avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.embed-system .content {
+flex: 1;
+}
+.embed-system .time {
+font-size: 12px;
+color: var(--muted);
+margin-bottom: 8px;
+}
+.embed-system .field {
+margin: 6px 0;
+font-size: 14px;
+}
+.embed-system .field strong {
+color: var(--text);
+margin-right: 6px;
+font-weight: 600;
+}
+.msg {
+display: flex;
+gap: 12px;
+padding: 14px;
+border-radius: 8px;
+margin: 12px 0;
+background: var(--card);
+border: 1px solid var(--border);
+transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+flex: 0 0 40px;
+object-fit: cover;
+}
+.content {
+flex: 1;
+}
+.headerline {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 6px;
+font-size: 14px;
+}
+.name {
+font-weight: 600;
+}
+.time {
+color: var(--muted);
+font-size: 12px;
+}
+.badge {
+display: inline-block;
+padding: 2px 8px;
+font-size: 11px;
+border-radius: 4px;
+font-weight: 500;
+color: #fff;
+}
+.badge.user {
+background: var(--accent);
+}
+.badge.staff {
+background: #5cb85c;
+}
+.badge.admin {
+background: #d9534f;
+}
+.text p {
+margin: 6px 0;
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+.attachments {
+margin-top: 8px;
+}
+.attachments img {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+border: 1px solid var(--border);
+margin-top: 8px;
+}
+.file a {
+display: inline-block;
+margin-top: 8px;
+background: var(--soft);
+border: 1px solid var(--border);
+padding: 8px 12px;
+border-radius: 6px;
+color: var(--accent);
+text-decoration: none;
+font-size: 13px;
+transition: background 0.2s;
+}
+.file a:hover {
+background: #4a4a4a;
+}
+footer {
+color: var(--muted);
+font-size: 13px;
+text-align: center;
+padding: 24px;
+border-top: 1px solid var(--border);
+margin-top: 30px;
+}
+.emoji {
+width: 24px;
+height: 24px;
+vertical-align: middle;
+margin: 0 2px;
+}
+.sticker {
+max-width: 320px;
+max-height: 320px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+.gif {
+max-width: 100%;
+max-height: 300px;
+border-radius: 8px;
+margin: 8px 0;
+border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>ticket-589</h1>
+<div class="header-meta">
+<div><strong>Категория:</strong> Вопрос по игре</div>
+<div><strong>ID тикета:</strong> 1465239073563217942</div>
+<div><strong>Открыт в:</strong> 26.01.2026 06:56</div>
+<div><strong>Всего сообщений:</strong> 22</div>
+<div><strong>Закрыт в:</strong> —</div>
+<div><strong>Всего вложений:</strong> 8</div>
+<div><strong>Открыт пользователем:</strong> KPAMTTyC</div>
+<div><strong>Закрыт пользователем:</strong> None</div>
+<div><strong>Назначен:</strong> None</div>
+</div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="time">СИСТЕМА • 26.01.2026 06:56</div>
+<div class="field"><strong>Никнейм игрока:</strong> `KPAMTTyC`</div>
+
+
+<div class="field"><strong>Причина обращения:</strong> Беседа</div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 06:58</span>
+</div>
+<div class='text'><p>@Lormunty</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 07:09</span>
+</div>
+<div class='text'><p>Привет, смотри, такая ситуация с вашим тиммейтом xGamerx случилась.
+Передал другим игрокам ресурсы по типу гелиосферный зарядный центр 
+Термоядерный правильный комплекс
+Энергонный синтезатор и преобразователь, 24 объеда жидкой материи с 10лвлами соответственно 
+Крафтовые души ВСЕХ драконов.
+Совершенные пасеки 
+И прочее
+
+Как поступим в данной ситуации?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 07:13</span>
+</div>
+<div class='text'><p>Я даже незнаю, т.к. я на сервер ужу неделю не захожу и возможности такой нету, пока в отпуске был зашел закрыл сборку</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 07:14</span>
+</div>
+<div class='text'><p>Что там шяс в тиме вообще незнаю</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 07:14</span>
+</div>
+<div class='text'><p>И да эти все вещи скорее всего пропали с базы</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 07:14</span>
+</div>
+<div class='text'><p>Т.к. у нас это все стояло</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 07:14</span>
+</div>
+<div class='text'><p>Я сейчас в компу даже подойти не смогу</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 11:51</span>
+</div>
+<div class='text'><p>Может кто-то из тиммейтов?
+Не xGamerx проверить?</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 16:59</span>
+</div>
+<div class='text'><p>У нас тима была собранна на быструю руку, сейчас с группы почти все повыходили, и собрку я закрывал в солло ( последние 2-3 дня )</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 17:00</span>
+</div>
+<div class='text'><p>Тем более конфликты начинались под конец закрытия</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 17:00</span>
+</div>
+<div class='text'><p>Так что я даже хз что там и да как с ними</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 17:00</span>
+</div>
+<div class='text'><p>А я на СВО сейчас, так что ничем помочь не могу</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 17:06</span>
+</div>
+<div class='text'><p>дай дискорд xGamerx</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:28</span>
+</div>
+<div class='text'><p>В таблице не написанно было ? На заявку рега ?, у меня есть наш дискорд общий но кто из них кто я не знаю</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:32</span>
+</div>
+<div class='text'><p>Вот держи</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:32</span>
+</div>
+<div class='text'><p>Кто-то из них</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:32</span>
+</div>
+
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444326120100065/IMG_5091.png?ex=6979c9a1&is=69787821&hm=532b36f18996f07a972f6bc266c23ee1f8db3f3729323f670dc45f6f60d22e91&" alt="IMG_5091.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444326568890520/IMG_5092.png?ex=6979c9a2&is=69787822&hm=5a601d8564d5b4f46767a6d643829b4fb59a339aefd618ffe42ce0ab9befad17&" alt="IMG_5092.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444327290573064/IMG_5094.png?ex=6979c9a2&is=69787822&hm=3f176a35641a1d9710d1b8d504e2b8f73b645a55d9c5c0a9bab34b8dc908900f&" alt="IMG_5094.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444327638434005/IMG_5095.png?ex=6979c9a2&is=69787822&hm=9bd37913afc2a2c88fef5e85cdd282744a956e63bbdaa2442fff94bf2d54d43a&" alt="IMG_5095.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444328074645544/IMG_5096.png?ex=6979c9a2&is=69787822&hm=88de4b994084056c122aa181d084342dc8efc84afaa7703d9c8d0e81abf60c26&" alt="IMG_5096.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444328540340515/IMG_5097.png?ex=6979c9a2&is=69787822&hm=6392c9de3fd6d2e84f1c57a6a8d338cabdab439af63703cb8949c2abe373b70e&" alt="IMG_5097.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444329035403350/IMG_5098.png?ex=6979c9a2&is=69787822&hm=40f0d5c3cd96380b8754ad3afc876fee2a258886c16ade394e114db98897f6d6&" alt="IMG_5098.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:32</span>
+</div>
+<div class='text'><p>А нагляднее можно глянуть в анкете регестрации команды</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/445221387087642635/2aed23a7ae10514810867b7026be5931.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">KPAMTTyC</span>
+<span class='badge user'>User</span>
+<span class="time">26.01.2026 20:32</span>
+</div>
+<div class='text'><p>Я там писал</p></div>
+
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">26.01.2026 20:34</span>
+</div>
+
+<div class="attachments"><img src="https://cdn.discordapp.com/attachments/1465239073563217942/1465444873112129763/image.png?ex=6979ca24&is=697878a4&hm=1d80e52baad2142cb6b9f88943281835fbae4415aeb7c68c4a3746c165364abb&" alt="image.png"></div>
+</div>
+</div>
+
+<div class="msg">
+<img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/f2eb378540e78b131f76caab7da2f073.png?size=1024" alt="avatar"/>
+<div class="content">
+<div class="headerline">
+<span class="name">Lormunty</span>
+<span class='badge admin'>Admin</span>
+<span class="time">27.01.2026 11:37</span>
+</div>
+<div class='text'><p>@KPAMTTyC ну так что?</p></div>
+
+</div>
+</div>
+
+</div>
+<footer>
+Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 27.01.2026 12:00
+</footer>
+</body>
+</html>
