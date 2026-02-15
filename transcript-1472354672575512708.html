@@ -1,0 +1,352 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-640</title>
+<style>
+:root {
+    --bg: #1e1e1e;
+    --card: #2d2d2d;
+    --soft: #3a3a3a;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --accent: #4d90ff;
+    --user: #3a4a60;
+    --staff: #3a5040;
+    --admin: #503a3a;
+    --system: #404040;
+    --header-bg: #252525;
+    --header-text: #ffffff;
+    --border: #404040;
+}
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+.header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.header-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    text-align: left;
+    margin-top: 16px;
+    font-size: 14px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.header-meta div {
+    background: var(--soft);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.header-meta strong {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+@media (max-width: 768px) {
+    .header-meta {
+        grid-template-columns: 1fr;
+    }
+}
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+.embed-system {
+    background: var(--system);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    border-left: 4px solid var(--accent);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+.embed-system .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.embed-system .content {
+    flex: 1;
+}
+.embed-system .time {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.embed-system .field {
+    margin: 6px 0;
+    font-size: 14px;
+}
+.embed-system .field strong {
+    color: var(--text);
+    margin-right: 6px;
+    font-weight: 600;
+}
+.msg {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 8px;
+    margin: 12px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.content {
+    flex: 1;
+}
+.headerline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+.name {
+    font-weight: 600;
+}
+.time {
+    color: var(--muted);
+    font-size: 12px;
+}
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #fff;
+}
+.badge.user {
+    background: var(--accent);
+}
+.badge.staff {
+    background: #5cb85c;
+}
+.badge.admin {
+    background: #d9534f;
+}
+.text p {
+    margin: 6px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.attachments {
+    margin-top: 8px;
+}
+.attachments img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+}
+.file a {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+.file a:hover {
+    background: #4a4a4a;
+}
+footer {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+}
+.emoji {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin: 0 2px;
+}
+.sticker {
+    max-width: 320px;
+    max-height: 320px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+.gif {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>ticket-640</h1>
+    <div class="header-meta">
+        <div><strong>Категория:</strong> Технические проблемы</div>
+        <div><strong>ID тикета:</strong> 1472354672575512708</div>
+        <div><strong>Открыт в:</strong> 14.02.2026 22:11</div>
+        <div><strong>Всего сообщений:</strong> 7</div>
+        <div><strong>Закрыт в:</strong> 15.02.2026 03:50</div>
+        <div><strong>Всего вложений:</strong> 3</div>
+        <div><strong>Открыт пользователем:</strong> TCX1C</div>
+        <div><strong>Закрыт пользователем:</strong> Raynor</div>
+        <div><strong>Назначен:</strong> Raynor</div>
+    </div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 14.02.2026 22:11</div>
+        <div class="field"><strong>Никнейм игрока:</strong> `frikadelbka`</div>
+        
+        
+        <div class="field"><strong>Причина обращения:</strong> Привет, у нас на базе 14 тпс, и я не могу понять в чем проблема, вы можете узнать что нагружает реалм? Может мы уберем</div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/830480651441537096/4833dfc0b5aeb4d62602a7a4d908857a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">TCX1C</span>
+            <span class='badge user'>User</span>
+            <span class="time">14.02.2026 22:12</span>
+        </div>
+        <div class='text'><p>Реалм на  игрока HappyEnd</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/830480651441537096/4833dfc0b5aeb4d62602a7a4d908857a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">TCX1C</span>
+            <span class='badge user'>User</span>
+            <span class="time">14.02.2026 22:13</span>
+        </div>
+        <div class='text'><p>В чате у других игроков стабильных 20, от базы у меня ничего вроде такого нет, бомжи 
+А из-за этого мехи долго работают (</p></div>
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1472355031708733511/1472354672575512708_1472355026377900103_0681a93c109643a08a9ba836554aca91.png?ex=699244fa&is=6990f37a&hm=37abf68384864aee2e03e9f01749447c329ac4e91b97020a72658b4a36a784ab&" alt="image.png"></div><div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1472355040441139242/1472354672575512708_1472355026377900103_777c3f228af8430c8b0a1df4db40a28e.png?ex=699244fc&is=6990f37c&hm=daccd626de465caecfddcd787b05658343f98fd8277559b4b1fe1ae10e613091&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/830480651441537096/4833dfc0b5aeb4d62602a7a4d908857a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">TCX1C</span>
+            <span class='badge user'>User</span>
+            <span class="time">14.02.2026 22:30</span>
+        </div>
+        <div class='text'><p>А еще наши наблюдения вышли на новый уровень
+Мы находимся в 1  измерении или как это сказать
+с этим игроком
+У которого база и магазин с 14 тпс
+Где я спокойно могу лазить в своем терминале</p></div>
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1472359395605086260/1472354672575512708_1472359388181430469_11b4b75cd5494648b2d7893df8b99508.png?ex=6992490b&is=6990f78b&hm=5b7bb69727d4efc498016dd6c89aa9debf2e766080e94ee3d7caf2c34771f102&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/830480651441537096/4833dfc0b5aeb4d62602a7a4d908857a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">TCX1C</span>
+            <span class='badge user'>User</span>
+            <span class="time">14.02.2026 22:48</span>
+        </div>
+        <div class='text'><p>Ладно мы пофиксиили, просто вышли из реалма нашего и из игры
+И потом когда подключились то мы уже не в 1 измерении</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/8b8fa99507229e442a61f7c231441154.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Raynor</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">15.02.2026 03:49</span>
+        </div>
+        <div class='text'><p>Им я уже сказал что делать. Они должны перестроить базу. На данный момент остались еще вопросы?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/830480651441537096/4833dfc0b5aeb4d62602a7a4d908857a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">TCX1C</span>
+            <span class='badge user'>User</span>
+            <span class="time">15.02.2026 03:49</span>
+        </div>
+        <div class='text'><p>Нет, спс</p></div>
+        
+    </div>
+</div>
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/5204b0076c8fd3196a3888784d906cf9.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 15.02.2026 03:50</div>
+        <div class="field"><strong>Причина закрытия:</strong> Ответ дан</div>
+        <div class="field"><strong>Закрыл:</strong> Raynor</div>
+        <div class="field"><strong>Дата закрытия:</strong> 15.02.2026 03:50</div>
+    </div>
+</div>
+
+</div>
+<footer>
+    Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 15.02.2026 03:50
+</footer>
+</body>
+</html>
