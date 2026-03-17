@@ -1,0 +1,372 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-686</title>
+<style>
+:root {
+    --bg: #1e1e1e;
+    --card: #2d2d2d;
+    --soft: #3a3a3a;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --accent: #4d90ff;
+    --user: #3a4a60;
+    --staff: #3a5040;
+    --admin: #503a3a;
+    --system: #404040;
+    --header-bg: #252525;
+    --header-text: #ffffff;
+    --border: #404040;
+}
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+.header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.header-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    text-align: left;
+    margin-top: 16px;
+    font-size: 14px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.header-meta div {
+    background: var(--soft);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.header-meta strong {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+@media (max-width: 768px) {
+    .header-meta {
+        grid-template-columns: 1fr;
+    }
+}
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+.embed-system {
+    background: var(--system);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    border-left: 4px solid var(--accent);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+.embed-system .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.embed-system .content {
+    flex: 1;
+}
+.embed-system .time {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.embed-system .field {
+    margin: 6px 0;
+    font-size: 14px;
+}
+.embed-system .field strong {
+    color: var(--text);
+    margin-right: 6px;
+    font-weight: 600;
+}
+.msg {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 8px;
+    margin: 12px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.content {
+    flex: 1;
+}
+.headerline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+.name {
+    font-weight: 600;
+}
+.time {
+    color: var(--muted);
+    font-size: 12px;
+}
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #fff;
+}
+.badge.user {
+    background: var(--accent);
+}
+.badge.staff {
+    background: #5cb85c;
+}
+.badge.admin {
+    background: #d9534f;
+}
+.text p {
+    margin: 6px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.attachments {
+    margin-top: 8px;
+}
+.attachments img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+}
+.file a {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+.file a:hover {
+    background: #4a4a4a;
+}
+footer {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+}
+.emoji {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin: 0 2px;
+}
+.sticker {
+    max-width: 320px;
+    max-height: 320px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+.gif {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>ticket-686</h1>
+    <div class="header-meta">
+        <div><strong>Категория:</strong> Финансовые проблемы</div>
+        <div><strong>ID тикета:</strong> 1483224614980292729</div>
+        <div><strong>Открыт в:</strong> 16.03.2026 22:05</div>
+        <div><strong>Всего сообщений:</strong> 9</div>
+        <div><strong>Закрыт в:</strong> 17.03.2026 06:06</div>
+        <div><strong>Всего вложений:</strong> 4</div>
+        <div><strong>Открыт пользователем:</strong> NoName</div>
+        <div><strong>Закрыт пользователем:</strong> Raynor</div>
+        <div><strong>Назначен:</strong> Raynor</div>
+    </div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/a_9ec703f8cf44fff17bc88340270620f7.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 16.03.2026 22:05</div>
+        <div class="field"><strong>Никнейм игрока:</strong> `TsoraDark`</div>
+        
+        
+        <div class="field"><strong>Причина обращения:</strong> Купил Донат кейс и когда крутить начал произошла перезагрузка сервера,из-за чего деньги потратились а донат не выдался</div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/566653813918793730/88f98e517aae214980e97e56cc50aba3.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">NoName</span>
+            <span class='badge user'>User</span>
+            <span class="time">16.03.2026 22:05</span>
+        </div>
+        
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1483224679211729007/1483224614980292729_1483224671293018257_f84b390aa85e40f99cf2c6c4f70978a9.png?ex=69b9d020&is=69b87ea0&hm=b517360d6cec15d7be5220d40ac4400d84a83dbd087ebb716d9d0640c39fee07&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/566653813918793730/88f98e517aae214980e97e56cc50aba3.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">NoName</span>
+            <span class='badge user'>User</span>
+            <span class="time">16.03.2026 22:05</span>
+        </div>
+        <div class='text'><p>доказательство что кейс открыл</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/566653813918793730/88f98e517aae214980e97e56cc50aba3.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">NoName</span>
+            <span class='badge user'>User</span>
+            <span class="time">16.03.2026 22:05</span>
+        </div>
+        <div class='text'><p>доказательство что нету доната</p></div>
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1483224758303854623/1483224614980292729_1483224751093715137_98f70add46204bb5a89ac9833f361f69.png?ex=69b9d033&is=69b87eb3&hm=e65ea60fbb4e2d10be84438038deeae82d098ab3d173c29b1881c457cece264b&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/566653813918793730/88f98e517aae214980e97e56cc50aba3.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">NoName</span>
+            <span class='badge user'>User</span>
+            <span class="time">16.03.2026 22:05</span>
+        </div>
+        <div class='text'><p>ну и скриншот где сервер перезагружается</p></div>
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1483224813031133194/1483224614980292729_1483224804449452152_5694946e753f488a99da5ce714357318.png?ex=69b9d040&is=69b87ec0&hm=61d4f330b188c4feb91fb1d42a0a232b0c6d02f0cb34601a692aea7713403a23&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_63368d63a69881482c2a0ac6cc9ae505.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Raynor</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">17.03.2026 01:41</span>
+        </div>
+        <div class='text'><p>Доброго времени суток! Ожидайте ответ от куратора проекта @Танкер Александр</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1170696543993602078/2f88bbbf489da19eded24dd14459d63d.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Танкер Александр</span>
+            <span class='badge staff'>Staff</span>
+            <span class="time">17.03.2026 05:17</span>
+        </div>
+        <div class='text'><p>Здравствуйте! Произведен возврат на личный кабинет.</p></div>
+        <div class="attachments"><img src="https://cdn.discordapp.com/attachments/1418611419032584202/1483333448734343289/1483224614980292729_1483333444086927472_32106fb524304b749f15564369000da2.png?ex=69ba356d&is=69b8e3ed&hm=e26418730d3825253b04fbbac0b614daa5fc7aabd16a0feb57f91dfc1bd62489&" alt="image.png"></div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_63368d63a69881482c2a0ac6cc9ae505.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Raynor</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">17.03.2026 05:54</span>
+        </div>
+        <div class='text'><p>@NoName у вас остались еще вопросы?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/566653813918793730/88f98e517aae214980e97e56cc50aba3.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">NoName</span>
+            <span class='badge user'>User</span>
+            <span class="time">17.03.2026 05:55</span>
+        </div>
+        <div class='text'><p>нет, спасибо</p></div>
+        
+    </div>
+</div>
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/a_9ec703f8cf44fff17bc88340270620f7.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 17.03.2026 06:06</div>
+        <div class="field"><strong>Причина закрытия:</strong> решено</div>
+        <div class="field"><strong>Закрыл:</strong> Raynor</div>
+        <div class="field"><strong>Дата закрытия:</strong> 17.03.2026 06:06</div>
+    </div>
+</div>
+
+</div>
+<footer>
+    Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 17.03.2026 06:06
+</footer>
+</body>
+</html>
