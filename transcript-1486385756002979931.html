@@ -1,0 +1,874 @@
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Транскрипт #ticket-695</title>
+<style>
+:root {
+    --bg: #1e1e1e;
+    --card: #2d2d2d;
+    --soft: #3a3a3a;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --accent: #4d90ff;
+    --user: #3a4a60;
+    --staff: #3a5040;
+    --admin: #503a3a;
+    --system: #404040;
+    --header-bg: #252525;
+    --header-text: #ffffff;
+    --border: #404040;
+}
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+.header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.header h1 {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.header-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    text-align: left;
+    margin-top: 16px;
+    font-size: 14px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.header-meta div {
+    background: var(--soft);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.header-meta strong {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+@media (max-width: 768px) {
+    .header-meta {
+        grid-template-columns: 1fr;
+    }
+}
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+.embed-system {
+    background: var(--system);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    border-left: 4px solid var(--accent);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+.embed-system .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.embed-system .content {
+    flex: 1;
+}
+.embed-system .time {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.embed-system .field {
+    margin: 6px 0;
+    font-size: 14px;
+}
+.embed-system .field strong {
+    color: var(--text);
+    margin-right: 6px;
+    font-weight: 600;
+}
+.msg {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 8px;
+    margin: 12px 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s ease;
+}
+.msg:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+    object-fit: cover;
+}
+.content {
+    flex: 1;
+}
+.headerline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+.name {
+    font-weight: 600;
+}
+.time {
+    color: var(--muted);
+    font-size: 12px;
+}
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #fff;
+}
+.badge.user {
+    background: var(--accent);
+}
+.badge.staff {
+    background: #5cb85c;
+}
+.badge.admin {
+    background: #d9534f;
+}
+.text p {
+    margin: 6px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.attachments {
+    margin-top: 8px;
+}
+.attachments img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 8px;
+}
+.file a {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+.file a:hover {
+    background: #4a4a4a;
+}
+footer {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+}
+.emoji {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin: 0 2px;
+}
+.sticker {
+    max-width: 320px;
+    max-height: 320px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+.gif {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>ticket-695</h1>
+    <div class="header-meta">
+        <div><strong>Категория:</strong> Вопрос по игре</div>
+        <div><strong>ID тикета:</strong> 1486385756002979931</div>
+        <div><strong>Открыт в:</strong> 25.03.2026 15:26</div>
+        <div><strong>Всего сообщений:</strong> 47</div>
+        <div><strong>Закрыт в:</strong> 25.03.2026 16:36</div>
+        <div><strong>Всего вложений:</strong> 0</div>
+        <div><strong>Открыт пользователем:</strong> Илья</div>
+        <div><strong>Закрыт пользователем:</strong> OtisLAB</div>
+        <div><strong>Назначен:</strong> OtisLAB</div>
+    </div>
+</div>
+<div class="container">
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/a_9ec703f8cf44fff17bc88340270620f7.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 25.03.2026 15:26</div>
+        <div class="field"><strong>Никнейм игрока:</strong> `Liftarion`</div>
+        
+        
+        <div class="field"><strong>Причина обращения:</strong> Использования  меча бесконечности в коупе кулона айсберга или же копья подпространства</div>
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:26</span>
+        </div>
+        <div class='text'><p>шас оставлю видео</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:27</span>
+        </div>
+        <div class='text'><p>Не скину, мне свет выключили . Немного ожидания . ..</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/dd4673de2e05554f774b63b11a6e60fb.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Lormunty</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 15:28</span>
+        </div>
+        <div class='text'><p>ну как будет возможность зальёте
+@OtisLAB вам ответит</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:28</span>
+        </div>
+        <div class='text'><p>Да, там и видео не нужно</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:29</span>
+        </div>
+        <div class='text'><p>Текста хватает</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:29</span>
+        </div>
+        <div class='text'><p>Но по возможности оставлю</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/457254057816489984/a_63368d63a69881482c2a0ac6cc9ae505.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Raynor</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 15:29</span>
+        </div>
+        <div class='text'><p>Отис ответит, он нам показывал уже этот баг</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 15:30</span>
+        </div>
+        <div class='text'><p>Интересно, во всех ли вариациях</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 15:59</span>
+        </div>
+        <div class='text'><p>Добрый вечер, подскажите что именно вы имеете ввиду?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:00</span>
+        </div>
+        <div class='text'><p>Касаемо этого бага и какой вариации</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:02</span>
+        </div>
+        <div class='text'><p>Можно ли убивать людей у которых дракон или хаос броня с помощью совмещения пассивного урона и меча бесконечности?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:03</span>
+        </div>
+        <div class='text'><p>То есть к примеру настакивать лучи от копья, и брать в руку меч бесконечности, так урон от каждого луча будет 300 едениц, которые дальше по формуле сломанных реликвий будет множится в разы</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:03</span>
+        </div>
+        <div class='text'><p>Или же брать13 кулонов айсберга, и так же в руку меч бесконечности</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:04</span>
+        </div>
+        <div class='text'><p>От чего сносить если не ошибаюсь, 13 ударов в секунду</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:04</span>
+        </div>
+        <div class='text'><p>Или в тик</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:06</span>
+        </div>
+        <div class='text'><p>Я понял о чём вы.
+Ситуация в том что данный баг работает только для брони имеющей заряд энергии.
+Касаемо ударов там удары каждый тик, но они не стакаются
+Так же данный предмет сейчас будет запрещён на сервере для использования и будет удаляться из инвентарей</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:09</span>
+        </div>
+        <div class='text'><p>Ни капли не понимаю в чем смысл его запрещать</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:10</span>
+        </div>
+        <div class='text'><p>Особенно когда есть сета которые основаны на демон сете и 1 части хаоса с зеркалом, и эту броню без этих багов никак не перебить</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:13</span>
+        </div>
+        <div class='text'><p>С тем учётом что как таковой проблемы в этом нет</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:13</span>
+        </div>
+        <div class='text'><p>Ситуация в том что они не должны быть настолько взаимосвязанными, как это работает сейчас. Так как кулон айсберга не подразумевал под своим использованием меч бесконечности и изначально по моду был сделан только для терралезвия либо экскалибура (для оригинального мода)
+Мечь бесконечности багается из за него в следствии чего и получается результат который вы видели сами при использовании</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:15</span>
+        </div>
+        <div class='text'><p>Да, но в чем проблема то...</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:16</span>
+        </div>
+        <div class='text'><p>Люди которые собирают на ДК чистый сет, и так и так обречены на ТП на спавн</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:16</span>
+        </div>
+        <div class='text'><p>Люди которые собирают голый демон сет так же обречены на такую участь</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:17</span>
+        </div>
+        <div class='text'><p>А очень мной уважаемые товарищи которые берут 2 катализатора времени демон сет + хаос часть с зеркалом и максимальный билд на отражение ударов. Вот таких же нереально будет убить без доп вещей альфхейма</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:17</span>
+        </div>
+        <div class='text'><p>С тем учётом что их и так резали всеми возможными способами, и то что буквально 3-5лет назад работало в десятки раз сильнее, не всегда хоть что то может показать вменяемое в плане урона</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:22</span>
+        </div>
+        <div class='text'><p>На данный момент, хоть и есть шансы противостояния этому багу, с использованием доп предметов, это всё равно является багом, который не вырезать из за логики самого мода.
+В этом и заключается вся проблематика данной связки которая была запрещена. Для любителей пвп согласен очень приятная или же зеркально неприятная связка предметов.
+На данный момент это баг, который со временем будет исправлен</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/dd4673de2e05554f774b63b11a6e60fb.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Lormunty</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:25</span>
+        </div>
+        <div class='text'><p>@Илья что ты хочешь от нас на данный момент?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:25</span>
+        </div>
+        <div class='text'><p>Я писал же в чате</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:25</span>
+        </div>
+        <div class='text'><p>Можно ли так делать, или нет</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/dd4673de2e05554f774b63b11a6e60fb.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Lormunty</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:25</span>
+        </div>
+        <div class='text'><p>про баг как бы составу известно, поэтому награды не будет</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/538022114331066379/dd4673de2e05554f774b63b11a6e60fb.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Lormunty</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:26</span>
+        </div>
+        <div class='text'><p>предмет добавлен в запрет, поэтому использовать вы его не сможете больше</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:26</span>
+        </div>
+        <div class='text'><p>Вот ради награды написал человек заходивший в феврале последний раз. Ну не считая последних пару дней</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:26</span>
+        </div>
+        <div class='text'><p>А вы весь перечень добавили? Это будет случатся со всем пассивным уроном</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:27</span>
+        </div>
+        <div class='text'><p>А альфхейм в этой схеме, самый легко добываемый пассивный урон</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:27</span>
+        </div>
+        <div class='text'><p>Но не единственный</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:27</span>
+        </div>
+        <div class='text'><p>Можешь пожалуйста скинуть что вы добавили? Я пока просто сам на сервер не смогу зайти</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:28</span>
+        </div>
+        <div class='text'><p>На данный момент только копьё + кулон</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:29</span>
+        </div>
+        <div class='text'><p>В скором времени добавиться ещё несколько предметов</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:29</span>
+        </div>
+        <div class='text'><p>Линзы маны что Ле?</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:29</span>
+        </div>
+        <div class='text'><p>Сверх проводник + преследование</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:30</span>
+        </div>
+        <div class='text'><p>Преследование не обязательно, но не знаю каким нужно быть ловким что бы без него обходится</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:31</span>
+        </div>
+        <div class='text'><p>Я правда не знаю как вы их запретите</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:33</span>
+        </div>
+        <div class='text'><p>Если уж такое пошло, проще будет закинуть в запреты излучатель маны</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:33</span>
+        </div>
+        <div class='text'><p>Можно там ещё мьелнир и экс, но там вы уже думаю сами</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/841645147942813717/6cc699e3baedb19f7accd6d8660ee81a.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">Илья</span>
+            <span class='badge user'>User</span>
+            <span class="time">25.03.2026 16:34</span>
+        </div>
+        <div class='text'><p>Тикет можете закрывать</p></div>
+        
+    </div>
+</div>
+
+<div class="msg">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/261938647786323978/785d4449de2c14bbf5cd52343600f76c.png?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="headerline">
+            <span class="name">OtisLAB</span>
+            <span class='badge admin'>Admin</span>
+            <span class="time">25.03.2026 16:35</span>
+        </div>
+        <div class='text'><p>Ну в скором времени всё увидите
+Всего доброго</p></div>
+        
+    </div>
+</div>
+
+<div class="embed-system">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/1319284661981155390/a_9ec703f8cf44fff17bc88340270620f7.gif?size=1024" alt="avatar"/>
+    <div class="content">
+        <div class="time">СИСТЕМА • 25.03.2026 16:36</div>
+        <div class="field"><strong>Причина закрытия:</strong> Ответ дан</div>
+        <div class="field"><strong>Закрыл:</strong> OtisLAB</div>
+        <div class="field"><strong>Дата закрытия:</strong> 25.03.2026 16:36</div>
+    </div>
+</div>
+
+</div>
+<footer>
+    Экспортировано ботом тикетов • HTML Transcript • Сгенерировано: 25.03.2026 16:36
+</footer>
+</body>
+</html>
